@@ -22,8 +22,8 @@ public class HelloController {
      */
     @ResponseBody
     @RequestMapping("/getUser2")
-    User test2(){
-        User user = new User();
+    User2 test2(){
+        User2 user = new User2();
         user.setId(new BigDecimal(12));
         user.setUserName("john");
         user.setSex("man");
@@ -38,7 +38,7 @@ public class HelloController {
      */
     @RequestMapping("/getUser3")
     public String testByFastJson(HttpServletResponse response){
-        User user = new User();
+        User2 user = new User2();
         user.setId(new BigDecimal(12));
         user.setUserName("john");
         user.setSex("man");
