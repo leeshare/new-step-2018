@@ -1,4 +1,4 @@
-package com.step.service;
+package com.step.repository;
 
 import com.step.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;

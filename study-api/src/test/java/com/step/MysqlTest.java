@@ -4,10 +4,10 @@ import com.step.configuration.JpaConfiguration;
 import com.step.entity.Department;
 import com.step.entity.Role;
 import com.step.entity.User;
-import com.step.service.DepartmentRespository;
-import com.step.service.RoleRepository;
-import com.step.service.UserRepository;
-import org.aspectj.lang.annotation.Before;
+import com.step.repository.DepartmentRepository;
+import com.step.repository.RoleRepository;
+import com.step.repository.UserRepository;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -35,7 +35,7 @@ public class MysqlTest {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    DepartmentRespository departmentRespository;
+    DepartmentRepository departmentRespository;
     @Autowired
     RoleRepository roleRepository;
 
