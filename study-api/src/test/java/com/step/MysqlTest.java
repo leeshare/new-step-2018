@@ -1,6 +1,5 @@
 package com.step;
 
-import com.step.configuration.JpaConfiguration;
 import com.step.entity.Department;
 import com.step.entity.Role;
 import com.step.entity.User;
@@ -35,7 +34,7 @@ public class MysqlTest {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    DepartmentRepository departmentRespository;
+    DepartmentRepository departmentRepository;
     @Autowired
     RoleRepository roleRepository;
 
@@ -43,11 +42,11 @@ public class MysqlTest {
     public void initData(){
         userRepository.deleteAll();
         roleRepository.deleteAll();
-        departmentRespository.deleteAll();
+        departmentRepository.deleteAll();
 
         Department department = new Department();
         department.setName("开发部");
-        departmentRespository.save(department);
+        departmentRepository.save(department);
         Assert.notNull(department.getId());
 
         Role role = new Role();

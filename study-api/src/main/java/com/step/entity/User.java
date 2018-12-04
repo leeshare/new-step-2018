@@ -1,7 +1,6 @@
 package com.step.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
