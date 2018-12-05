@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,5 +55,7 @@ public class RedisTest {
     @Test
     public void get(){
         User user = userRedis.get(this.getClass().getName() + ": userByname: user");
+        Assert.notNull(user);
+        logger.info("=====user===== name: {}, department: {}, role: {}", user.getName(), user.getDepartment().getName(), user.getRoles().get(0).getName());
     }
 }
