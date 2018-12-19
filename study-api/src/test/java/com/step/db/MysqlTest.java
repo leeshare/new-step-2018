@@ -1,4 +1,4 @@
-package com.step;
+package com.step.db;
 
 import com.step.entity.Department;
 import com.step.entity.Role;

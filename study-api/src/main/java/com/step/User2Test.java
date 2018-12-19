@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 /**
  * Created by lxl on 18/12/3.
  */
-public class User2 {
+public class User2Test {
     private BigDecimal id;
     private String userName;
     private String sex;

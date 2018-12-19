@@ -1,6 +1,5 @@
-package com.step;
+package com.step.db;
 
-import com.step.configuration.RedisConfig;
 import com.step.entity.Department;
 import com.step.entity.Role;
 import com.step.entity.User;
@@ -54,7 +53,7 @@ public class RedisTest {
 
     @Test
     public void get(){
-        User user = userRedis.get(this.getClass().getName() + ": userByname: user");
+        User user = userRedis.get(this.getClass().getName() + ": userByname: 小马");
         Assert.notNull(user);
         logger.info("=====user===== name: {}, department: {}, role: {}", user.getName(), user.getDepartment().getName(), user.getRoles().get(0).getName());
     }
