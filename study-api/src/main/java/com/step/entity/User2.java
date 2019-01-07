@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * Created by Administrator on 12/18/2018.
  */
-@Document(collection = "user")
+@Document(collection = "user2")
 public class User2 {
     public String getUserId() {
         return userId;
@@ -89,7 +89,7 @@ public class User2 {
 
 
     @PersistenceConstructor
-    private User2(String userId, String username, String password, String name, String email, Date registrationDate, Set<String> roles){
+    public User2(String userId, String username, String password, String name, String email, Date registrationDate, Set<String> roles){
         this.userId = userId;
         this.username = username;
         this.password = password;

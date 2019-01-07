@@ -6,5 +6,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 /**
  * Created by Administrator on 12/19/2018.
  */
-public interface User2Registory extends MongoRepository<User2, String> {
+public interface User2Mongodb extends MongoRepository<User2, String> {
+    User2 findByUsername(String username);
 }

@@ -5,6 +5,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -19,8 +20,9 @@ import java.util.List;
  * Created by Administrator on 12/19/2018.
  */
 @Configuration
-@PropertySource({"classpath:data-source.properties"})
-@EnableMongoRepositories(basePackages = "dbdemo.mongo.repositories")
+//@PropertySource({"classpath:data-source.properties"})
+@ConfigurationProperties(prefix = "mongo")
+@EnableMongoRepositories(basePackages = "com.step.repository")
 public class MongoConfig extends AbstractMongoConfiguration {
     @Autowired
     private Environment env;

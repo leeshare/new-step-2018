@@ -25,8 +25,8 @@ spring:
 
     # MongoDB
     mongo:
-        username: test
-        password: test
+        #username: test
+        #password: test
         host: localhost
         name: mongoDb
         port: 27017
