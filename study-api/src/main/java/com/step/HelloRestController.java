@@ -25,8 +25,8 @@ public class HelloRestController {
      * @return
      */
     @RequestMapping("/getUser")
-    User2 test(){
-        User2 user = new User2();
+    User2Test test(){
+        User2Test user = new User2Test();
         user.setId(new BigDecimal(12));
         user.setUserName("john");
         user.setSex("man");
