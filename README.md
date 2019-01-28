@@ -14,4 +14,11 @@ study-web 后台管理端，比如讲师管理、课程管理、及一些基础设置功能
 	基于 ant-design-pro
 		$ npm install
 		$ npm start
+	基于 And-admin 本地启动： 
+		$ npm run start
+
+
+mac chrome 跨域支持
+
+open -a "Google Chrome" --args --disable-web-security  --user-data-dir
 
