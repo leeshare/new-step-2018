@@ -36,12 +36,15 @@ public class SsoUser implements Serializable {
 
     //private Timestamp lastModify;
 
-    @ManyToMany(cascade = {}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {}, fetch = FetchType.LAZY)
     @JoinTable(name = "sso_user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private List<SsoRole> ssoRoles;
 
     @Transient
     private String photoFull;
+
+    @Transient
+    private String ticket;
 
     public Integer getId() {
         return id;
@@ -185,5 +188,21 @@ public class SsoUser implements Serializable {
 
     public void setSsoRoles(List<SsoRole> ssoRoles) {
         this.ssoRoles = ssoRoles;
+    }
+
+    public String getPhotoFull() {
+        return photoFull;
+    }
+
+    public void setPhotoFull(String photoFull) {
+        this.photoFull = photoFull;
+    }
+
+    public String getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(String ticket) {
+        this.ticket = ticket;
     }
 }

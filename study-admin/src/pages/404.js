@@ -1,13 +1,15 @@
-import React from 'react';
-import Link from 'umi/link';
-import { formatMessage } from 'umi/locale';
-import Exception from '@/components/Exception';
+import React from 'react'
+import { Icon } from 'antd'
+import { Page } from 'components'
+import styles from './404.less'
 
-export default () => (
-  <Exception
-    type="404"
-    linkElement={Link}
-    desc={formatMessage({ id: 'app.exception.description.404' })}
-    backText={formatMessage({ id: 'app.exception.back' })}
-  />
-);
+const Error = () => (
+  <Page inner>
+    <div className={styles.error}>
+      <Icon type="frown-o" />
+      <h1>404 Not Found</h1>
+    </div>
+  </Page>
+)
+
+export default Error

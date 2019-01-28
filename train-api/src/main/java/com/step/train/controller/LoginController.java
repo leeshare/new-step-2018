@@ -10,10 +10,7 @@ import com.step.train.service.UserService;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +24,7 @@ import java.util.Map;
 import org.springframework.util.DigestUtils;
 
 @RestController
-@RequestMapping("/api")
+//@RequestMapping("/api")
 public class LoginController {
 
     @Autowired
@@ -36,18 +33,32 @@ public class LoginController {
     private AccessLogService accessLogService;
 
     //@RequestMapping(value = "/login", method = RequestMethod.POST)
-    @RequestMapping(value = "/login")
-    public Object login(String userName, String pwd, String code) {
+    //@RequestMapping(value = "/login")
+    //public Object login(String userName, String pwd, String code)
+    //@PostMapping("/login")
+    //public Object login(@RequestParam(value = "username", required = false) String username, @RequestParam(value = "pwd", required = false) String pwd)
 
+    @PostMapping("/api/login")
+    public Object login(@RequestBody SsoUser params)
+    {
         int result = 0;
         int userId = 0; //通过用户名查到的用户Id
         byte errorNum = 0;   //登录时密码错误次数
+        String username = "", pwd = "";
+
+        if(params == null){
+            result = -1;
+        }else {
+            username = params.getUserName();
+            pwd = params.getPassword();
+        }
+
         SsoUser u = new SsoUser();
-        if(StringUtils.isEmpty(userName) || StringUtils.isEmpty(pwd) //|| StringUtils.isEmpty(code)
+        if(StringUtils.isEmpty(username) || StringUtils.isEmpty(pwd) //|| StringUtils.isEmpty(code)
                 ){
             result = -1;
         }else {
-            SsoUser user = userService.findByUserName(userName);
+            SsoUser user = userService.findByUserName(username);
             if(user != null && user.getId() > 0) {
                 userId = user.getId();
                 //验证 log
@@ -60,10 +71,17 @@ public class LoginController {
                         errorNum = (byte)tempResult;
                     String pwd_md5 = DigestUtils.md5DigestAsHex(pwd.getBytes());
                     if (pwd_md5.equalsIgnoreCase(user.getPassword())) {
-                        u.setId(user.getId());
+                        u.setId(userId);
                         u.setRealName(user.getRealName());
+                        u.setSsoRoles(user.getSsoRoles());
+
+
+
+                        String ticket = userService.addLoginTicket(userId);
+                        u.setTicket(ticket);
 
                         checkAccessLog(userId, true, true);
+
                         result = 1;
                     }else {
                         //本次登录失败

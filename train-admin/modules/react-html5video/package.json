@@ -1,0 +1,174 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "react-html5video",
+        "scope": null,
+        "escapedName": "react-html5video",
+        "name": "react-html5video",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "d:\\USEABCV2\\SourceCode\\Mobile\\Manage"
+    ]
+  ],
+  "_cnpm_publish_time": 1501091864670,
+  "_from": "react-html5video@latest",
+  "_hasShrinkwrap": false,
+  "_id": "react-html5video@2.3.0",
+  "_inCache": true,
+  "_location": "/react-html5video",
+  "_nodeVersion": "6.11.1",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/react-html5video-2.3.0.tgz_1501091863614_0.9107994411606342"
+  },
+  "_npmUser": {
+    "name": "mderrick",
+    "email": "me@mattderrick.co.uk"
+  },
+  "_npmVersion": "3.10.10",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "react-html5video",
+    "scope": null,
+    "escapedName": "react-html5video",
+    "name": "react-html5video",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npm.taobao.org/react-html5video/download/react-html5video-2.3.0.tgz",
+  "_shasum": "e7de4d40aa1b1b0300b9f79c63b14566796da736",
+  "_shrinkwrap": null,
+  "_spec": "react-html5video",
+  "_where": "d:\\USEABCV2\\SourceCode\\Mobile\\Manage",
+  "author": {
+    "name": "Matt Derrick",
+    "email": "me@mattderrick.co.uk",
+    "url": "http://mattderrick.co.uk"
+  },
+  "bugs": {
+    "url": "https://github.com/mderrick/react-html5video/issues"
+  },
+  "dependencies": {},
+  "description": "A customizeable HTML5 Video",
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.18.2",
+    "babel-jest": "^18.0.0",
+    "babel-loader": "^6.2.7",
+    "babel-plugin-transform-object-rest-spread": "^6.19.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-runtime": "^6.23.0",
+    "case-sensitive-paths-webpack-plugin": "^1.1.4",
+    "chalk": "^1.1.3",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.25.0",
+    "detect-port": "^1.0.6",
+    "enzyme": "^2.6.0",
+    "eslint": "^3.11.1",
+    "eslint-plugin-react": "^6.7.1",
+    "express": "^4.14.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "gh-pages": "^0.12.0",
+    "html-webpack-plugin": "^2.24.1",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^18.0.0",
+    "json-loader": "^0.5.4",
+    "open": "0.0.5",
+    "postcss-loader": "^1.1.1",
+    "prop-types": "^15.5.10",
+    "react": "^15.4.0",
+    "react-dom": "^15.4.0",
+    "react-hot-loader": "^3.0.0-beta.6",
+    "react-svg-loader": "^1.1.1",
+    "react-test-renderer": "^15.5.4",
+    "recompose": "^0.20.2",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.3",
+    "webpack-dev-middleware": "^1.8.4",
+    "webpack-hot-middleware": "^2.13.2"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "e7de4d40aa1b1b0300b9f79c63b14566796da736",
+    "size": 36285,
+    "noattachment": false,
+    "tarball": "http://registry.npm.taobao.org/react-html5video/download/react-html5video-2.3.0.tgz"
+  },
+  "files": [
+    "dist"
+  ],
+  "gitHead": "5b6720b6e13f30b2c6e96b4f6b79a9fa0f30fe6b",
+  "homepage": "https://github.com/mderrick/react-html5video#readme",
+  "jest": {
+    "moduleFileExtensions": [
+      "jsx",
+      "js",
+      "json"
+    ],
+    "moduleNameMapper": {
+      "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|ico|vtt)$": "<rootDir>/__mocks__/fileMock.js",
+      "^.+\\.css$": "identity-obj-proxy"
+    },
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      "^.+\\.(svg)$": "<rootDir>/__mocks__/fileTransformer.js"
+    },
+    "testPathIgnorePatterns": [
+      "<rootDir>/(build|docs|node_modules)/"
+    ],
+    "testEnvironment": "node",
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(js|jsx)$"
+  },
+  "keywords": [
+    "react-component",
+    "html5-video"
+  ],
+  "license": "MIT",
+  "main": "dist",
+  "maintainers": [
+    {
+      "name": "mderrick",
+      "email": "me@mattderrick.co.uk"
+    }
+  ],
+  "name": "react-html5video",
+  "optionalDependencies": {},
+  "peerDependencies": {
+    "react": ">=15.0.0",
+    "react-dom": "^15.4.1"
+  },
+  "publish_time": 1501091864670,
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mderrick/react-html5video.git"
+  },
+  "scripts": {
+    "build": "webpack --display-error-details",
+    "build:demo": "cd demo && webpack",
+    "clean": "rm -rf node_modules && rm -rf dist && rm -rf demo/node_modules && rm -rf demo/dist",
+    "deploy:demo": "node scripts/deploy:demo.js",
+    "i:demo": "npm run install:demo",
+    "install:demo": "cd demo && npm i",
+    "lint": "eslint ./",
+    "lint:fix": "npm run lint -- --fix",
+    "postversion": "git push && git push --tags",
+    "preinstall:demo": "npm run build",
+    "preversion": "npm run clean && npm i && npm run i:demo && npm run lint && npm run test",
+    "start": "node scripts/start.js",
+    "test": "jest --env=jsdom",
+    "test:watch": "npm run test -- --watch"
+  },
+  "version": "2.3.0"
+}
