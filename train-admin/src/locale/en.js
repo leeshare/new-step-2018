@@ -1,0 +1,75 @@
+//英文
+import enUS from 'antd/lib/locale-provider/en_US';
+
+const App = {
+  Total: 'Total ${total}',
+  Create: 'New',
+  Edit: 'Edit',
+  Save: 'Submit',
+  Delete: 'Delete',
+  View: 'View',
+  Detail: 'Detail',
+  Cancel: 'Cancel',
+  Back: 'Back',
+  Search: 'Search',
+  Select: 'Please Select',
+  All: 'All',
+  PleaseChoose: 'Please Select',
+  PleaseInput: 'Please Input Content',
+  Status: 'Status',
+  Action: 'Action',
+  OrderNo: 'Display Order',
+  Description: 'Description',
+  CreateInfo: 'Create Information',
+  UpdateInfo: 'Modify Information',
+  DeleteConfirmTitle: 'Delete Confirm',
+  DeleteConfirmContent: 'Are you sure you want to delete this data?',
+
+  dic_Status_0: 'Disable',
+  dic_Status_1: 'Enable',
+  dic_YesNo_0: 'No',
+  dic_YesNo_1: 'Yes',
+  dic_Allow_0: 'Deny',
+  dic_Allow_1: 'Allow',
+  dic_Sex_1: 'male',
+  dic_Sex_2: 'female',
+
+  Acount_login: 'user login',
+  Account_login_title: 'Account password login',
+  Qrcode_login: 'QR code login',
+  Qrcode_login_title: 'Sweep the login',
+  Qrcode_login_tips: 'Please use <a>Shenmo Smart Cloud APP</a> Scan Code Login',
+  Forget_password: 'Forgot password',
+  Forget_password_title: 'Forgot your password?',
+  Forget_password_content: 'Please email us at <a href="mail:service@shenmo.com">service@shenmo.com</a> to complete the password! ',
+  logout: 'logout',
+  login: 'login',
+  loginPending: 'login...',
+  loginFailed: 'login failed',
+  loginSuccess: 'Welcome {realName}',
+  Account: 'Account',
+  Account_tips: 'Please enter an account number',
+  Account_empty: 'The login account cannot be empty',
+  Password: 'Password',
+  Password_tips: 'Please enter a password',
+  Password_empty: 'Password cannot be empty',
+  HomePage: 'Home',
+
+  //字典管理部分
+  Dictionary: 'Dictionary',
+  DictionaryType: 'Dictionary Type',
+  DictionaryItemTitle: 'Item Name',
+  DictionaryItemValue: 'Item Value',
+  DictionaryDeleteMsgTitle: 'Are you sure you want to delete the dictionary?',
+  DictionaryDeleteMsgContent: 'Cannot be deleted if the dictionary is already in use！',
+  DictionaryItemTitleSearchPlaceholder: 'Dictionary item name or dictionary item value',
+  //角色管理
+  Role: 'Role',
+  RoleName: 'Role Name',
+}
+export default {
+  ...enUS,
+  locale: 'en',
+  //应用多语言
+  App
+};
