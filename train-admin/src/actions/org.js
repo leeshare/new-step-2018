@@ -1,11 +1,11 @@
 import api from '../api'
 
 //获取机构列表
-export function getOrganizationList(pagingSearch) {
+export function train_org_list(pagingSearch) {
   return {
-    type: 'GetOrganizationList',
+    type: 'TRAIN_ORG_LIST',
     payload: {
-      promise: api.put('/GetOrganizationList',pagingSearch)
+      promise: api.put('/train_org_list', pagingSearch)
     }
   }
 }

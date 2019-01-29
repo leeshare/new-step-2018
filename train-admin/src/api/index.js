@@ -19,7 +19,8 @@ axios.interceptors.request.use(function (config) {
   //在请求发送之前做一些事
   var token = getToken(); //window.localStorage.getItem('token') || '';
   var locale = getLocale();//语言环境
-  config.headers.common.token = token;
+  //config.headers.common.token = token;
+  config.headers.common.ticket = token;
   config.headers.common.locale = locale;
   return config;
 }, function (error) {
@@ -54,7 +55,7 @@ axios.interceptors.response.use(function (response) {
 
 // mock 数据
 var mock = new MockAdapter(mockAxios);
-//登录处理
+//登录处理 train
 mock.onPut('/login').reply(config => {
   return new Promise(function (resolve, reject) {
     //normalAxios.post('/user/AdminLogin', config.data)
@@ -66,6 +67,7 @@ mock.onPut('/login').reply(config => {
     });
   });
 });
+//从本地获取菜单  train
 mock.onGet('/menu').reply(config => {
   return new Promise(function (resolve, reject) {
     resolve([200, menus]);
@@ -80,6 +82,18 @@ mock.onGet('/menu').reply(config => {
 });
 //退出处理
 mock.onGet('/logout').reply(200, {});
+
+//机构管理
+mock.onPut('/train_org_list').reply(config => {
+  return new Promise(function (resolve, reject) {
+    normalAxios.post('/orgList', config.data).then((res) => {
+      resolve([200, res.data]);
+    }).catch((err) => {
+      resolve([500, err]);
+    });
+  });
+});
+
 
 //二维码登录URL地址获取
 mock.onPut('/GetAdminLoginQRCode').reply(config => {

@@ -102,18 +102,25 @@ class Sidebar extends React.Component {
 
         if (menu.length > 0) {
           return (item.visible && <SubMenu
-            key={'sub' + item.key} className={[item.child.length === 1 ? 'dot ' : ' ', this.state.selectedSub === 'sub' + item.key ? ' highlight' : ' ']}
-            title={<span><Icon type={item.icon} theme="twoTone" twoToneColor="#FFF"/><span className="nav-text">{item.name}</span></span>}
+              key={'sub' + item.key}
+              className={[item.child.length === 1 ? 'dot ' : ' ', this.state.selectedSub === 'sub' + item.key ? ' highlight' : ' ']}
+              title={<span><Icon type={item.icon} theme="outlined" twoToneColor="#FFF"/><span className="nav-text">{item.name}</span></span>}
           >
             {menu}
           </SubMenu>
           )
         } else {
-          return (item.visible && <Menu.Item key={'menu' + item.key} className={'menu' + item.key}>
-            {
-              item.url ? <Link to={item.url} >{item.icon && <Icon type={item.icon} theme="twoTone" twoToneColor="#FFF"/>}<span>{item.name}</span></Link> : <span>{item.icon && <Icon type={item.icon} theme="twoTone" twoToneColor="#FFF"/>}{item.name}</span>
-            }
-          </Menu.Item>
+          return (item.visible && <Menu.Item
+              key={'menu' + item.key}
+              className={'menu' + item.key}
+            >
+              {item.url ? <Link to={item.url}>
+                  {item.icon && <Icon type={item.icon} theme="outlined" twoToneColor="#FFF"/>}
+                  <span>{item.name}</span>
+                </Link> :
+                <span>{item.icon && <Icon type={item.icon} theme="outlined" twoToneColor="#FFF"/>}{item.name}</span>
+              }
+            </Menu.Item>
           )
         }
       });

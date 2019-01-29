@@ -38,7 +38,16 @@ import other_xuetang_rotation from '@/views/Rotation/XuetangManage/index';
 //广告图
 import other_linkInfo from '@/views/LinkInfo/Manage/index';
 
+//-------------2019-01-30
+//机构
+import org_list from '@/views/org/org_index';
+
+//-------------END 2019-01-30
 const adminRoutes = [
+  {
+    path: '/org/list',
+    component: org_list
+  },
   {
     path: '/System/DictionaryManage',
     component: dictionaryManage

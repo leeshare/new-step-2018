@@ -19,6 +19,7 @@ import com.step.train.model.SsoUserQo;
 import com.step.train.parameter.LinkEnum;
 import com.step.train.parameter.Operator;
 import com.step.train.parameter.PredicateBuilder;
+import com.step.train.util.MyEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -127,6 +129,38 @@ public class UserService {
         }
         LoginTicket t = JSON.parseObject(result, LoginTicket.class);
         return t;
+    }
+
+    public SsoUser getCurrentUser(String ticket){
+        LoginTicket loginTicket = getLoginTicket(ticket);
+        if(loginTicket == null){
+            return null;
+        }
+        int userId = loginTicket.getUserId();
+        if(userId <= 0){
+            return null;
+        }
+        SsoUser user = findById(userId);
+        return user;
+    }
+
+    public Boolean checkIsRoot(SsoUser user){
+        if(user == null){
+            return false;
+        }
+        List<SsoRole> roles = user.getSsoRoles();
+        if(roles == null){
+            return false;
+        }
+        Iterator iterator = roles.iterator();
+        while(iterator.hasNext()){
+            SsoRole role = (SsoRole) iterator.next();
+            if(role.getType() == MyEnum.ROOT){
+                return true;
+            }
+        }
+        return false;
+
     }
 
 }
