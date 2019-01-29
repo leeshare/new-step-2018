@@ -1,5 +1,7 @@
 package com.step.train.controller;
 
+import com.step.train.annotation.CurrentUser;
+import com.step.train.annotation.LoginRequired;
 import com.step.train.domain.entity.JsonResult;
 import com.step.train.domain.entity.Param;
 import com.step.train.domain.entity.SsoOrganization;
@@ -10,11 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/org")
 public class OrgController {
 
     @Autowired
@@ -22,8 +26,9 @@ public class OrgController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/api/orgList")
-    public Object list(@RequestBody Param param) {
+    @PostMapping("/list")
+    @LoginRequired
+    public Object list(@RequestBody Param param, @CurrentUser SsoUser user) {
         if(param == null){
             return new JsonResult<SsoOrganization>("请登录");
         }

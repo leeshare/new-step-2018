@@ -167,7 +167,7 @@ class OrgManage extends React.Component {
 
   fetch = (pagingSearch) => {
     this.setState({ loading: true })
-    this.props.fileCollectListQuery().payload.promise.then((response) => {
+    this.props.train_org_list({a: 2}).payload.promise.then((response) => {
       let data = response.payload.data;
       if (data.result === false) {
         this.setState({ loading: false })
@@ -370,7 +370,7 @@ class OrgManage extends React.Component {
   }
 }
 //表单组件 封装
-const WrappedCollectManage = Form.create()(OrgManage);
+const WrappedOrgManage = Form.create()(OrgManage);
 
 const mapStateToProps = (state) => {
   //基本字典数据
@@ -385,7 +385,7 @@ function mapDispatchToProps(dispatch) {
     fileCollectListQuery: bindActionCreators(fileCollectListQuery, dispatch),
     fileCollectSave: bindActionCreators(fileCollectSave, dispatch),
 
-    getOrganizationList: bindActionCreators(getOrganizationList, dispatch),
+    train_org_list: bindActionCreators(train_org_list, dispatch),
   };
 }
 //redux 组件 封装

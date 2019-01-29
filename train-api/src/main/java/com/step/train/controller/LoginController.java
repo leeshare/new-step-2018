@@ -24,7 +24,7 @@ import java.util.Map;
 import org.springframework.util.DigestUtils;
 
 @RestController
-//@RequestMapping("/api")
+@RequestMapping("/api/login")
 public class LoginController {
 
     @Autowired
@@ -38,7 +38,7 @@ public class LoginController {
     //@PostMapping("/login")
     //public Object login(@RequestParam(value = "username", required = false) String username, @RequestParam(value = "pwd", required = false) String pwd)
 
-    @PostMapping("/api/login")
+    @PostMapping("")
     public Object login(@RequestBody SsoUser params)
     {
         int result = 0;

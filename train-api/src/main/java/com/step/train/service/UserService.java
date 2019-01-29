@@ -131,6 +131,10 @@ public class UserService {
         return t;
     }
 
+    public void setCurrentUser(String ticket){
+
+    }
+
     public SsoUser getCurrentUser(String ticket){
         LoginTicket loginTicket = getLoginTicket(ticket);
         if(loginTicket == null){

@@ -22,6 +22,7 @@ axios.interceptors.request.use(function (config) {
   //config.headers.common.token = token;
   config.headers.common.ticket = token;
   config.headers.common.locale = locale;
+  config.data = config.data || {}
   return config;
 }, function (error) {
   //当出现请求错误是做一些事
@@ -86,7 +87,7 @@ mock.onGet('/logout').reply(200, {});
 //机构管理
 mock.onPut('/train_org_list').reply(config => {
   return new Promise(function (resolve, reject) {
-    normalAxios.post('/orgList', config.data).then((res) => {
+    normalAxios.post('/org/list', config.data).then((res) => {
       resolve([200, res.data]);
     }).catch((err) => {
       resolve([500, err]);
