@@ -29,8 +29,8 @@ module.exports = merge(baseWebpackConfig, {
       filename: 'index.html',
       template: 'index.html',
       inject: true,
-      title:'神墨教育',
-      copyright:`神墨 版权所有 © ${new Date().getFullYear()} shenmo.com`,
+      title:'培训教育',
+      copyright:`bj 版权所有 © ${new Date().getFullYear()} shenmo.com`,
     }),
     new FriendlyErrorsPlugin()
   ]

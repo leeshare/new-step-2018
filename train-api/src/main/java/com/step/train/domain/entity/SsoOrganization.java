@@ -16,10 +16,19 @@ public class SsoOrganization implements Serializable {
     private String code;
     private String name;
     private Byte orgType;
+    /**
+     * 1 启用；0 停用
+     */
     private Byte status;
     private Integer parentId;
     private String path;
+    /**
+     * 1 yes; 0 no
+     */
     private Byte isDefaultOrg;
+    /**
+     * 1 yes; 0 no
+     */
     private Byte isDelete;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdDate;

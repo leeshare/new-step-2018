@@ -26,13 +26,20 @@ export default function menu(state = initialState, action = {}) {
       var allMenus = action.payload.data;
       allMenus.filter((a) => {
         var visible = false;
-        if (!a.child) {
-          visible = true;
+        if(a.visible == false){
+          visible = false;
+        }else {
+          if (!a.child) {
+            visible = true;
+          }
+          (a.child || []).map((child) => {
+            //child.visible = (child.support || '').indexOf('pc') != -1;
+            child.visible = true;
+            visible = visible || child.visible;
+          });
         }
-        (a.child || []).map((child) => {
-          child.visible = (child.support || '').indexOf('pc') != -1;
-          visible = visible || child.visible;
-        });
+
+
         a.visible = visible;
       })
       allMenus.map((item) => {

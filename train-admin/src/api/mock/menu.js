@@ -4,17 +4,25 @@ module.exports = {
       key: 0,
       name: '首页',
       icon: 'home',
-      url: '/teach/home'
+      url: '/home'
     },
     {
       key: 1,
       name: '机构管理',
-      icon: 'user',
+      icon: 'team',
+      url: '/org/list',
+    },
+    {
+      key: 11,
+      name: 'test',
+      icon: 'team',
+      visible: false,
       child: [
         {
-          name: '课程表',
+          name: '机构列表',
           key: 101,
-          url: '/teach/schedule'
+          url: '/org/list',
+          icon: 'table'
         },
         {
           name: '教师备课',
@@ -41,14 +49,14 @@ module.exports = {
     {
       key: 2,
       name: '讲师管理',
-      icon: 'home',
-      url: '/teach/home'
+      icon: 'user',
+      url: '/teacher'
     },
     {
       key: 3,
       name: '课程管理',
-      icon: 'home',
-      url: '/teach/home'
+      icon: 'book',
+      url: '/course'
     }
   ],
 };

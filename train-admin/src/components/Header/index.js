@@ -2,7 +2,9 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Modal, Layout, Row, Col, Icon, Badge, Menu, Dropdown, Avatar, Popover } from 'antd'
+import { Modal, Layout, Row, Col, Icon,
+  Badge, Menu, Dropdown, Avatar, Popover
+} from 'antd'
 import './index.less'
 import { Link, withRouter } from 'react-router-dom'
 const { Header } = Layout;
