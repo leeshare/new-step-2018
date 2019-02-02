@@ -3,7 +3,7 @@
 module.exports = {
     //serverURL: '/API-1.0',
     //serverURL: 'http://manage-test.shenmo.com/API-1.0',
-    serverURL: 'http://localhost:80/api',
+    serverURL: 'http://localhost:8084/api',
     product: false,//false=开发模式
     extendAllMenus: 4,//菜单过少全部展开
     appName: (window.Global_AppName || '培训教育'),

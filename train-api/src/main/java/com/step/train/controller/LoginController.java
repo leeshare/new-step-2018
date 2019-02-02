@@ -39,7 +39,7 @@ public class LoginController {
     //public Object login(@RequestParam(value = "username", required = false) String username, @RequestParam(value = "pwd", required = false) String pwd)
 
     @PostMapping("")
-    public Object login(@RequestBody SsoUser params)
+    public Object login(@RequestBody(required = false) SsoUser params)
     {
         int result = 0;
         int userId = 0; //通过用户名查到的用户Id

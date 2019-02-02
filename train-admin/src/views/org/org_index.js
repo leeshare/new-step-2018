@@ -36,6 +36,7 @@ import {
   train_org_list
 } from '@/actions/org';
 
+
 class OrgManage extends React.Component {
   constructor(props) {
     super(props);
