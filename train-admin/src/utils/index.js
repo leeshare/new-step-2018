@@ -312,3 +312,16 @@ export function formatMsgTime(comparedateTime) {
 
   return timeSpanStr;
 };
+
+export function timestampToTime(timestamp){
+  var d = new Date(timestamp); //根据时间戳生成的时间对象
+  var m = d.getMonth() + 1;
+  var dd = d.getDate();
+  var date = (d.getFullYear()) + "-" +
+    (m < 10 ? ('0' + m) : m) + "-" +
+    (dd < 10 ? ('0' + dd) : dd) + " " +
+    (d.getHours()) + ":" +
+    (d.getMinutes()) + ":" +
+    (d.getSeconds());
+  return date;
+}

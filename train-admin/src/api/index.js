@@ -33,13 +33,20 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(function (response) {
   //api 调用出错的标志result=false;
   //if (!response.data.result)
-  if (response.data.state == 0)
-  {
+  if (response.data.state == 0){
     //对返回的错误进行一些处理
     return Promise.reject({ message: response.data.msg, result: false });
   }
+  if(response.data.error){
+    return Promise.reject({ message: response.data.error, result: false });
+  }
+  if(!response.data){
+    //对返回的错误进行一些处理
+    return Promise.reject({ message: '请重新登录', result: false });
+  }
   //升级为业务对象
   response.data = response.data.data || {};//兼容成功时没有数据情况
+  response.data.result = true;
   //response.data = response.data || {};//兼容成功时没有数据情况
   return response;
 }, function (error) {
@@ -88,6 +95,16 @@ mock.onGet('/logout').reply(200, {});
 mock.onPut('/train_org_list').reply(config => {
   return new Promise(function (resolve, reject) {
     normalAxios.post('/org/list', config.data).then((res) => {
+      resolve([200, res.data]);
+    }).catch((err) => {
+      resolve([500, err]);
+    });
+  });
+});
+//机构save
+mock.onPut('/train_org_save').reply(config => {
+  return new Promise(function (resolve, reject) {
+    normalAxios.post('/org/save', config.data).then((res) => {
       resolve([200, res.data]);
     }).catch((err) => {
       resolve([500, err]);

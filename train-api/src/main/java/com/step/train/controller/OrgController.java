@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -28,23 +29,52 @@ public class OrgController {
 
     @PostMapping("/list")
     @LoginRequired
-    public Object list(@RequestBody Param param, @CurrentUser SsoUser user) {
-        if(param == null){
+    public Object list(@RequestBody(required = false) Param param, @CurrentUser SsoUser currentUser) {
+        if(currentUser == null || currentUser.getId() <= 0){
             return new JsonResult<SsoOrganization>("请登录");
         }
-        String ticket = param.getTicket();
-        if(StringUtils.isEmpty(ticket)){
-            return new JsonResult<SsoOrganization>("请登录");
-        }
-        SsoUser currUser = userService.getCurrentUser(ticket);
-        if(currUser == null){
-            return new JsonResult<SsoOrganization>("请重新登录");
-        }
-        if(userService.checkIsRoot(currUser)){
+        if(userService.checkIsRoot(currentUser)){
             List<SsoOrganization> orgList =  orgService.findAll();
+            for (SsoOrganization organization : orgList) {
+                if(organization.getCreatedUserId() > 0){
+                    SsoUser createdUser = userService.findById(organization.getCreatedUserId());
+                    if(createdUser != null)
+                        organization.setCreatedUserName(createdUser.getRealName());
+                }
+                if(organization.getUpdatedUserId() > 0){
+                    SsoUser updatedUser = userService.findById(organization.getUpdatedUserId());
+                    if(updatedUser != null)
+                        organization.setUpdatedUserName(updatedUser.getRealName());
+                }
+            }
             return new JsonResult<List<SsoOrganization>>(orgList);
         }else {
             return new JsonResult<SsoOrganization>("您没有读取机构列表权限");
         }
     }
+
+    @PostMapping("/save")
+    @LoginRequired
+    public Object save(@RequestBody SsoOrganization org, @CurrentUser SsoUser currentUser) {
+        if (currentUser == null || currentUser.getId() <= 0) {
+            return new JsonResult<SsoOrganization>("请登录");
+        }
+        if (!userService.checkIsRoot(currentUser)) {
+            return new JsonResult<SsoOrganization>("您没有读取机构列表权限");
+        }
+        if (org == null) {
+            return new JsonResult<SsoOrganization>("请输入机构信息");
+        }
+        org.setUpdatedUserId(currentUser.getId());
+
+
+        String result = orgService.save(org);
+        if (StringUtils.isEmpty(result)) {
+            return new JsonResult<SsoOrganization>();
+        } else {
+            return new JsonResult<SsoOrganization>(result);
+        }
+    }
+
+
 }

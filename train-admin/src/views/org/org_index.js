@@ -1,4 +1,4 @@
-//机构列表
+//机构列表 2019-01-28
 
 import React from 'react';
 import PropTypes from 'prop-types'
@@ -21,9 +21,9 @@ import { searchFormItemLayout, searchFormItemLayout24,
   onPageIndexChange, onShowSizeChange
 } from '@/utils/componentExt';
 //工具类方法引入
-import { YSI18n, getDictionaryTitle, timestampToTime
+import { YSI18n, getDictionaryTitle, timestampToTime,
+  ellipsisText, dataBind
 } from '@/utils';
-import { _download } from '@/utils/download';
 import { serverURL, getToken } from '../../api/env';
 
 //基本字典接口方法引入
@@ -33,9 +33,10 @@ import {
   fileCollectListQuery, fileCollectSave
 } from '@/actions/file';
 import {
-  train_org_list
+  train_org_list, train_org_save
 } from '@/actions/org';
 
+import OrgView from './org_view.js';
 
 class OrgManage extends React.Component {
   constructor(props) {
@@ -45,123 +46,61 @@ class OrgManage extends React.Component {
     this.state = {
       expand: false,
       currentDataModel: null,
+      editMode: '',
       data_list: [],
-      curr_data_list: [],
+      data_list_total: 0,
       loading: false,
-      curr_file: {},
+
+      pagingSearch: { PageIndex: 1, PageSize: 30, keyword: '', status: '-1', },
+      dic_Status: [],
     };
 
-    this._download = _download.bind(this);
     //扩展方法用于本组件实例
     this.loadBizDictionary = loadBizDictionary.bind(this);
     this.onSearch = onSearch.bind(this);
-
-    (this: any).gotoFile = this.gotoFile.bind(this);
-    (this: any).filterList = this.filterList.bind(this);
-
-    (this: any).onFileDownload = this.onFileDownload.bind(this);
-    (this: any).copyUrl = this.copyUrl.bind(this);
-
-    (this: any).removeFileOrFolderFromList = this.removeFileOrFolderFromList.bind(this);
-    (this: any).collectFile = this.collectFile.bind(this);
   }
 
   componentWillMount() {
     //载入需要的字典项
-    //this.loadBizDictionary(['dic_Status']);
+    this.loadBizDictionary(['dic_Status']);
     this.onSearch();
   }
 
   //table 输出列定义
   columns = [
     {
-      title: YSI18n.get('文件名称'),
+      title: YSI18n.get('机构名称'),
       dataIndex: 'name',
-      render: (text, record) => {
-
-            let file_ico = '';
-            switch (record.file_type) {
-              case '.mp3':
-                file_ico = 'ico_mp3';
-                break;
-              case '.mp4':
-                file_ico = 'ico_mp4';
-                break;
-              case '.jpg':
-              case '.png':
-                file_ico = 'ico_png';
-                break;
-              case '.pdf':
-                file_ico = 'ico_pdf';
-                break;
-              case '.ppt':
-                file_ico = 'ico_ppt';
-                break;
-              case '.doc':
-              case '.docx':
-                file_ico = 'ico_doc';
-                break;
-              case '.zip':
-              case '.rar':
-                file_ico = 'ico_zip';
-                break;
-              case '.xls':
-              case '.xlsx':
-                file_ico = 'ico_xls';
-                break;
-              default:
-                file_ico = 'ico_other';
-                break;
-            }
-            return <Row>
-              {(record.meta_type == 'video'
-                || record.meta_type == 'picture'
-              ) ? <a onClick={() => { this.gotoFile(record) }}><span className={file_ico} />{text}</a>
-                : <span><span className={file_ico} />{text}</span>
-              }
-              {!!record.show_download &&  <a href={record.file_url} download={record.name}><Icon type='download' className='icon_button' style={{fontSize: '20px'}}  /></a>}
-              {/* {!!record.show_download && <Button icon="download" style={{ marginLeft: 10 }} onClick={() => { this.onFileDownload(record) }}></Button>} */}
-            </Row>
-
-      }
     },
     {
-      title: YSI18n.get('大小'),
-      width: 180,
-      dataIndex: 'file_size_str',
-      render: (text, record) => {
-        if (record.f_type == 'file') {
-          return <span>{text}</span>
-        }
-        else {
-          return <span>-</span>
-        }
+      title: '是否系统机构',
+      dataIndex: 'isDefaultOrg',
+      render: (text) => {
+        return text == 1 ? <span>是</span> : <span>否</span>
       }
     },
     {
       title: YSI18n.get('更新时间'),
       width: 200,
-      dataIndex: 'updatedDateStr',
+      dataIndex: 'updatedDate',
+      render: (text) => {
+        return <span>{timestampToTime(text)}</span>
+      }
+    },
+    {
+      title: '状态',
+      render: (text, record, index) => {
+        return getDictionaryTitle(this.state.dic_Status, record.status);
+      }
     },
     {
       title: YSI18n.get('操作'),
       width: 100,
       render: (text, record) => {
-        let popmenu = <div className='block_popmentu'>
-          <a href={record.file_url} download={record.name}>下载</a>
-          <a onClick={() => this.copyUrl(record)}>复制链接</a>
-          <a onClick={() => this.collectFile(record)}>取消收藏</a>
-        </div>
-
-        let block_opertion =
-          <Popover placement="bottom" title={null} content={popmenu} trigger="click">
-            <Icon type='ellipsis' className='ico_ellipsis' />
-          </Popover>
-
-        return (
-          block_opertion
-        )
-
+        return <span>
+          <a onClick={() => { this.onLookView('Edit', record) }}>编辑</a> |
+          <a onClick={() => { this.onLookView('Delete', record) }}>删除</a>
+        </span>
       }
     },
   ];
@@ -169,35 +108,22 @@ class OrgManage extends React.Component {
   fetch = (pagingSearch) => {
     this.setState({ loading: true })
     this.props.train_org_list({a: 2}).payload.promise.then((response) => {
-      let data = response.payload.data;
-      if (data.result === false) {
-        this.setState({ loading: false })
-        message.error(data.message);
-      }
-      else {
-        var _curr_list = [];
-        data.data_list.map(a => {
+      let data = response.payload.data || [];
+      if(data.result){
+        data.map(a => {
           a.key = a.id;
-          _curr_list.push(a);
         })
         this.setState({
           loading: false,
-          //data_list: data.data_list,
-          curr_data_list: _curr_list,
-        })
+          data_list: data
+        });
+      }else {
+        message.error(data.message);
+        this.setState({ loading: false });
       }
-    })
-  }
-
-  //播放文件
-  gotoFile(record) {
-    if (!record) {
-      message.error('没有选择文件');
-      return;
-    }
-    this.setState({
-      curr_file: record,
-      show_modal: true
+    }).catch(error => {
+      message.error(error.message);
+      this.setState({ loading: false });
     })
   }
 
@@ -212,161 +138,155 @@ class OrgManage extends React.Component {
     });
   }
 
-  //搜索
-  filterList(value) {
-    var curr_folder = this.state.curr_folder;
-    if (!curr_folder) {
-      return;
-    }
-    var currs = [];
-    if (!value) {
-      //使用
-      var root_id = curr_folder.id;
-      curr_folder.folder_list.map(d => {
-        if (d.parent_id == root_id) {
-          d.key = d.id;
-          currs.push(d);
-        }
-      });
-      var index = currs.length > 0 ? currs.length : 0;
-      curr_folder.file_list.map((d, i) => {
-        if (d.parent_id == root_id) {
-          d.key = d.id;
-          currs.push(d);
-        }
-      });
-    } else {
-      var alls = this.state.data_list;
-      curr_folder.folder_list.map(d => {
-        if (d.name.indexOf(value) >= 0) {
-          d.key = d.id;
-          currs.push(d);
-        }
-      });
-      var index = currs.length > 0 ? currs.length : 0;
-      curr_folder.file_list.map((d, i) => {
-        if (d.name.indexOf(value) >= 0) {
-          d.key = d.id;
-          currs.push(d);
-        }
-      });
-    }
-
-    this.setState({
-      curr_data_list: currs
-    })
+  //搜索条件
+  getFields() {
+      const count = this.state.expand ? 10 : 6;
+      const { getFieldDecorator } = this.props.form;
+      const formItemLayout = {
+          labelCol: { span: 10 },
+          wrapperCol: { span: 14 },
+      };
+      const children = [];
+      children.push(
+          <Col span={8}>
+              <FormItem {...formItemLayout} label={'机构'} >
+                  {getFieldDecorator('Keyword', { initialValue: this.state.pagingSearch.Keyword })(
+                      <Input placeholder={'机构名称模糊搜索'} />
+                  )}
+              </FormItem>
+          </Col>
+      );
+      children.push(
+          <Col span={8}>
+              <FormItem
+                  {...formItemLayout}
+                  label="状态"
+              >
+                  {getFieldDecorator('Status', { initialValue: this.state.pagingSearch.Status })(
+                      <Select>
+                          <Option value="-1">全部</Option>
+                          {this.state.dic_Status.map((item) => {
+                              return <Option value={item.value}>{item.title}</Option>
+                          })}
+                      </Select>
+                  )}
+              </FormItem>
+          </Col>
+      );
+      let filedCount = this.state.expand ? children.length : 3;
+      return children.slice(0, filedCount);
   }
-  //下载文件
-  onFileDownload = (record) => {
-    var that = this;
-    if (record && record.f_type == 'file') {
-      try {
+  toggle = () => {
+    const { expand } = this.state;
+    this.setState({ expand: !expand });
+  }
 
-        var url = record.file_url;
-        var name = record.name;
-        var x = new XMLHttpRequest();
-        x.open("GET", url, true);
-        x.responseType = 'blob';
-        x.onload = function (e) {
-          that._download(x.response, name, "application/file");
+  onViewCallback = (dataModel) => {
+    if(!dataModel) {
+      this.setState({ currentDataModel: null, editMode: 'Manage' })
+    }else {
+      this.props.train_org_save(dataModel).payload.promise.then((response) => {
+        let data = response.payload.data || {};
+        if (data.result === true) {
+          this.onSearch();
+          //进入管理页
+          this.onLookView("Manage", null);
         }
-        x.send();
-
-      } catch (e) {
-
-      }
-      return false;
+        else {
+          message.error(data.message);
+        }
+      })
     }
   }
-  copyUrl(record) {
-    //alert(record.file_url)
-    copy(record.file_url);
-    message.success('复制成功，如果失败，请在输入框内手动复制.');
-  }
-  collectFile(record) {
-    this.props.fileCollectSave({fileId: record.id, isDel: true}).payload.promise.then((response) => {
-      let data = response.payload.data;
-      if (data.result === false) {
-        this.setState({ loading: false })
-        message.error(data.message);
-      } else {
-        message.success("取消收藏成功");
-        this.removeFileOrFolderFromList(record);
-      }
-    })
-  }
 
-  //-----------------------------操作某一项到当前列表中（新增/修改/删除）
-  removeFileOrFolderFromList(record) {
-    var id = record.id;
-    var currs = this.state.curr_data_list || [];
-    for (var i = 0; i < currs.length; i++) {
-      if (currs[i].id == id) {
-        currs.splice(i, 1);
-        break;
-      }
-    }
 
-    this.setState({
-      curr_data_list: currs,
-      //data_list: alls,
-    })
-  }
-  //-----------------------------END 操作某一项到当前列表中（新增/修改/删除）
+  //处理分页事件
+  onPageIndexChange = (page, pageSize) => {
+      let pagingSearch = this.state.pagingSearch;
+      pagingSearch.PageIndex = page;
+      this.setState({ pagingSearch });
+      setTimeout(() => {
+          //重新查找
+          this.onSearch();
+      }, 100);
+  };
+  //处理调整页面大小
+  onShowSizeChange = (current, size) => {
+      let pagingSearch = this.state.pagingSearch;
+      pagingSearch.PageSize = size;
+      pagingSearch.PageIndex = 1;//重置到第一页
+      this.setState({ pagingSearch });
+      setTimeout(() => {
+          //重新查找
+          this.onSearch();
+      }, 100);
+  };
+  //浏览视图
+  onLookView = (op, item) => {
+      this.setState({
+          editMode: op,//编辑模式
+          currentDataModel: item,//编辑对象
+      });
+  };
 
   //渲染，根据模式不同控制不同输出
   render() {
     var that = this;
     let block_content = <div></div>
+    switch (this.state.editMode) {
+      case 'Create':
+      case 'Edit':
+      case 'View':
+      case 'Delete':
+        block_content = <OrgView viewCallback={this.onViewCallback} {...this.state} />
+        break;
+      case 'Manage':
+      default:
+        block_content = (
+          <div>
+            <Form className="search-form">
+              <Row gutter={40}>
+                {this.getFields()}
+              </Row>
+              <Row>
+                <Col span={24} style={{ textAlign: 'right' }}>
+                  <Button type="primary" icon="search" onClick={this.onSearch}>查询</Button>
+                  <Button style={{ marginLeft: 8 }} onClick={() => this.onLookView('Create') } icon="plus">新增机构</Button>
+                  <a style={{ marginLeft: 8, fontSize: 12 }} onClick={this.toggle}>
+                    更多 <Icon type={this.state.expand ? 'up' : 'down'} />
+                  </a>
+                </Col>
+              </Row>
+            </Form>
+            <div className="search-result-list">
+              <Table
+                  loading={this.state.loading}
+                  pagination={false}
+                  columns={this.columns} //列定义
+                  dataSource={this.state.data_list}//数据
+              />
+              <div className="search-paging">
+                  <Row>
+                      <Col span={8}>
+                      </Col>
+                      <Col span={16} className={'search-paging-control'}>
+                          <Pagination showSizeChanger
+                              current={this.state.pagingSearch.PageIndex}
+                              defaultPageSize={this.state.pagingSearch.PageSize}
+                              onShowSizeChange={this.onShowSizeChange}
+                              onChange={this.onPageIndexChange}
+                              showTotal={(total) => { return `共${total}条数据`; }}
+                              total={this.state.data_list_total} />
+                      </Col>
+                  </Row>
+              </div>
+              </div>
+          </div>
+        )
+
+    }
+
     let token = getToken();
-    let functionType = 'DepartFiles';
-    let folderId = this.state.curr_id;
-
-    block_content = (
-      <div>
-        <Form className="search-form">
-          <Row>
-            <Col span={24} style={{ textAlign: 'left' }}>
-              <span>文件收藏</span>
-            </Col>
-          </Row>
-        </Form>
-        <div className="search-result-list">
-          <Table
-            loading={this.state.loading}
-            pagination={false}
-            columns={this.columns} //列定义
-            dataSource={this.state.curr_data_list}//数据
-          />
-        </div>
-        <Modal
-          title={this.state.curr_file.name}
-          visible={this.state.show_modal}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-          width={'55%'}
-          footer={null}
-        >
-          {this.state.curr_file.meta_type == 'picture' &&
-            <img src={this.state.curr_file.file_url} style={{ width: '100%', height: 'auto' }} />
-          }
-
-          {this.state.curr_file.meta_type == 'video' &&
-            <Video key={`video_${this.state.curr_file.id}`}
-              controls={['PlayPause', 'Seek', 'Time', 'Volume', 'Fullscreen']}
-              onCanPlay={this.onVideoLoaded}
-              onCanPlayThrough={this.onVideoLoaded}
-              onPlaying={() => { this.setState({ videoError: '' }) }}
-              onError={this.onVideoError}
-            >
-              <source src={this.state.curr_file.file_url} type="video/mp4" />
-            </Video>
-          }
-
-        </Modal>
-        <iframe id="ifile" style={{ display: 'none' }}></iframe>
-      </div>
-    );
     return block_content;
   }
 }
@@ -387,6 +307,7 @@ function mapDispatchToProps(dispatch) {
     fileCollectSave: bindActionCreators(fileCollectSave, dispatch),
 
     train_org_list: bindActionCreators(train_org_list, dispatch),
+    train_org_save: bindActionCreators(train_org_save, dispatch),
   };
 }
 //redux 组件 封装

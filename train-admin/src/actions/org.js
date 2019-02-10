@@ -10,11 +10,11 @@ export function train_org_list(pagingSearch) {
   }
 }
 //保存机构信息
-export function saveOrganizationInfo(orgInfo) {
+export function train_org_save(orgInfo) {
   return {
-    type: 'SaveOrganizationInfo',
+    type: 'TRAIN_ORG_SAVE',
     payload: {
-      promise: api.put('/SaveOrganizationInfo',orgInfo)
+      promise: api.put('/train_org_save',orgInfo)
     }
   }
 }

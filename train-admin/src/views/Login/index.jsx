@@ -101,7 +101,7 @@ class Login extends React.Component {
             message.error(res.payload.data.message);
             return;
           }
-          message.success(YSI18n.get('loginSuccess').replace('{realName}', res.payload.data.name));
+          message.success(YSI18n.get('loginSuccess').replace('{realName}', res.payload.data.realName));
           this.props.history.replace('/');
         }).catch(err => {
           this.setState({

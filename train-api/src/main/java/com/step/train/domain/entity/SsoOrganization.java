@@ -15,6 +15,9 @@ public class SsoOrganization implements Serializable {
     private Integer id;
     private String code;
     private String name;
+    /**
+     * 暂无用
+     */
     private Byte orgType;
     /**
      * 1 启用；0 停用
@@ -36,6 +39,12 @@ public class SsoOrganization implements Serializable {
     private Date updatedDate;
     private Integer createdUserId;
     private Integer updatedUserId;
+    private String remark;
+
+    @Transient
+    private String createdUserName;
+    @Transient
+    private String updatedUserName;
 
     public Integer getId() {
         return id;
@@ -140,4 +149,29 @@ public class SsoOrganization implements Serializable {
     public void setUpdatedUserId(Integer updatedUserId) {
         this.updatedUserId = updatedUserId;
     }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getCreatedUserName() {
+        return createdUserName;
+    }
+
+    public void setCreatedUserName(String createdUserName) {
+        this.createdUserName = createdUserName;
+    }
+
+    public String getUpdatedUserName() {
+        return updatedUserName;
+    }
+
+    public void setUpdatedUserName(String updatedUserName) {
+        this.updatedUserName = updatedUserName;
+    }
+
 }
