@@ -28,4 +28,5 @@ public interface SsoUserRepository
     @Query("SELECT u FROM SsoUser u WHERE u.isDelete = 0 AND u.id = ?1")
     SsoUser findById(int id);
 
+
 }

@@ -26,6 +26,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -164,6 +165,17 @@ public class UserService {
             }
         }
         return false;
+
+    }
+
+    @Transactional
+    public String save(SsoUser user){
+
+        //注册用户
+
+        //添加用户角色 sso_user_role
+
+        //根据推荐用户，添加 用户层级表 user_level
 
     }
 

@@ -34,6 +34,11 @@ public class SsoUser implements Serializable {
     private Integer createdUserId;
     private Integer updatedUserId;
 
+    /**
+     * 用户所属机构（root除外，普通用户除外）
+     */
+    private Integer orgId;
+
     //private Timestamp lastModify;
 
     @ManyToMany(cascade = {}, fetch = FetchType.LAZY)
@@ -45,6 +50,17 @@ public class SsoUser implements Serializable {
 
     @Transient
     private String ticket;
+
+    /**
+     * 推荐用户Id
+     */
+    @Transient
+    private Integer recommendUserId;
+
+    /**
+     * 用户角色类型
+     */
+    private Integer roleType;
 
     public Integer getId() {
         return id;
@@ -204,5 +220,29 @@ public class SsoUser implements Serializable {
 
     public void setTicket(String ticket) {
         this.ticket = ticket;
+    }
+
+    public Integer getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Integer orgId) {
+        this.orgId = orgId;
+    }
+
+    public Integer getRecommendUserId() {
+        return recommendUserId;
+    }
+
+    public void setRecommendUserId(Integer recommendUserId) {
+        this.recommendUserId = recommendUserId;
+    }
+
+    public Integer getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(Integer roleType) {
+        this.roleType = roleType;
     }
 }
