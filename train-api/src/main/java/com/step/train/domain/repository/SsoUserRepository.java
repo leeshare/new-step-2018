@@ -29,6 +29,6 @@ public interface SsoUserRepository
     SsoUser findById(int id);
 
     @Query("SELECT u FROM SsoUser u WHERE u.isDelete = 0 AND (u.roleType = ?1 OR 0 = ?1)")
-    List<SsoUser> find(int roleType);
+    List<SsoUser> find(byte roleType);
 
 }

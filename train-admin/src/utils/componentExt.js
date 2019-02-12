@@ -36,6 +36,7 @@ export function loadBizDictionary(dicTypes: Array) {
     if (!findItem && item != 'dic_Status' && item != 'dic_YesNo'
       && item != 'dic_Allow' && item != 'dic_OrgType'
       && item != 'dic_sex'
+      && item != 'dic_role'
     ) {//状态字典默认不提供，需要虚拟
       needLoadDicTypes.push(item);
       findItem = [];//提前占位，等待服务端加载更新
@@ -51,6 +52,9 @@ export function loadBizDictionary(dicTypes: Array) {
     }
     else if (item == 'dic_Sex') {
       findItem = [{ title: YSI18n.get('dic_Sex_1'), value: '1', state: 1 }, { title: YSI18n.get('dic_Sex_2'), value: '2', state: 1 }]
+    }
+    else if (item == 'dic_role') {
+      findItem = [{ title: '管理员', value: '1', state: 1 }, { title: '机构管理员', value: '2', state: 1 }, { title: '教师', value: '3', state: 1 }, { title: '普通用户', value: '4', state: 1 }]
     }
     //动态设置属性值
     eval(`stateDicTypes.${item}=findItem`);

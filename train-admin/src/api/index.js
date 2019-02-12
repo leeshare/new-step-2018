@@ -111,6 +111,26 @@ mock.onPut('/train_org_save').reply(config => {
     });
   });
 });
+//用户管理
+mock.onPut('/train_user_list').reply(config => {
+  return new Promise(function (resolve, reject) {
+    normalAxios.post('/user/list', config.data).then((res) => {
+      resolve([200, res.data]);
+    }).catch((err) => {
+      resolve([500, err]);
+    });
+  });
+});
+//用户save
+mock.onPut('/train_user_save').reply(config => {
+  return new Promise(function (resolve, reject) {
+    normalAxios.post('/user/save', config.data).then((res) => {
+      resolve([200, res.data]);
+    }).catch((err) => {
+      resolve([500, err]);
+    });
+  });
+});
 
 
 //二维码登录URL地址获取

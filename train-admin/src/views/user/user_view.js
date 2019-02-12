@@ -1,4 +1,4 @@
-//机构详情 2019-02-03
+//用户详情 2019-02-12
 
 import React from 'react';
 import PropTypes from 'prop-types'
@@ -20,6 +20,9 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
 const { TextAre, Search } = Input;
+
+import { train_org_list } from '@/actions/org';
+
 const btnformItemLayout = {
     wrapperCol: { span: 24 },
 };
@@ -34,18 +37,43 @@ editMode [Create/Edit/View/Delete]
 currentDataModel [数据模型]
 viewCallback [回调]
 */
-class OrgView extends React.Component {
+class UserView extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             dataModel: props.currentDataModel || { isDefaultOrg: 0, status: 1, id: 0 },//数据模型
             disabled: false,
             loading: false,
+            orgList: [],
         };
     }
 
     componentWillMount() {
-
+      this.getOrgData();
+    }
+    getOrgData = () => {
+      this.props.train_org_list().payload.promise.then((response) => {
+        let data = response.payload.data || [];
+        var list = [];
+        if(data.result){
+          data.map(a => {
+            list.push({
+              value: a.id,
+              title: a.name
+            })
+          })
+          this.setState({
+            loading: false,
+            orgList: list
+          });
+        }else {
+          message.error(data.message);
+          this.setState({ loading: false });
+        }
+      }).catch(error => {
+        message.error(error.message);
+        this.setState({ loading: false });
+      })
     }
     onCancel = () => {
         this.props.viewCallback();
@@ -95,6 +123,12 @@ class OrgView extends React.Component {
             }
         })
     }*/
+    onOrgChange = (e) => {
+      if(e){
+        
+      }
+
+    }
     //标题
     getTitle() {
         let op = getViewEditModeTitle(this.props.editMode);
@@ -142,12 +176,12 @@ class OrgView extends React.Component {
                     <Form>
                         <FormItem
                             {...formItemLayout}
-                            label="机构名称"
+                            label="用户姓名"
                         >
-                            {getFieldDecorator('name', {
-                                initialValue: this.state.dataModel.name,
+                            {getFieldDecorator('realName', {
+                                initialValue: this.state.dataModel.realName,
                                 rules: [{
-                                    required: true, message: '请输入机构名称!',
+                                    required: true, message: '请输入用户姓名!',
                                 }],
                             })(
                                 <Input />
@@ -155,28 +189,43 @@ class OrgView extends React.Component {
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
-                            label="机构编号"
+                            label="用户名"
                         >
-                            {getFieldDecorator('code', {
-                                initialValue: this.state.dataModel.code,
+                            {getFieldDecorator('userName', {
+                                initialValue: this.state.dataModel.userName,
                                 rules: [{
-                                    required: true, message: '请输入机构编号!',
+                                    required: true, message: '请输入用户名!',
                                 }],
                             })(
                                 <Input />
                                 )}
                         </FormItem>
+                        {this.props.editMode == 'Create' && <FormItem
+                            {...formItemLayout}
+                            label="密码"
+                        >
+                            {getFieldDecorator('password', {
+                                initialValue: this.state.dataModel.password,
+                                rules: [{
+                                    required: true, message: '请输入密码!',
+                                }],
+                            })(
+                                <Input type="password" placeholder="输入密码"/>
+                                )}
+                        </FormItem>}
                         <FormItem
                             {...formItemLayout}
-                            label="是否默认机构"
+                            label="角色"
                         >
-                            {getFieldDecorator('isDefaultOrg', {
-                                initialValue: dataBind(this.state.dataModel.isDefaultOrg),
+                            {getFieldDecorator('roleType', {
+                                initialValue: dataBind(this.state.dataModel.roleType),
                             }
                             )(
                                 <RadioGroup size="large">
-                                    <RadioButton value="1">是</RadioButton>
-                                    <RadioButton value="0">否</RadioButton>
+                                    <RadioButton value="1">管理员</RadioButton>
+                                    <RadioButton value="2">机构管理员</RadioButton>
+                                    <RadioButton value="3">教师</RadioButton>
+                                    <RadioButton value="4">普通用户</RadioButton>
                                 </RadioGroup>
                                 )}
                         </FormItem>
@@ -196,16 +245,18 @@ class OrgView extends React.Component {
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
-                            label="机构简介"
+                            label="所属机构"
                         >
-                            {getFieldDecorator('remark', {
-                                initialValue: this.state.dataModel.remark,
-                                rules: [{
-                                    required: false, message: '备注!',
-                                }]
-                            })(
-                                <TextArea rows={5} />
-                                )}
+                            {getFieldDecorator('orgId', {
+                                initialValue: dataBind(this.state.dataModel.orgId),
+                            }
+                            )(
+                              <Select defaultValue="无" style={{ width: 120 }} onChange={this.onOrgChange}>
+                                {this.state.orgList.map((item) => {
+                                  return <Option value={item.value}>{item.title}</Option>
+                                })}
+                              </Select>
+                            )}
                         </FormItem>
                         {this.renderBtnControl()}
                     </Form>
@@ -218,27 +269,21 @@ class OrgView extends React.Component {
                     <Form>
                         <FormItem
                             {...formItemLayout}
-                            label="机构名称"
+                            label="用户姓名"
                         >
-                            <span className="ant-form-text" >{this.state.dataModel.name}</span>
+                            <span className="ant-form-text" >{this.state.dataModel.realName}</span>
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
-                            label="机构编号"
+                            label="用户名"
                         >
-                            <span className="ant-form-text" >{this.state.dataModel.code}</span>
+                            <span className="ant-form-text" >{this.state.dataModel.userName}</span>
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
-                            label="是否默认机构"
+                            label="角色"
                         >
-                            <span className="ant-form-text" >{getDictionaryTitle(this.props.dic_YesNo, this.state.dataModel.isDefaultOrg)}</span>
-                        </FormItem>
-                        <FormItem
-                            {...formItemLayout}
-                            label='机构简介'
-                        >
-                            <span className="ant-form-text" dangerouslySetInnerHTML={{ __html: convertTextToHtml(this.state.dataModel.remark) }}></span>
+                            <span className="ant-form-text" >{getDictionaryTitle(this.props.dic_role, this.state.dataModel.roleType)}</span>
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
@@ -277,13 +322,15 @@ class OrgView extends React.Component {
     }
 }
 
-const WrappedOrgView = Form.create()(OrgView);
+const WrappedUserView = Form.create()(UserView);
 
 const mapStateToProps = (state) => {
     return {}
 };
 
 function mapDispatchToProps(dispatch) {
-    return {};
+    return {
+      train_org_list: bindActionCreators(train_org_list, dispatch),
+    };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(WrappedOrgView);
+export default connect(mapStateToProps, mapDispatchToProps)(WrappedUserView);

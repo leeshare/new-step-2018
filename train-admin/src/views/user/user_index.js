@@ -33,8 +33,8 @@ import {
   fileCollectListQuery, fileCollectSave
 } from '@/actions/file';
 import {
-  train_org_list, train_org_save
-} from '@/actions/org';
+  train_user_list, train_user_save
+} from '@/actions/user';
 
 import UserView from './user_view.js';
 
@@ -51,8 +51,11 @@ class UserManage extends React.Component {
       data_list_total: 0,
       loading: false,
 
-      pagingSearch: { PageIndex: 1, PageSize: 30, keyword: '', status: '-1', },
+      pagingSearch: {
+        page: 1, size: 30, keyword: '', status: '-1', roleType: 0
+      },
       dic_Status: [],
+      dic_role: [],
     };
 
     //扩展方法用于本组件实例
@@ -62,27 +65,32 @@ class UserManage extends React.Component {
 
   componentWillMount() {
     //载入需要的字典项
-    this.loadBizDictionary(['dic_Status']);
+    this.loadBizDictionary(['dic_Status', 'dic_role']);
     this.onSearch();
   }
 
   //table 输出列定义
   columns = [
     {
-      title: YSI18n.get('机构名称'),
-      dataIndex: 'name',
+      title: YSI18n.get('用户名称'),
+      dataIndex: 'realName',
     },
     {
-      title: '是否系统机构',
-      dataIndex: 'isDefaultOrg',
-      render: (text) => {
-        return text == 1 ? <span>是</span> : <span>否</span>
+      title: '账号',
+      dataIndex: 'userName'
+    },
+    {
+      title: '角色类型',
+      dataIndex: 'roleType',
+      render: (text, record) => {
+        //return text == 1 ? <span>启用</span> : <span>停用</span>
+        return getDictionaryTitle(this.state.dic_role, record.roleType);
       }
     },
     {
-      title: YSI18n.get('更新时间'),
+      title: YSI18n.get('创建时间'),
       width: 200,
-      dataIndex: 'updatedDate',
+      dataIndex: 'createdDate',
       render: (text) => {
         return <span>{timestampToTime(text)}</span>
       }
@@ -107,15 +115,17 @@ class UserManage extends React.Component {
 
   fetch = (pagingSearch) => {
     this.setState({ loading: true })
-    this.props.train_org_list({a: 2}).payload.promise.then((response) => {
-      let data = response.payload.data || [];
+    this.props.train_user_list(pagingSearch).payload.promise.then((response) => {
+      let data = response.payload.data || {};
       if(data.result){
-        data.map(a => {
+        data.list.map(a => {
           a.key = a.id;
         })
         this.setState({
           loading: false,
-          data_list: data
+          data_list: data.list,
+          data_list_total: data.total,
+          data_has_next: data.hasNextPage,
         });
       }else {
         message.error(data.message);
@@ -149,9 +159,26 @@ class UserManage extends React.Component {
       const children = [];
       children.push(
           <Col span={8}>
-              <FormItem {...formItemLayout} label={'机构'} >
-                  {getFieldDecorator('Keyword', { initialValue: this.state.pagingSearch.Keyword })(
-                      <Input placeholder={'机构名称模糊搜索'} />
+              <FormItem {...formItemLayout} label={'用户名'} >
+                  {getFieldDecorator('keyword', { initialValue: this.state.pagingSearch.keyword })(
+                      <Input placeholder={'用户名模糊搜索'} />
+                  )}
+              </FormItem>
+          </Col>
+      );
+      children.push(
+          <Col span={8}>
+              <FormItem
+                  {...formItemLayout}
+                  label="角色"
+              >
+                  {getFieldDecorator('roleType', { initialValue: this.state.pagingSearch.roleType })(
+                      <Select>
+                          <Option value="-1">全部</Option>
+                          {this.state.dic_role.map((item) => {
+                              return <Option value={item.value}>{item.title}</Option>
+                          })}
+                      </Select>
                   )}
               </FormItem>
           </Col>
@@ -162,7 +189,7 @@ class UserManage extends React.Component {
                   {...formItemLayout}
                   label="状态"
               >
-                  {getFieldDecorator('Status', { initialValue: this.state.pagingSearch.Status })(
+                  {getFieldDecorator('status', { initialValue: this.state.pagingSearch.status })(
                       <Select>
                           <Option value="-1">全部</Option>
                           {this.state.dic_Status.map((item) => {
@@ -185,7 +212,7 @@ class UserManage extends React.Component {
     if(!dataModel) {
       this.setState({ currentDataModel: null, editMode: 'Manage' })
     }else {
-      this.props.train_org_save(dataModel).payload.promise.then((response) => {
+      this.props.train_user_save(dataModel).payload.promise.then((response) => {
         let data = response.payload.data || {};
         if (data.result === true) {
           this.onSearch();
@@ -203,7 +230,7 @@ class UserManage extends React.Component {
   //处理分页事件
   onPageIndexChange = (page, pageSize) => {
       let pagingSearch = this.state.pagingSearch;
-      pagingSearch.PageIndex = page;
+      pagingSearch.page = page;
       this.setState({ pagingSearch });
       setTimeout(() => {
           //重新查找
@@ -213,8 +240,8 @@ class UserManage extends React.Component {
   //处理调整页面大小
   onShowSizeChange = (current, size) => {
       let pagingSearch = this.state.pagingSearch;
-      pagingSearch.PageSize = size;
-      pagingSearch.PageIndex = 1;//重置到第一页
+      pagingSearch.size = size;
+      pagingSearch.page = 1;//重置到第一页
       this.setState({ pagingSearch });
       setTimeout(() => {
           //重新查找
@@ -251,7 +278,7 @@ class UserManage extends React.Component {
               <Row>
                 <Col span={24} style={{ textAlign: 'right' }}>
                   <Button type="primary" icon="search" onClick={this.onSearch}>查询</Button>
-                  <Button style={{ marginLeft: 8 }} onClick={() => this.onLookView('Create') } icon="plus">新增机构</Button>
+                  <Button style={{ marginLeft: 8 }} onClick={() => this.onLookView('Create') } icon="plus">新增用户</Button>
                   <a style={{ marginLeft: 8, fontSize: 12 }} onClick={this.toggle}>
                     更多 <Icon type={this.state.expand ? 'up' : 'down'} />
                   </a>
@@ -271,8 +298,8 @@ class UserManage extends React.Component {
                       </Col>
                       <Col span={16} className={'search-paging-control'}>
                           <Pagination showSizeChanger
-                              current={this.state.pagingSearch.PageIndex}
-                              defaultPageSize={this.state.pagingSearch.PageSize}
+                              current={this.state.pagingSearch.page}
+                              defaultPageSize={this.state.pagingSearch.size}
                               onShowSizeChange={this.onShowSizeChange}
                               onChange={this.onPageIndexChange}
                               showTotal={(total) => { return `共${total}条数据`; }}
@@ -306,8 +333,8 @@ function mapDispatchToProps(dispatch) {
     fileCollectListQuery: bindActionCreators(fileCollectListQuery, dispatch),
     fileCollectSave: bindActionCreators(fileCollectSave, dispatch),
 
-    train_org_list: bindActionCreators(train_org_list, dispatch),
-    train_org_save: bindActionCreators(train_org_save, dispatch),
+    train_user_list: bindActionCreators(train_user_list, dispatch),
+    train_user_save: bindActionCreators(train_user_save, dispatch),
   };
 }
 //redux 组件 封装
