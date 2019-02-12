@@ -52,7 +52,7 @@ class UserManage extends React.Component {
       loading: false,
 
       pagingSearch: {
-        page: 1, size: 30, keyword: '', status: '-1', roleType: 0
+        page: 1, size: 20, keyword: '', status: '-1', roleType: '0'
       },
       dic_Status: [],
       dic_role: [],
@@ -174,7 +174,7 @@ class UserManage extends React.Component {
               >
                   {getFieldDecorator('roleType', { initialValue: this.state.pagingSearch.roleType })(
                       <Select>
-                          <Option value="-1">全部</Option>
+                          <Option value="0">全部</Option>
                           {this.state.dic_role.map((item) => {
                               return <Option value={item.value}>{item.title}</Option>
                           })}

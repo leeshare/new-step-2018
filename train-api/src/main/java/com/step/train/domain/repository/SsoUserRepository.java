@@ -28,7 +28,12 @@ public interface SsoUserRepository
     @Query("SELECT u FROM SsoUser u WHERE u.isDelete = 0 AND u.id = ?1")
     SsoUser findById(int id);
 
-    @Query("SELECT u FROM SsoUser u WHERE u.isDelete = 0 AND (u.roleType = ?1 OR 0 = ?1)")
-    List<SsoUser> find(byte roleType);
+    @Query(nativeQuery = true, value = "SELECT COUNT(*) FROM sso_user u WHERE u.is_delete = 0 AND (u.role_type = ?1 OR 0 = ?1) ")
+    int findCount(byte roleType);
+
+    //@Query("SELECT u FROM SsoUser u WHERE u.isDelete = 0 AND (u.roleType = ?1 OR 0 = ?1)")
+    //List<SsoUser> find(byte roleType);
+    @Query(nativeQuery = true, value = "SELECT u.* FROM sso_user u WHERE u.is_delete = 0 AND (u.role_type = ?3 OR 0 = ?3) LIMIT ?2 OFFSET ?1 ")
+    List<SsoUser> find(int offset, int limit, byte roleType);
 
 }

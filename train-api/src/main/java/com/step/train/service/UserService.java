@@ -45,7 +45,7 @@ public class UserService {
     private SsoUserRepository ssoUserRepository;
     @Autowired
     private SsoRoleRepository ssoRoleRepository;
-
+    @Autowired
     private UserLevelRepository userLevelRepository;
 
     @Autowired
@@ -76,9 +76,17 @@ public class UserService {
             list.add(all.next());
         }*/
 
-        PageHelper.startPage(ssoUserQo.getPage(), ssoUserQo.getSize());
-        List<SsoUser> list = ssoUserRepository.find(ssoUserQo.getRoleType());
+        int page = ssoUserQo.getPage();
+        int size = ssoUserQo.getSize();
+        //PageHelper.startPage(page, size);
+        int offset = (page - 1) * size;
+        int limit = size;
+        //List<SsoUser> list = ssoUserRepository.find(ssoUserQo.getRoleType());
+        int total = ssoUserRepository.findCount(ssoUserQo.getRoleType());
+        List<SsoUser> list = ssoUserRepository.find(offset, size, ssoUserQo.getRoleType());
         PageInfo<SsoUser> pageInfo = new PageInfo<>(list);
+        pageInfo.setTotal(total);
+        pageInfo.setHasNextPage(page * size < total);
         return pageInfo;
 
     }
@@ -226,6 +234,7 @@ public class UserService {
         if(user.getId() <= 0){
             //根据推荐用户，添加 用户层级表 user_level
             UserLevel ul = new UserLevel();
+            ul.setId(0);
             ul.setCurrentUserId(newUser.getId());
             ul.setParentUserId(user.getRecommendUserId());
             ul.setCreatedDate(new Date());

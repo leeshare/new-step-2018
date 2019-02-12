@@ -1,0 +1,15 @@
+<!--
+    In the configuration file,
+    plugins location must meet the requirements as the following order:
+    properties?, settings?,
+    typeAliases?, typeHandlers?,
+    objectFactory?,objectWrapperFactory?,
+    plugins?,
+    environments?, databaseIdProvider?, mappers?
+-->
+<plugins>
+    <plugin interceptor="com.github.pagehelper.PageInterceptor">
+        <!-- 设置数据库类型 Oracle,Mysql,MariaDB,SQLite,Hsqldb,PostgreSQL六种数据库-->
+        <property name="helperDialect" value="mysql"/>
+    </plugin>
+</plugins>
