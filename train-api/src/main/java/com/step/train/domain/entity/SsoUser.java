@@ -39,6 +39,11 @@ public class SsoUser implements Serializable {
      */
     private Integer orgId;
 
+    /**
+     * 用户角色类型
+     */
+    private Byte roleType;
+
     //private Timestamp lastModify;
 
     @ManyToMany(cascade = {}, fetch = FetchType.LAZY)
@@ -57,10 +62,6 @@ public class SsoUser implements Serializable {
     @Transient
     private Integer recommendUserId;
 
-    /**
-     * 用户角色类型
-     */
-    private Integer roleType;
 
     public Integer getId() {
         return id;
@@ -238,11 +239,11 @@ public class SsoUser implements Serializable {
         this.recommendUserId = recommendUserId;
     }
 
-    public Integer getRoleType() {
+    public Byte getRoleType() {
         return roleType;
     }
 
-    public void setRoleType(Integer roleType) {
+    public void setRoleType(Byte roleType) {
         this.roleType = roleType;
     }
 }

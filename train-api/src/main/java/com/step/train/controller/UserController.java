@@ -1,10 +1,12 @@
 package com.step.train.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.step.train.annotation.CurrentUser;
 import com.step.train.annotation.LoginRequired;
 import com.step.train.domain.entity.JsonResult;
 import com.step.train.domain.entity.Param;
 import com.step.train.domain.entity.SsoUser;
+import com.step.train.model.SsoUserQo;
 import com.step.train.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -25,11 +27,12 @@ public class UserController {
 
     @PostMapping("/list")
     @LoginRequired
-    public Object list(@RequestBody(required = false) Param param, @CurrentUser SsoUser currentUser){
+    public Object list(@RequestBody(required = false) SsoUserQo param, @CurrentUser SsoUser currentUser){
         if(currentUser == null || currentUser.getId() <= 0){
             return new JsonResult<>("请登录");
         }
-        userService.findById()
+        PageInfo<SsoUser> pageInfo = userService.findPage(param);
+        return new JsonResult<>(pageInfo);
     }
 
     @PostMapping("/save")

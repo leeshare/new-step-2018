@@ -19,7 +19,7 @@ public interface SsoUserRepository
     extends JpaRepository<SsoUser, Integer>
 {
 
-    @Query("SELECT u FROM SsoUser u WHERE u.isDelete = 0 AND u.status = 1 AND u.userName = ?1")
+    @Query("SELECT u FROM SsoUser u WHERE u.isDelete = 0 AND u.userName = ?1")
     SsoUser findByUserName(String userName);
 
     @Query("SELECT u FROM SsoUser u WHERE u.isDelete = 0 AND u.status = 1 AND u.realName like :name")
@@ -28,5 +28,7 @@ public interface SsoUserRepository
     @Query("SELECT u FROM SsoUser u WHERE u.isDelete = 0 AND u.id = ?1")
     SsoUser findById(int id);
 
+    @Query("SELECT u FROM SsoUser u WHERE u.isDelete = 0 AND (u.roleType = ?1 OR 0 = ?1)")
+    List<SsoUser> find(int roleType);
 
 }

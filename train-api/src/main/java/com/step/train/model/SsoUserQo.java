@@ -7,6 +7,8 @@ public class SsoUserQo extends PageQo {
 
     private Byte status;
 
+    private Byte roleType;
+
     public SsoUserQo(){
 
     }
@@ -33,5 +35,13 @@ public class SsoUserQo extends PageQo {
 
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public Byte getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(Byte roleType) {
+        this.roleType = roleType;
     }
 }

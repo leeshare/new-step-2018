@@ -59,7 +59,7 @@ public class LoginController {
             result = -1;
         }else {
             SsoUser user = userService.findByUserName(username);
-            if(user != null && user.getId() > 0) {
+            if(user != null && user.getId() > 0 && user.getStatus() == 1) {
                 userId = user.getId();
                 //验证 log
                 int tempResult = checkAccessLog(userId, false, false);
