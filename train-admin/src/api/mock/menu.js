@@ -48,10 +48,16 @@ module.exports = {
     },
     {
       key: 2,
+      name: '用户管理',
+      icon: 'user',
+      url: '/user/list'
+    },
+    /*{
+      key: 2,
       name: '讲师管理',
       icon: 'user',
       url: '/teacher'
-    },
+    },*/
     {
       key: 3,
       name: '课程管理',

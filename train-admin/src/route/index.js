@@ -41,12 +41,18 @@ import other_linkInfo from '@/views/LinkInfo/Manage/index';
 //-------------2019-01-30
 //机构
 import org_list from '@/views/org/org_index';
+//用户
+import user_list from '@/views/user/user_index';
 
 //-------------END 2019-01-30
 const adminRoutes = [
   {
     path: '/org/list',
     component: org_list
+  },
+  {
+    path: '/user/list',
+    component: user_list
   },
   {
     path: '/System/DictionaryManage',
