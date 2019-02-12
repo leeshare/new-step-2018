@@ -41,7 +41,7 @@ class UserView extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            dataModel: props.currentDataModel || { isDefaultOrg: 0, status: 1, id: 0 },//数据模型
+            dataModel: props.currentDataModel || { recommendUserId: 0, status: 1, id: 0 },//数据模型
             disabled: false,
             loading: false,
             orgList: [],
@@ -125,7 +125,7 @@ class UserView extends React.Component {
     }*/
     onOrgChange = (e) => {
       if(e){
-        
+
       }
 
     }

@@ -188,10 +188,10 @@ public class UserService {
     @Transactional
     public String save(SsoUser user){
         SsoUser oldUser = ssoUserRepository.findByUserName(user.getUserName());
-        if(user.getId() <= 0 && oldUser.getId() > 0){
+        if(user.getId() <= 0 && oldUser != null && oldUser.getId() > 0){
             return "新增用户名已存在!";
         }
-        if(user.getId() > 0 && oldUser.getId() != user.getId()){
+        if(user.getId() > 0 && oldUser != null && oldUser.getId() != user.getId()){
             return "修改用户名已存在!";
         }
 
@@ -201,27 +201,32 @@ public class UserService {
         user.setCreatedDate(new Date());
         user.setUpdatedDate(new Date());
         user.setIsDelete((byte)0);
-        if(user.getId() <= 0 && StringUtils.isEmpty(user.getPassword())){
-            String pwd = DigestUtils.md5DigestAsHex(DEFAULT_PASSWORD.getBytes());
-            user.setPassword(pwd);
+        if(user.getId() <= 0) {
+            if (StringUtils.isEmpty(user.getPassword())) {
+                String pwd = DigestUtils.md5DigestAsHex(DEFAULT_PASSWORD.getBytes());
+                user.setPassword(pwd);
+            } else {
+                String pwd = DigestUtils.md5DigestAsHex(user.getPassword().getBytes());
+                user.setPassword(pwd);
+            }
         }
         //注册用户
-        ssoUserRepository.save(user);
+        SsoUser newUser = ssoUserRepository.save(user);
 
-        if(user.getId() <= 0){
+        if(newUser.getId() <= 0){
             throw new RuntimeException();
         }
         //添加用户角色 sso_user_role
         SsoRole r = new SsoRole();
-        r.setType(user.getRoleType());
+        r.setType(newUser.getRoleType());
         List<SsoRole> rList = new ArrayList<>();
         rList.add(r);
-        user.setSsoRoles(rList);
+        newUser.setSsoRoles(rList);
 
-        //根据推荐用户，添加 用户层级表 user_level
-        if(user.getRecommendUserId() > 0){
+        if(user.getId() <= 0){
+            //根据推荐用户，添加 用户层级表 user_level
             UserLevel ul = new UserLevel();
-            ul.setCurrentUserId(user.getId());
+            ul.setCurrentUserId(newUser.getId());
             ul.setParentUserId(user.getRecommendUserId());
             ul.setCreatedDate(new Date());
             userLevelRepository.save(ul);
