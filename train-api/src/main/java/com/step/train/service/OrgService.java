@@ -28,6 +28,10 @@ public class OrgService {
         return ssoOrganizationRepository.findDefaultOrg();
     }
 
+    public SsoOrganization findById(int orgId){
+        return ssoOrganizationRepository.findOne(orgId);
+    }
+
     @Transactional
     public String save(SsoOrganization org){
         if(StringUtils.isEmpty(org.getName())){
@@ -53,7 +57,8 @@ public class OrgService {
                 ssoOrganizationRepository.save(defaultOrg);
             }
         }
-        org.setIsDelete((byte)0);
+        if(org.getIsDelete() == null)
+            org.setIsDelete((byte)0);
         org.setUpdatedDate(new Date());
         ssoOrganizationRepository.save(org);
         return "";

@@ -61,7 +61,7 @@ class OrgView extends React.Component {
                 title: '你确认要删除该机构吗?',
                 content: '请确认',
                 onOk: () => {
-                    this.props.viewCallback(this.state.dataModel);//保存数据
+                    this.props.viewCallback(this.state.dataModel, true);//保存数据
                 },
                 onCancel: () => {
                     console.log('Cancel');

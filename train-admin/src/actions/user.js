@@ -18,3 +18,12 @@ export function train_user_save(userInfo) {
     }
   }
 }
+//删除用户信息
+export function train_user_del(userId) {
+  return {
+    type: 'TRAIN_USER_DEL',
+    payload: {
+      promise: api.put('/train_user_del', userId)
+    }
+  }
+}

@@ -111,6 +111,16 @@ mock.onPut('/train_org_save').reply(config => {
     });
   });
 });
+//机构del
+mock.onPut('/train_org_del').reply(config => {
+  return new Promise(function (resolve, reject) {
+    normalAxios.post('/org/del', config.data).then((res) => {
+      resolve([200, res.data]);
+    }).catch((err) => {
+      resolve([500, err]);
+    });
+  });
+});
 //用户管理
 mock.onPut('/train_user_list').reply(config => {
   return new Promise(function (resolve, reject) {
@@ -131,7 +141,46 @@ mock.onPut('/train_user_save').reply(config => {
     });
   });
 });
-
+//user del
+mock.onPut('/train_user_del').reply(config => {
+  return new Promise(function (resolve, reject) {
+    normalAxios.post('/user/del', config.data).then((res) => {
+      resolve([200, res.data]);
+    }).catch((err) => {
+      resolve([500, err]);
+    });
+  });
+});
+//course管理
+mock.onPut('/train_course_list').reply(config => {
+  return new Promise(function (resolve, reject) {
+    normalAxios.post('/course/list', config.data).then((res) => {
+      resolve([200, res.data]);
+    }).catch((err) => {
+      resolve([500, err]);
+    });
+  });
+});
+//course save
+mock.onPut('/train_course_save').reply(config => {
+  return new Promise(function (resolve, reject) {
+    normalAxios.post('/course/save', config.data).then((res) => {
+      resolve([200, res.data]);
+    }).catch((err) => {
+      resolve([500, err]);
+    });
+  });
+});
+//course del
+mock.onPut('/train_course_del').reply(config => {
+  return new Promise(function (resolve, reject) {
+    normalAxios.post('/course/del', config.data).then((res) => {
+      resolve([200, res.data]);
+    }).catch((err) => {
+      resolve([500, err]);
+    });
+  });
+});
 
 //二维码登录URL地址获取
 mock.onPut('/GetAdminLoginQRCode').reply(config => {

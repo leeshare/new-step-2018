@@ -76,5 +76,27 @@ public class OrgController {
         }
     }
 
+    @PostMapping("/del")
+    @LoginRequired
+    public Object del(@RequestBody int orgId, @CurrentUser SsoUser currentUser) {
+        if (currentUser == null || currentUser.getId() <= 0) {
+            return new JsonResult<SsoOrganization>("请登录");
+        }
+        if (!userService.checkIsRoot(currentUser)) {
+            return new JsonResult<SsoOrganization>("您没有删除机构权限");
+        }
+        if(orgId > 0){
+            SsoOrganization org = orgService.findById(orgId);
+            if(org != null && org.getId() > 0){
+                org.setIsDelete((byte)1);
+                org.setUpdatedDate(new Date());
+                org.setUpdatedUserId(currentUser.getId());
+                orgService.save(org);
+                return new JsonResult<SsoOrganization>();
+            }
+        }
+
+        return new JsonResult<SsoOrganization>("找不到机构");
+    }
 
 }

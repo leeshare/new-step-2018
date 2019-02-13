@@ -82,8 +82,8 @@ public class UserService {
         int offset = (page - 1) * size;
         int limit = size;
         //List<SsoUser> list = ssoUserRepository.find(ssoUserQo.getRoleType());
-        int total = ssoUserRepository.findCount(ssoUserQo.getRoleType());
-        List<SsoUser> list = ssoUserRepository.find(offset, size, ssoUserQo.getRoleType());
+        int total = ssoUserRepository.findCount(ssoUserQo.getRoleType(), ssoUserQo.getStatus(), ssoUserQo.getKeyword());
+        List<SsoUser> list = ssoUserRepository.find(offset, size, ssoUserQo.getRoleType(), ssoUserQo.getStatus(), ssoUserQo.getKeyword());
         PageInfo<SsoUser> pageInfo = new PageInfo<>(list);
         pageInfo.setTotal(total);
         pageInfo.setHasNextPage(page * size < total);
@@ -208,7 +208,9 @@ public class UserService {
         }
         user.setCreatedDate(new Date());
         user.setUpdatedDate(new Date());
-        user.setIsDelete((byte)0);
+        if(user.getIsDelete() == null) {
+            user.setIsDelete((byte) 0);
+        }
         if(user.getId() <= 0) {
             if (StringUtils.isEmpty(user.getPassword())) {
                 String pwd = DigestUtils.md5DigestAsHex(DEFAULT_PASSWORD.getBytes());

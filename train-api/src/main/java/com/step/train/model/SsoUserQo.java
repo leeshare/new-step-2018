@@ -5,6 +5,8 @@ public class SsoUserQo extends PageQo {
     private Integer id;
     private String realName;
 
+    private String keyword;
+
     private Byte status;
 
     private Byte roleType;
@@ -27,6 +29,14 @@ public class SsoUserQo extends PageQo {
 
     public void setRealName(String realName) {
         this.realName = realName;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
     public Byte getStatus() {

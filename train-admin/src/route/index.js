@@ -43,6 +43,8 @@ import other_linkInfo from '@/views/LinkInfo/Manage/index';
 import org_list from '@/views/org/org_index';
 //用户
 import user_list from '@/views/user/user_index';
+//course
+import course_list from '@/views/course/course_index';
 
 //-------------END 2019-01-30
 const adminRoutes = [
@@ -53,6 +55,10 @@ const adminRoutes = [
   {
     path: '/user/list',
     component: user_list
+  },
+  {
+    path: '/course/list',
+    component: course_list
   },
   {
     path: '/System/DictionaryManage',

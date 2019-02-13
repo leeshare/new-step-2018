@@ -62,9 +62,31 @@ module.exports = {
       key: 3,
       name: '课程管理',
       icon: 'book',
-      url: '/course'
+      url: '/course/list'
     }
   ],
+  menus_of_org: [
+    {
+      key: 0,
+      name: '首页',
+      icon: 'home',
+      url: '/home'
+    },
+    {
+      key: 2,
+      name: '教师管理',
+      icon: 'user',
+      url: '/user/list'
+    },
+  ],
+  menus_of_teacher: [
+    {
+      key: 0,
+      name: '首页',
+      icon: 'home',
+      url: '/home'
+    },
+  ]
 };
 
 //module.exports = {

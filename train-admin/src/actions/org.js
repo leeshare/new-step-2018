@@ -14,16 +14,16 @@ export function train_org_save(orgInfo) {
   return {
     type: 'TRAIN_ORG_SAVE',
     payload: {
-      promise: api.put('/train_org_save',orgInfo)
+      promise: api.put('/train_org_save', orgInfo)
     }
   }
 }
-//保存机构信息
-export function switchOrganizationInfoStatus(orgInfo) {
+//删除机构信息
+export function train_org_del(orgId) {
   return {
-    type: 'SwitchOrganizationInfoStatus',
+    type: 'TRAIN_ORG_DEL',
     payload: {
-      promise: api.put('/SwitchOrganizationInfoStatus',orgInfo)
+      promise: api.put('/train_org_del', orgId)
     }
   }
 }

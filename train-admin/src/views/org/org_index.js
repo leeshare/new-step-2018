@@ -33,7 +33,7 @@ import {
   fileCollectListQuery, fileCollectSave
 } from '@/actions/file';
 import {
-  train_org_list, train_org_save
+  train_org_list, train_org_save, train_org_del
 } from '@/actions/org';
 
 import OrgView from './org_view.js';
@@ -181,21 +181,35 @@ class OrgManage extends React.Component {
     this.setState({ expand: !expand });
   }
 
-  onViewCallback = (dataModel) => {
+  onViewCallback = (dataModel, isDelete) => {
     if(!dataModel) {
       this.setState({ currentDataModel: null, editMode: 'Manage' })
     }else {
-      this.props.train_org_save(dataModel).payload.promise.then((response) => {
-        let data = response.payload.data || {};
-        if (data.result === true) {
-          this.onSearch();
-          //进入管理页
-          this.onLookView("Manage", null);
-        }
-        else {
-          message.error(data.message);
-        }
-      })
+      if(isDelete){
+        this.props.train_org_del(dataModel.id).payload.promise.then((response) => {
+          let data = response.payload.data || {};
+          if (data.result === true) {
+            this.onSearch();
+            //进入管理页
+            this.onLookView("Manage", null);
+          }
+          else {
+            message.error(data.message);
+          }
+        })
+      }else {
+        this.props.train_org_save(dataModel).payload.promise.then((response) => {
+          let data = response.payload.data || {};
+          if (data.result === true) {
+            this.onSearch();
+            //进入管理页
+            this.onLookView("Manage", null);
+          }
+          else {
+            message.error(data.message);
+          }
+        })
+      }
     }
   }
 
@@ -308,6 +322,7 @@ function mapDispatchToProps(dispatch) {
 
     train_org_list: bindActionCreators(train_org_list, dispatch),
     train_org_save: bindActionCreators(train_org_save, dispatch),
+    train_org_del: bindActionCreators(train_org_del, dispatch),
   };
 }
 //redux 组件 封装

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 /**
  * Created by Administrator on 2/11/2019.
  */
@@ -57,4 +59,28 @@ public class UserController {
         }
         return new JsonResult<>(result);
     }
+
+    @PostMapping("/del")
+    @LoginRequired
+    public Object del(@RequestBody int userId, @CurrentUser SsoUser currentUser) {
+        if (currentUser == null || currentUser.getId() <= 0) {
+            return new JsonResult<SsoUser>("请登录");
+        }
+        if (!userService.checkIsRoot(currentUser)) {
+            return new JsonResult<SsoUser>("您没有删除用户权限");
+        }
+        if(userId > 0){
+            SsoUser user = userService.findById(userId);
+            if(user != null && user.getId() > 0){
+                user.setIsDelete((byte) 1);
+                user.setUpdatedDate(new Date());
+                user.setUpdatedUserId(currentUser.getId());
+                userService.save(user);
+                return new JsonResult<SsoUser>();
+            }
+        }
+
+        return new JsonResult<SsoUser>("找不到用户");
+    }
+
 }

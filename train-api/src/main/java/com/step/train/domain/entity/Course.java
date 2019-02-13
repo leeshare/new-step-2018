@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -30,6 +31,9 @@ public class Course implements Serializable {
      * 1 收费 2 免费
      */
     private Byte courseType;
+
+    @Column(nullable = true, columnDefinition = "decimal(11,2)")
+    private BigDecimal price;
 
     private String courseDesc;
 
@@ -60,6 +64,10 @@ public class Course implements Serializable {
 
     private Integer updatedUserId;
 
+    @Transient
+    private String createdUserName;
+    @Transient
+    private String updatedUserName;
     //private Timestamp lastModify;
 
     public Integer getId() {
@@ -180,5 +188,29 @@ public class Course implements Serializable {
 
     public void setSsoOrganization(SsoOrganization ssoOrganization) {
         this.ssoOrganization = ssoOrganization;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getCreatedUserName() {
+        return createdUserName;
+    }
+
+    public void setCreatedUserName(String createdUserName) {
+        this.createdUserName = createdUserName;
+    }
+
+    public String getUpdatedUserName() {
+        return updatedUserName;
+    }
+
+    public void setUpdatedUserName(String updatedUserName) {
+        this.updatedUserName = updatedUserName;
     }
 }
