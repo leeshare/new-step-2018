@@ -43,24 +43,33 @@ public class CourseController {
             return new JsonResult<Course>("您没有读取机构列表权限");
         }
 
-            List<Course> courseList =  courseService.findPage(param).getList();
-            for (Course info: courseList) {
-                if(info.getCreatedUserId() > 0){
-                    SsoUser createdUser = userService.findById(info.getCreatedUserId());
-                    if(createdUser != null)
-                        info.setCreatedUserName(createdUser.getRealName());
-                }
-                if(info.getUpdatedUserId() > 0){
-                    SsoUser updatedUser = userService.findById(info.getUpdatedUserId());
-                    if(updatedUser != null)
-                        info.setUpdatedUserName(updatedUser.getRealName());
-                }
+        PageInfo<Course> pageInfo = courseService.findPage(param);
+        List<Course> courseList = pageInfo.getList();
+        for (Course info: courseList) {
+            if (info.getCreatedUserId() > 0) {
+                SsoUser createdUser = userService.findById(info.getCreatedUserId());
+                if (createdUser != null)
+                    info.setCreatedUserName(createdUser.getRealName());
             }
-            return new JsonResult<List<Course>>(courseList);
-
-        PageInfo<SsoUser> pageInfo = userService.findPage(param);
+            if (info.getUpdatedUserId() > 0) {
+                SsoUser updatedUser = userService.findById(info.getUpdatedUserId());
+                if (updatedUser != null)
+                    info.setUpdatedUserName(updatedUser.getRealName());
+            }
+        }
+        pageInfo.setList(courseList);
+        return new JsonResult<>(pageInfo);
     }
 
+    /**
+     * 课程保存
+     *      会员  isShow = 0 只能有此一个这样的课程（用于用户购买会员时使用）
+     *          courseType = 1，且 price > 0
+     *      普通课程  isShow = 1
+     * @param course
+     * @param currentUser
+     * @return
+     */
     @PostMapping("/save")
     @LoginRequired
     public Object save(@RequestBody Course course, @CurrentUser SsoUser currentUser) {

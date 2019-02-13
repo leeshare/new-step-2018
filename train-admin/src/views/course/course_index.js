@@ -71,14 +71,25 @@ class CourseManage extends React.Component {
   //table 输出列定义
   columns = [
     {
-      title: YSI18n.get('机构名称'),
+      title: YSI18n.get('课程名称'),
       dataIndex: 'name',
     },
     {
-      title: '是否系统机构',
-      dataIndex: 'isDefaultOrg',
+      title: '是否收费',
+      dataIndex: 'courseType',
       render: (text) => {
         return text == 1 ? <span>是</span> : <span>否</span>
+      }
+    },
+    {
+      title: '价格',
+      dataIndex: 'price',
+    },
+    {
+      title: '是否会员',
+      dataIndex: 'isShow',
+      render: (text) => {
+        return text == 0 ? <span>是</span> : <span>否</span>
       }
     },
     {
