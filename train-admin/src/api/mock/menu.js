@@ -92,6 +92,12 @@ module.exports = {
       icon: 'home',
       url: '/home'
     },
+    {
+      key: 3,
+      name: '课程管理',
+      icon: 'book',
+      url: '/course/list'
+    }
   ]
 };
 

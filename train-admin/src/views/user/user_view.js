@@ -104,6 +104,17 @@ class UserView extends React.Component {
             //表单验证后，合并数据提交
             this.props.form.validateFields((err, values) => {
                 if (!err) {
+                    if(that.props.user.roleType == 2){
+                      values.orgId = that.props.user.orgId;
+                      if(values.roleType == 1){
+                        message.warning('角色类型不能是管理员');
+                        return;
+                      }
+                    }
+                    if(!values.roleType){
+                        message.warning('必须选一个角色类型');
+                        return;
+                    }
                     //按钮点击后加装状态
                     that.setState({ loading: true });
                     setTimeout(() => {
@@ -226,8 +237,8 @@ class UserView extends React.Component {
                             }
                             )(
                                 <RadioGroup size="large">
-                                    <RadioButton value="1">管理员</RadioButton>
-                                    <RadioButton value="2">机构管理员</RadioButton>
+                                    {this.props.user.roleType == 1 && <RadioButton value="1">管理员</RadioButton>}
+                                    {this.props.user.roleType == 2 && <RadioButton value="2">机构管理员</RadioButton>}
                                     <RadioButton value="3">教师</RadioButton>
                                     <RadioButton value="4">普通用户</RadioButton>
                                 </RadioGroup>
@@ -247,7 +258,7 @@ class UserView extends React.Component {
                                 </RadioGroup>
                                 )}
                         </FormItem>
-                        <FormItem
+                        {this.props.user.roleType == 1 && <FormItem
                             {...formItemLayout}
                             label="所属机构"
                         >
@@ -261,7 +272,13 @@ class UserView extends React.Component {
                                 })}
                               </Select>
                             )}
-                        </FormItem>
+                        </FormItem>}
+                        {this.props.user.roleType == 2 && <FormItem
+                          {...formItemLayout}
+                            label="所属机构"
+                        >
+                            <span className="ant-form-text" >{this.props.user.orgName}</span>
+                        </FormItem>}
                         {this.renderBtnControl()}
                     </Form>
                 </div>

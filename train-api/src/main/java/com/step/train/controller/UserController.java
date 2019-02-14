@@ -7,8 +7,10 @@ import com.step.train.domain.entity.JsonResult;
 import com.step.train.domain.entity.Param;
 import com.step.train.domain.entity.SsoUser;
 import com.step.train.model.SsoUserQo;
+import com.step.train.service.AccessLogService;
 import com.step.train.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +28,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private AccessLogService accessLogService;
 
     @PostMapping("/list")
     @LoginRequired
@@ -33,7 +37,7 @@ public class UserController {
         if(currentUser == null || currentUser.getId() <= 0){
             return new JsonResult<>("请登录");
         }
-        if(currentUser.getRoleType() == 1) {
+        if(userService.checkIsRoot(currentUser)) {
             param.setOrgId(0);
         }else {
             param.setOrgId(currentUser.getOrgId());
@@ -52,8 +56,8 @@ public class UserController {
             return new JsonResult<SsoUser>("请输入用户信息");
         }
         if (!userService.checkIsRoot(currentUser)) {
-            if(user.getRoleType() == 1 || user.getRoleType() == 2){
-                return new JsonResult<>("您没有权限！");
+            if(userService.checkIsRoot(user)){
+                return new JsonResult<>("您没有修改此用户的权限！");
             }
         }
         user.setCreatedUserId(currentUser.getId());
@@ -71,12 +75,15 @@ public class UserController {
         if (currentUser == null || currentUser.getId() <= 0) {
             return new JsonResult<SsoUser>("请登录");
         }
-        if (!userService.checkIsRoot(currentUser)) {
-            return new JsonResult<SsoUser>("您没有删除用户权限");
-        }
+
         if(userId > 0){
             SsoUser user = userService.findById(userId);
             if(user != null && user.getId() > 0){
+                if (!userService.checkIsRoot(currentUser)) {
+                    if(userService.checkIsRoot(user)) {
+                        return new JsonResult<SsoUser>("您没有删除此用户权限");
+                    }
+                }
                 user.setIsDelete((byte) 1);
                 user.setUpdatedDate(new Date());
                 user.setUpdatedUserId(currentUser.getId());
@@ -87,5 +94,29 @@ public class UserController {
 
         return new JsonResult<SsoUser>("找不到用户");
     }
+
+    @PostMapping("/change_pwd")
+    @LoginRequired
+    public Object changePwd(@RequestBody SsoUserQo param, @CurrentUser SsoUser currentUser) {
+        String oldPwdMd5 = DigestUtils.md5DigestAsHex(param.getOldPwd().getBytes());
+        if(!oldPwdMd5.equals(currentUser.getPassword())){
+            int num = accessLogService.checkAccessLog(currentUser.getId(), false, true);
+
+            return new JsonResult<SsoUser>(String.format("旧密码失败%d次", num));
+        }
+        if(StringUtils.isEmpty(param.getNewPwd())){
+            return new JsonResult<SsoUser>("请设置新密码");
+        }
+        String newPwdMd5 = DigestUtils.md5DigestAsHex(param.getNewPwd().getBytes());
+        currentUser.setPassword(newPwdMd5);
+        String result = userService.save(currentUser);
+        if(StringUtils.isEmpty(result)){
+            return new JsonResult<>();
+        }
+        return new JsonResult<>(result);
+
+
+    }
+
 
 }

@@ -8,6 +8,8 @@ public class PageQo {
 
     private Byte status;
 
+    private Integer orgId;
+
     public Integer getPage() {
         return page;
     }
@@ -38,5 +40,13 @@ public class PageQo {
 
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    public Integer getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Integer orgId) {
+        this.orgId = orgId;
     }
 }

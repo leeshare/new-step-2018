@@ -33,7 +33,10 @@ public class OrgController {
         if(currentUser == null || currentUser.getId() <= 0){
             return new JsonResult<SsoOrganization>("请登录");
         }
-        if(userService.checkIsRoot(currentUser)){
+        if(!userService.checkIsRoot(currentUser)) {
+            return new JsonResult<SsoOrganization>("您没有读取机构列表权限");
+        }
+
             List<SsoOrganization> orgList =  orgService.findAll();
             for (SsoOrganization organization : orgList) {
                 if(organization.getCreatedUserId() > 0){
@@ -48,9 +51,6 @@ public class OrgController {
                 }
             }
             return new JsonResult<List<SsoOrganization>>(orgList);
-        }else {
-            return new JsonResult<SsoOrganization>("您没有读取机构列表权限");
-        }
     }
 
     @PostMapping("/save")
@@ -60,7 +60,7 @@ public class OrgController {
             return new JsonResult<SsoOrganization>("请登录");
         }
         if (!userService.checkIsRoot(currentUser)) {
-            return new JsonResult<SsoOrganization>("您没有读取机构列表权限");
+            return new JsonResult<SsoOrganization>("您没有保存机构权限");
         }
         if (org == null) {
             return new JsonResult<SsoOrganization>("请输入机构信息");

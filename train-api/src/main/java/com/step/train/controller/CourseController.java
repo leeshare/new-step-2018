@@ -39,8 +39,10 @@ public class CourseController {
         if(currentUser == null || currentUser.getId() <= 0){
             return new JsonResult<Course>("请登录");
         }
-        if(!userService.checkIsRoot(currentUser)) {
-            return new JsonResult<Course>("您没有读取机构列表权限");
+        if(userService.checkIsRoot(currentUser)) {
+            param.setOrgId(0);
+        }else {
+            param.setOrgId(currentUser.getOrgId());
         }
 
         PageInfo<Course> pageInfo = courseService.findPage(param);
@@ -59,7 +61,7 @@ public class CourseController {
             if(info.getOrgId() > 0){
                 SsoOrganization org = orgService.findById(info.getOrgId());
                 if(org != null)
-                    info.setSsoOrganization(org);
+                    info.setOrgName(org.getName());
             }
         }
         pageInfo.setList(courseList);
@@ -81,14 +83,15 @@ public class CourseController {
         if (currentUser == null || currentUser.getId() <= 0) {
             return new JsonResult<Course>("请登录");
         }
-        if (!userService.checkIsRoot(currentUser)) {
-            return new JsonResult<Course>("您没有读取机构列表权限");
-        }
         if (course == null) {
             return new JsonResult<Course>("请输入课程信息");
         }
+        if(!userService.checkIsRoot(currentUser)){
+            if(currentUser.getOrgId() != course.getOrgId()){
+                return new JsonResult<Course>("无法保存非本机构课程");
+            }
+        }
         course.setUpdatedUserId(currentUser.getId());
-
 
         String result = courseService.save(course);
         if (StringUtils.isEmpty(result)) {
@@ -104,12 +107,13 @@ public class CourseController {
         if (currentUser == null || currentUser.getId() <= 0) {
             return new JsonResult<Course>("请登录");
         }
-        if (!userService.checkIsRoot(currentUser)) {
-            return new JsonResult<Course>("您没有删除机构权限");
-        }
         if(courseId > 0){
             Course info = courseService.findById(courseId);
             if(info != null && info.getId() > 0){
+                if (!userService.checkIsRoot(currentUser)) {
+                    if(info.getOrgId() != currentUser.getOrgId())
+                        return new JsonResult<Course>("您没有删除此机构课程的权限");
+                }
                 info.setIsDelete((byte) 1);
                 info.setUpdatedDate(new Date());
                 info.setUpdatedUserId(currentUser.getId());

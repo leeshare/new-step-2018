@@ -52,6 +52,18 @@ export function logout() {
   }
 }
 
+export function changePassword(info) {
+  return {
+    type: 'CHANGE_PWD',
+    payload: {
+      promise: api.put('/change_pwd', {
+        oldPwd: info.old_password,
+        newPwd: info.password
+      })
+    }
+  }
+}
+
 //二维码登录URL地址获取
 export function getAdminLoginQRCode() {
   return {

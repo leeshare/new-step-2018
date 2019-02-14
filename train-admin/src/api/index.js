@@ -107,6 +107,17 @@ mock.onGet('/menu').reply(config => {
 //退出处理
 mock.onGet('/logout').reply(200, {});
 
+mock.onPut('/change_pwd').reply(config => {
+  return new Promise(function (resolve, reject) {
+    normalAxios.post('/user/change_pwd', config.data)
+    .then((res) => {
+      resolve([200, res.data]);
+    }).catch((err) => {
+      resolve([500, err]);
+    });
+  });
+});
+
 //机构管理
 mock.onPut('/train_org_list').reply(config => {
   return new Promise(function (resolve, reject) {

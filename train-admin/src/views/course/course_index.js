@@ -94,7 +94,7 @@ class CourseManage extends React.Component {
     },*/
     {
       title: '所属机构',
-      dataIndex: 'ssoOrganization.name',
+      dataIndex: 'orgName',
     },
     {
       title: YSI18n.get('更新时间'),

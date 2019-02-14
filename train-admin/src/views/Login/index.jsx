@@ -29,13 +29,13 @@ class Login extends React.Component {
   componentWillMount() {
     var _this = this;
     //提前获取二维码
-    this.props.getAdminLoginQRCode().payload.promise.then(res => {
+    /*this.props.getAdminLoginQRCode().payload.promise.then(res => {
       if (res.error) {
         message.error(res.payload.data.message);
         return;
       }
       _this.setState({ QRCodeInfo: res.payload.data });
-    })
+    })*/
   }
 
   testQRLoginTimer = () => {
@@ -160,21 +160,21 @@ class Login extends React.Component {
             <Button className="btn-login" type='primary' size="large" loading={this.state.loading} onClick={this.onLogin}>{YSI18n.get('login')}</Button>
           </p>
           <div>
-            <a onClick={() => this.onSwitchLogin()} >{YSI18n.get('qrcode_login')}</a>
+            {/*<a onClick={() => this.onSwitchLogin()} >{YSI18n.get('qrcode_login')}</a>*/}
             <a onClick={this.onForget} className='forget'>{YSI18n.get('forget_password_title')}</a>
           </div>
         </div>
 
       </Form>
     } else {
-      block_login_content = <Form layout="horizontal" className="login-form">
+      /*block_login_content = <Form layout="horizontal" className="login-form">
         <h2 className="logo_wrap"><span className="logo_name">{YSI18n.get('qrcode_login_title')}</span></h2>
         <h3 style={{ textAlign: 'center', marginBottom: 18 }} dangerouslySetInnerHTML={{ __html: convertTextToHtml(YSI18n.get('qrcode_login_tips')) }}></h3>
         <div className='qrcodeImg'>{this.state.QRCodeInfo &&
           <img src={this.state.QRCodeInfo.QRImageUrl} style={{ width: '100%', height: '100%' }} />
         }</div>
         <div onClick={() => this.onSwitchLogin()}><a>{YSI18n.get('account_login_title')}</a></div>
-      </Form>
+      </Form>*/
     }
 
     let year = new Date().getFullYear();

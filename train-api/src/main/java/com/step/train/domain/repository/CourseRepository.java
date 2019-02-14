@@ -22,9 +22,9 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
     @Query("SELECT o FROM Course o WHERE o.isShow = 0")
     Course findVipCourse();
 
-    @Query(nativeQuery = true, value = "SELECT COUNT(*) FROM course u WHERE u.is_delete = 0 AND (u.status = ?1 OR -1 = ?1) AND (u.name LIKE CONCAT(CONCAT('%',?2),'%') ) ")
-    int findCount(byte status, String keyword);
+    @Query(nativeQuery = true, value = "SELECT COUNT(*) FROM course u WHERE u.is_delete = 0 AND (u.status = ?1 OR -1 = ?1) AND (u.name LIKE CONCAT(CONCAT('%',?2),'%')) AND (u.org_id = ?3 OR 0 = ?3) ")
+    int findCount(byte status, String keyword, int orgId);
 
-    @Query(nativeQuery = true, value = "SELECT u.* FROM course u WHERE u.is_delete = 0 AND (u.status = ?3 OR -1 = ?3) AND (u.name LIKE CONCAT(CONCAT('%',?4),'%') ) LIMIT ?2 OFFSET ?1 ")
-    List<Course> find(int offset, int limit, byte status, String keyword);
+    @Query(nativeQuery = true, value = "SELECT u.* FROM course u WHERE u.is_delete = 0 AND (u.status = ?3 OR -1 = ?3) AND (u.name LIKE CONCAT(CONCAT('%',?4),'%')) AND (u.org_id = ?5 OR 0 = ?5) LIMIT ?2 OFFSET ?1 ")
+    List<Course> find(int offset, int limit, byte status, String keyword, int orgId);
 }

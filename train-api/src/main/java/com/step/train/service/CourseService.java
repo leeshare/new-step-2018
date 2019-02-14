@@ -30,8 +30,8 @@ public class CourseService {
     public PageInfo<Course> findPage(PageQo condition) {
         int limit = condition.getSize();
         int offset = (condition.getPage() - 1) * limit;
-        int total = courseRepository.findCount(condition.getStatus(), condition.getKeyword());
-        List<Course> list = courseRepository.find(offset, limit, condition.getStatus(), condition.getKeyword());
+        int total = courseRepository.findCount(condition.getStatus(), condition.getKeyword(), condition.getOrgId());
+        List<Course> list = courseRepository.find(offset, limit, condition.getStatus(), condition.getKeyword(), condition.getOrgId());
 
         PageInfo<Course> pageInfo = new PageInfo<>(list);
         pageInfo.setTotal(total);

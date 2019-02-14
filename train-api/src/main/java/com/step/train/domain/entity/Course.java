@@ -23,8 +23,7 @@ public class Course implements Serializable {
     //@ManyToOne
     //@JoinColumn(name = "org_id")
     //@JsonBackReference
-    @Transient
-    private SsoOrganization ssoOrganization;
+    //private SsoOrganization ssoOrganization;
 
     private Integer teacherId;
 
@@ -70,6 +69,11 @@ public class Course implements Serializable {
     @Transient
     private String updatedUserName;
     //private Timestamp lastModify;
+
+    @Transient
+    private String orgName;
+
+    //-------------------------------------//
 
     public Integer getId() {
         return id;
@@ -183,13 +187,13 @@ public class Course implements Serializable {
         this.updatedUserId = updatedUserId;
     }
 
-    public SsoOrganization getSsoOrganization() {
+    /*public SsoOrganization getSsoOrganization() {
         return ssoOrganization;
     }
 
     public void setSsoOrganization(SsoOrganization ssoOrganization) {
         this.ssoOrganization = ssoOrganization;
-    }
+    }*/
 
     public BigDecimal getPrice() {
         return price;
@@ -221,5 +225,13 @@ public class Course implements Serializable {
 
     public void setOrgId(Integer orgId) {
         this.orgId = orgId;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 }

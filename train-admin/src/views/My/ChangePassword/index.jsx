@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import { Modal, message, Form, Row, Col, Input, Select, Button, Icon, Table, Pagination, Tree, Card } from 'antd';
 
-import { changePassword } from '@/actions/admin';
+//import { changePassword } from '@/actions/admin';
+import { changePassword } from '@/actions/auth';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const btnformItemLayout = {

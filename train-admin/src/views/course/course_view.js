@@ -58,8 +58,12 @@ class CourseView extends React.Component {
     }
 
     componentWillMount() {
-      this.getOrgData();
-      this.getTeacherData();
+      if(this.props.user.roleType == 1){
+        this.getOrgData();
+      }
+      //if(this.props.user.roleType >= 2){
+        this.getTeacherData();
+      //}
     }
     getOrgData = () => {
       this.props.train_org_list().payload.promise.then((response) => {
@@ -136,9 +140,11 @@ class CourseView extends React.Component {
             //表单验证后，合并数据提交
             this.props.form.validateFields((err, values) => {
                 if (!err) {
-                    if(!values.orgId){
+                    if(that.props.user.roleType == 1 && !values.orgId){
                       message.warning('请选择一个机构');
                       return;
+                    }else {
+                      values.orgId = that.props.user.orgId;
                     }
                     //按钮点击后加装状态
                     that.setState({ loading: true });
@@ -306,7 +312,7 @@ class CourseView extends React.Component {
                                 </RadioGroup>
                                 )}
                         </FormItem>
-                        <FormItem
+                        {this.props.user.roleType == 1 && <FormItem
                             {...formItemLayout}
                             label="所属机构"
                         >
@@ -320,7 +326,13 @@ class CourseView extends React.Component {
                                 })}
                               </Select>
                             )}
-                        </FormItem>
+                        </FormItem>}
+                        {this.props.user.roleType != 1 && <FormItem
+                          {...formItemLayout}
+                            label="所属机构"
+                        >
+                            <span className="ant-form-text" >{this.props.user.orgName}</span>
+                        </FormItem>}
                         <FormItem
                             {...formItemLayout}
                             label="讲师"
@@ -330,6 +342,7 @@ class CourseView extends React.Component {
                             }
                             )(
                               <Select defaultValue="无" style={{ width: 120 }} onChange={this.onTeacherChange}>
+                                <Option value={0}>无</Option>
                                 {this.state.teacherList.map((item) => {
                                   return <Option value={item.value}>{item.title}</Option>
                                 })}
@@ -442,7 +455,9 @@ class CourseView extends React.Component {
 const WrappedCourseView = Form.create()(CourseView);
 
 const mapStateToProps = (state) => {
+    var u = state.auth.user;
     return {
+      user: u,
     }
 };
 

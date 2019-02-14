@@ -178,7 +178,11 @@ public class UserService {
         if(user == null){
             return false;
         }
-        List<SsoRole> roles = user.getSsoRoles();
+        if(user.getRoleType() == 1)
+            return true;
+        return false;
+
+        /*List<SsoRole> roles = user.getSsoRoles();
         if(roles == null){
             return false;
         }
@@ -189,7 +193,7 @@ public class UserService {
                 return true;
             }
         }
-        return false;
+        return false;*/
 
     }
 
@@ -206,7 +210,10 @@ public class UserService {
         if(user.getRoleType() <= 0){
             user.setRoleType((byte)4);
         }
-        user.setCreatedDate(new Date());
+        if(user.getId() <= 0){
+            user.setCreatedDate(new Date());
+            user.setCreatedUserId(user.getUpdatedUserId());
+        }
         user.setUpdatedDate(new Date());
         if(user.getIsDelete() == null) {
             user.setIsDelete((byte) 0);
