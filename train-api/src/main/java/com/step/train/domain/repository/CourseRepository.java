@@ -19,6 +19,9 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
     @Query("SELECT o FROM Course o WHERE o.isDelete = 0 AND o.name = ?1 AND o.id <> ?2")
     List<Course> findByName(String name, Integer id);
 
+    @Query("SELECT o FROM Course o WHERE o.isShow = 0")
+    Course findVipCourse();
+
     @Query(nativeQuery = true, value = "SELECT COUNT(*) FROM course u WHERE u.is_delete = 0 AND (u.status = ?1 OR -1 = ?1) AND (u.name LIKE CONCAT(CONCAT('%',?2),'%') ) ")
     int findCount(byte status, String keyword);
 

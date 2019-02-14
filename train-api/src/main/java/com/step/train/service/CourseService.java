@@ -45,8 +45,33 @@ public class CourseService {
             return "课程名称已存在";
         }
         course.setUpdatedDate(new Date());
+        if(course.getId() <= 0){
+            course.setCreatedUserId(course.getUpdatedUserId());
+            course.setCreatedDate(new Date());
+        }
         if(course.getIsDelete() == null){
             course.setIsDelete((byte)0);
+        }
+        Course vip = courseRepository.findVipCourse();
+        if(course.getIsShow() == 0){
+            //此课程为用于“购买会员”
+            if(vip != null && vip.getId() != course.getId()){
+                return "已存在作为会员的课程了，不允许再创建此类课程了";
+            }
+            if(course.getCourseType() == 2){
+                return "作为会员的课程必须是收费的";
+            }
+            if(course.getPrice().intValue() < 0){
+                return "作为会员的课程必须设置价格";
+            }
+            if(course.getStatus() == 0){
+                return "作为会员的课程必须启用状态";
+            }
+        }
+        if(course.getIsShow() == 1 || course.getStatus() == 0 || course.getIsDelete() == 1){
+            if(vip != null && vip.getId() == course.getId()){
+                return "作为会员的课程不能取消会员";
+            }
         }
         Course newCourse = courseRepository.save(course);
         if(newCourse.getId() > 0){

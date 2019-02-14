@@ -18,11 +18,12 @@ public class Course implements Serializable {
 
     private String name;
 
-    //private Integer orgId;
+    private Integer orgId;
 
-    @ManyToOne
-    @JoinColumn(name = "org_id")
-    @JsonBackReference
+    //@ManyToOne
+    //@JoinColumn(name = "org_id")
+    //@JsonBackReference
+    @Transient
     private SsoOrganization ssoOrganization;
 
     private Integer teacherId;
@@ -212,5 +213,13 @@ public class Course implements Serializable {
 
     public void setUpdatedUserName(String updatedUserName) {
         this.updatedUserName = updatedUserName;
+    }
+
+    public Integer getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Integer orgId) {
+        this.orgId = orgId;
     }
 }

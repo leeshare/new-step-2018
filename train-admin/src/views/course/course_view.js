@@ -28,6 +28,8 @@ const formItemLayout = {
     wrapperCol: { span: 12 },
 };
 import './index.less';
+import { train_org_list } from '@/actions/org';
+import { train_teacher_list } from '@/actions/user';
 /*
 必要属性输入
 editMode [Create/Edit/View/Delete]
@@ -36,29 +38,91 @@ viewCallback [回调]
 */
 class CourseView extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
+        var dm = props.currentDataModel || {
+              isShow: 1,
+              status: 1,
+              courseType: 1,
+              orgId: '',
+              teacherId: '',
+              id: 0
+            };
         this.state = {
-            dataModel: props.currentDataModel || { isDefaultOrg: 0, status: 1, id: 0 },//数据模型
+            dataModel: dm,//数据模型
             disabled: false,
             loading: false,
+            orgList: [],
+            teacherList: [],
+            hidePrice: dm.courseType == 2 ? true : false
         };
     }
 
     componentWillMount() {
-
+      this.getOrgData();
+      this.getTeacherData();
+    }
+    getOrgData = () => {
+      this.props.train_org_list().payload.promise.then((response) => {
+        let data = response.payload.data || [];
+        var list = [];
+        if(data.result){
+          data.map(a => {
+            list.push({
+              value: a.id,
+              title: a.name + (a.isDefaultOrg == 1 ? '(默认机构)' : '')
+            })
+          })
+          this.setState({
+            loading: false,
+            orgList: list
+          });
+        }else {
+          message.error(data.message);
+          this.setState({ loading: false });
+        }
+      }).catch(error => {
+        message.error(error.message);
+        this.setState({ loading: false });
+      })
+    }
+    getTeacherData = () => {
+      this.props.train_teacher_list().payload.promise.then((response) => {
+        let data = response.payload.data || [];
+        var list = [];
+        if(data.result){
+          data.list.map(a => {
+            list.push({
+              value: a.id,
+              title: a.realName,
+              orgId: a.orgId
+            })
+          })
+          this.setState({
+            loading: false,
+            allTeacherList: list,
+            teacherList: list
+          });
+        }else {
+          message.error(data.message);
+          this.setState({ loading: false });
+        }
+      }).catch(error => {
+        message.error(error.message);
+        this.setState({ loading: false });
+      })
     }
     onCancel = () => {
         this.props.viewCallback();
     }
     onSubmit = () => {
         var that = this;
-        if(this.state.dataModel.isDefaultOrg == 1){
-          message.warning('默认机构不能删除');
-          return;
-        }
         if (this.props.editMode == "Delete") {
+            if(this.state.dataModel.isShow == 0){
+              message.warning('会员不能删除');
+              return;
+            }
             Modal.confirm({
-                title: '你确认要删除该机构吗?',
+                title: '你确认要删除此课程吗?',
                 content: '请确认',
                 onOk: () => {
                     this.props.viewCallback(this.state.dataModel, true);//保存数据
@@ -72,11 +136,18 @@ class CourseView extends React.Component {
             //表单验证后，合并数据提交
             this.props.form.validateFields((err, values) => {
                 if (!err) {
+                    if(!values.orgId){
+                      message.warning('请选择一个机构');
+                      return;
+                    }
                     //按钮点击后加装状态
                     that.setState({ loading: true });
                     setTimeout(() => {
                         that.setState({ loading: false });
                     }, 3000);//合并保存数据
+                    if(values.courseType == '2'){
+                      values.price = 0;
+                    }
                     this.props.viewCallback({ ...that.state.dataModel, ...values });//合并保存数据
                 }
             });
@@ -95,6 +166,44 @@ class CourseView extends React.Component {
             }
         })
     }*/
+    onOrgChange = (orgId) => {
+      var tList = [];
+      var tExist = false;
+      this.state.allTeacherList.map(t => {
+        if(t.orgId == orgId){
+          tList.push(t);
+          if(this.state.teacherId && t.value == this.state.teacherId){
+            tExist = true;
+          }
+        }
+      });
+      var m = this.state.dataModel;
+      m.orgId = orgId;
+      if(!tExist){
+        m.teacherId = '';
+        //this.state.teacherId = '';
+      }
+      this.setState({
+        teacherList: tList,
+        dataModel: m,
+        //teacherId: this.state.teacherId
+      })
+    }
+    onTeacherChange = (teacherId) => {
+      var m = this.state.dataModel;
+      m.teacherId = teacherId;
+      this.setState({
+        dataModel: m
+      })
+
+    }
+    onCourseTypeChange = (e) => {
+      if(e.target.value == '2'){
+        this.setState({ hidePrice: true })
+      }else {
+        this.setState({ hidePrice: false })
+      }
+    }
     //标题
     getTitle() {
         let op = getViewEditModeTitle(this.props.editMode);
@@ -142,12 +251,12 @@ class CourseView extends React.Component {
                     <Form>
                         <FormItem
                             {...formItemLayout}
-                            label="机构名称"
+                            label="课程名称"
                         >
                             {getFieldDecorator('name', {
                                 initialValue: this.state.dataModel.name,
                                 rules: [{
-                                    required: true, message: '请输入机构名称!',
+                                    required: true, message: '请输入课程名称!',
                                 }],
                             })(
                                 <Input />
@@ -155,30 +264,77 @@ class CourseView extends React.Component {
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
-                            label="机构编号"
+                            label="课程类型"
                         >
-                            {getFieldDecorator('code', {
-                                initialValue: this.state.dataModel.code,
+                            {getFieldDecorator('courseType', {
+                                initialValue: dataBind(this.state.dataModel.courseType),
+                            })(
+                                <RadioGroup size="large" onChange={this.onCourseTypeChange}>
+                                    <RadioButton value="1">收费课</RadioButton>
+                                    <RadioButton value="2">免费课</RadioButton>
+                                </RadioGroup>
+                                )}
+                        </FormItem>
+                        {!this.state.hidePrice && <FormItem
+                            {...formItemLayout}
+                            label="定价"
+                        >
+                            {getFieldDecorator('price', {
+                                initialValue: this.state.dataModel.price,
                                 rules: [{
-                                    required: true, message: '请输入机构编号!',
+                                    required: false, message: '请输入价格!',
+                                    pattern: new RegExp(/^[1-9]\d*$/, "g"),
                                 }],
+                                getValueFromEvent: (event) => {
+                                  return event.target.value.replace(/\D/g,'')
+                                },
                             })(
                                 <Input />
                                 )}
-                        </FormItem>
+                        </FormItem>}
                         <FormItem
                             {...formItemLayout}
-                            label="是否默认机构"
+                            label="是否会员"
                         >
-                            {getFieldDecorator('isDefaultOrg', {
-                                initialValue: dataBind(this.state.dataModel.isDefaultOrg),
+                            {getFieldDecorator('isShow', {
+                                initialValue: dataBind(this.state.dataModel.isShow),
                             }
                             )(
                                 <RadioGroup size="large">
-                                    <RadioButton value="1">是</RadioButton>
-                                    <RadioButton value="0">否</RadioButton>
+                                    <RadioButton value="1">否</RadioButton>
+                                    <RadioButton value="0">是</RadioButton>
                                 </RadioGroup>
                                 )}
+                        </FormItem>
+                        <FormItem
+                            {...formItemLayout}
+                            label="所属机构"
+                        >
+                            {getFieldDecorator('orgId', {
+                                initialValue: this.state.dataModel.orgId,
+                            }
+                            )(
+                              <Select defaultValue="无" style={{ width: 120 }} onChange={this.onOrgChange}>
+                                {this.state.orgList.map((item) => {
+                                  return <Option value={item.value}>{item.title}</Option>
+                                })}
+                              </Select>
+                            )}
+                        </FormItem>
+                        <FormItem
+                            {...formItemLayout}
+                            label="讲师"
+                        >
+                            {getFieldDecorator('teacherId', {
+                                initialValue: this.state.dataModel.teacherId,
+                            }
+                            )(
+                              <Select defaultValue="无" style={{ width: 120 }} onChange={this.onTeacherChange}>
+                                {this.state.teacherList.map((item) => {
+                                  return <Option value={item.value}>{item.title}</Option>
+                                })}
+                              </Select>
+                            )}
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
@@ -196,10 +352,10 @@ class CourseView extends React.Component {
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
-                            label="机构简介"
+                            label="课程简介"
                         >
-                            {getFieldDecorator('remark', {
-                                initialValue: this.state.dataModel.remark,
+                            {getFieldDecorator('courseDesc', {
+                                initialValue: this.state.dataModel.courseDesc,
                                 rules: [{
                                     required: false, message: '备注!',
                                 }]
@@ -218,27 +374,33 @@ class CourseView extends React.Component {
                     <Form>
                         <FormItem
                             {...formItemLayout}
-                            label="机构名称"
+                            label="课程名称"
                         >
                             <span className="ant-form-text" >{this.state.dataModel.name}</span>
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
-                            label="机构编号"
+                            label="课程类型"
                         >
-                            <span className="ant-form-text" >{this.state.dataModel.code}</span>
+                            <span className="ant-form-text" >{getDictionaryTitle(this.props.dic_course_type, this.state.dataModel.courseType)}</span>
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
-                            label="是否默认机构"
+                            label="定价"
                         >
-                            <span className="ant-form-text" >{getDictionaryTitle(this.props.dic_YesNo, this.state.dataModel.isDefaultOrg)}</span>
+                            <span className="ant-form-text" >{this.state.dataModel.price}元</span>
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
-                            label='机构简介'
+                            label="是否会员"
                         >
-                            <span className="ant-form-text" dangerouslySetInnerHTML={{ __html: convertTextToHtml(this.state.dataModel.remark) }}></span>
+                            <span className="ant-form-text" >{getDictionaryTitle(this.props.dic_YesNo, this.state.dataModel.isShow == 1 ? 0 : 1)}</span>
+                        </FormItem>
+                        <FormItem
+                            {...formItemLayout}
+                            label='课程简介'
+                        >
+                            <span className="ant-form-text" dangerouslySetInnerHTML={{ __html: convertTextToHtml(this.state.dataModel.courseDesc) }}></span>
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
@@ -280,10 +442,14 @@ class CourseView extends React.Component {
 const WrappedCourseView = Form.create()(CourseView);
 
 const mapStateToProps = (state) => {
-    return {}
+    return {
+    }
 };
 
 function mapDispatchToProps(dispatch) {
-    return {};
+    return {
+      train_org_list: bindActionCreators(train_org_list, dispatch),
+      train_teacher_list: bindActionCreators(train_teacher_list, dispatch),
+    };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(WrappedCourseView);

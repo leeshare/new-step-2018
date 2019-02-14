@@ -64,7 +64,7 @@ class CourseManage extends React.Component {
 
   componentWillMount() {
     //载入需要的字典项
-    this.loadBizDictionary(['dic_Status']);
+    this.loadBizDictionary(['dic_Status', 'dic_course_type', 'dic_YesNo']);
     this.onSearch();
   }
 
@@ -85,12 +85,16 @@ class CourseManage extends React.Component {
       title: '价格',
       dataIndex: 'price',
     },
-    {
+    /*{
       title: '是否会员',
       dataIndex: 'isShow',
       render: (text) => {
         return text == 0 ? <span>是</span> : <span>否</span>
       }
+    },*/
+    {
+      title: '所属机构',
+      dataIndex: 'ssoOrganization.name',
     },
     {
       title: YSI18n.get('更新时间'),
@@ -164,9 +168,9 @@ class CourseManage extends React.Component {
       const children = [];
       children.push(
           <Col span={8}>
-              <FormItem {...formItemLayout} label={'机构'} >
-                  {getFieldDecorator('Keyword', { initialValue: this.state.pagingSearch.Keyword })(
-                      <Input placeholder={'机构名称模糊搜索'} />
+              <FormItem {...formItemLayout} label={'课程'} >
+                  {getFieldDecorator('keyword', { initialValue: this.state.pagingSearch.keyword })(
+                      <Input placeholder={'课程名称模糊搜索'} />
                   )}
               </FormItem>
           </Col>
@@ -177,7 +181,7 @@ class CourseManage extends React.Component {
                   {...formItemLayout}
                   label="状态"
               >
-                  {getFieldDecorator('Status', { initialValue: this.state.pagingSearch.Status })(
+                  {getFieldDecorator('status', { initialValue: this.state.pagingSearch.status })(
                       <Select>
                           <Option value="-1">全部</Option>
                           {this.state.dic_Status.map((item) => {
@@ -280,7 +284,7 @@ class CourseManage extends React.Component {
               <Row>
                 <Col span={24} style={{ textAlign: 'right' }}>
                   <Button type="primary" icon="search" onClick={this.onSearch}>查询</Button>
-                  <Button style={{ marginLeft: 8 }} onClick={() => this.onLookView('Create') } icon="plus">新增机构</Button>
+                  <Button style={{ marginLeft: 8 }} onClick={() => this.onLookView('Create') } icon="plus">新增课程</Button>
                   <a style={{ marginLeft: 8, fontSize: 12 }} onClick={this.toggle}>
                     更多 <Icon type={this.state.expand ? 'up' : 'down'} />
                   </a>

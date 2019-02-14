@@ -3,12 +3,11 @@ package com.step.train.controller;
 import com.github.pagehelper.PageInfo;
 import com.step.train.annotation.CurrentUser;
 import com.step.train.annotation.LoginRequired;
-import com.step.train.domain.entity.Course;
-import com.step.train.domain.entity.JsonResult;
-import com.step.train.domain.entity.Param;
-import com.step.train.domain.entity.SsoUser;
+import com.step.train.domain.entity.*;
+import com.step.train.domain.repository.SsoOrganizationRepository;
 import com.step.train.model.PageQo;
 import com.step.train.service.CourseService;
+import com.step.train.service.OrgService;
 import com.step.train.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -29,9 +28,10 @@ public class CourseController {
 
     @Autowired
     private CourseService courseService;
-
     @Autowired
     private UserService userService;
+    @Autowired
+    private OrgService orgService;
 
     @PostMapping("/list")
     @LoginRequired
@@ -55,6 +55,11 @@ public class CourseController {
                 SsoUser updatedUser = userService.findById(info.getUpdatedUserId());
                 if (updatedUser != null)
                     info.setUpdatedUserName(updatedUser.getRealName());
+            }
+            if(info.getOrgId() > 0){
+                SsoOrganization org = orgService.findById(info.getOrgId());
+                if(org != null)
+                    info.setSsoOrganization(org);
             }
         }
         pageInfo.setList(courseList);
