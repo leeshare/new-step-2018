@@ -13,6 +13,11 @@ module.exports = {
         var token = window.localStorage.getItem('token') || '';
         return token;
     },
+    getOrg: function () {
+        //在请求发送之前做一些事
+        var token = window.localStorage.getItem('org') || '';
+        return token;
+    },
     //获取当前用户语言环境
     getLocale: function () {
         var lang = navigator.language || navigator.userLanguage;//常规浏览器语言和IE浏览器

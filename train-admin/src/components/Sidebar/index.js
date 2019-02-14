@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Layout, Menu, Icon, Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
-import { getAllMenu, updateNavPath, recordUserFunClick, switchMenuCollapse } from '@/actions/menu'
+import { getAllMenu, getMenusByRole, updateNavPath, recordUserFunClick, switchMenuCollapse } from '@/actions/menu'
 import { appName, extendAllMenus } from '@/api/env.js'
 
 import { authHOC, getUserLastMenuInfo } from '@/utils/auth';
@@ -56,7 +56,10 @@ class Sidebar extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getAllMenu().payload.promise.then((response) => {
+    /*this.props.getAllMenu().payload.promise.then((response) => {
+      this.props.updateNavPath(this.lastMenuInfo.keyPath.sort((a, b) => { return (a.length > b.length) ? -1 : 1; }), this.lastMenuInfo.key);
+    })*/
+    this.props.getMenusByRole(this.props.auth.user.roleType).payload.promise.then((response) => {
       this.props.updateNavPath(this.lastMenuInfo.keyPath.sort((a, b) => { return (a.length > b.length) ? -1 : 1; }), this.lastMenuInfo.key);
     })
   }
@@ -172,6 +175,7 @@ Sidebar.propTypes = propTypes;
 Sidebar.defaultProps = defaultProps;
 
 function mapStateToProps(state) {
+
   return {
     items: state.menu.items,
     menuCollapsed: state.menu.menuCollapsed,
@@ -182,6 +186,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getAllMenu: bindActionCreators(getAllMenu, dispatch),
+    getMenusByRole: bindActionCreators(getMenusByRole, dispatch),
     updateNavPath: bindActionCreators(updateNavPath, dispatch),
     recordUserFunClick: bindActionCreators(recordUserFunClick, dispatch),
     switchMenuCollapse: bindActionCreators(switchMenuCollapse, dispatch),

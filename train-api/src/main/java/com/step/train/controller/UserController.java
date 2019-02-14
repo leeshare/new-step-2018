@@ -33,6 +33,11 @@ public class UserController {
         if(currentUser == null || currentUser.getId() <= 0){
             return new JsonResult<>("请登录");
         }
+        if(currentUser.getRoleType() == 1) {
+            param.setOrgId(0);
+        }else {
+            param.setOrgId(currentUser.getOrgId());
+        }
         PageInfo<SsoUser> pageInfo = userService.findPage(param);
         return new JsonResult<>(pageInfo);
     }

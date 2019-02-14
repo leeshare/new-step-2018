@@ -1,5 +1,5 @@
 module.exports = {
-  menus: [
+  menus_of_root: [
     {
       key: 0,
       name: '首页',
@@ -78,6 +78,12 @@ module.exports = {
       icon: 'user',
       url: '/user/list'
     },
+    {
+      key: 3,
+      name: '课程管理',
+      icon: 'book',
+      url: '/course/list'
+    }
   ],
   menus_of_teacher: [
     {

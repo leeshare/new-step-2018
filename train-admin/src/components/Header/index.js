@@ -8,7 +8,7 @@ import { Modal, Layout, Row, Col, Icon,
 import './index.less'
 import { Link, withRouter } from 'react-router-dom'
 const { Header } = Layout;
-import { getAllMenu } from '../../actions/menu'
+import { getAllMenu, getMenusByRole } from '../../actions/menu'
 import { switchOrgContext } from '../../actions/auth'
 import NavPath from '@/components/NavPath';
 import ModalChangeUserInfoView from '@/views/My/ChangeUserInfo';
@@ -29,7 +29,8 @@ class commonHeader extends React.Component {
     this.setState({ currentOrgInfo: item });
     this.props.switchOrgContext(item.orgID);
     //切换身份后立即获取对应的功能菜单
-    this.props.getAllMenu();
+    //this.props.getAllMenu();
+    this.props.getMenusByRole(this.props.roleType)
   }
 
 
@@ -151,14 +152,17 @@ commonHeader.propTypes = {
 };
 const mapStateToProps = (state) => {
   const { menu } = state;
+  const { user } = state.auth;
   return {
-    navpath: menu.navpath
+    navpath: menu.navpath,
+    roleType: user.roleType
   };
 };
 
 function mapDispatchToProps(dispatch) {
   return {
     getAllMenu: bindActionCreators(getAllMenu, dispatch),
+    getMenusByRole: bindActionCreators(getMenusByRole, dispatch),
     switchOrgContext: bindActionCreators(switchOrgContext, dispatch)
   }
 }

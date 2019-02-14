@@ -82,8 +82,8 @@ public class UserService {
         int offset = (page - 1) * size;
         int limit = size;
         //List<SsoUser> list = ssoUserRepository.find(ssoUserQo.getRoleType());
-        int total = ssoUserRepository.findCount(ssoUserQo.getRoleType(), ssoUserQo.getStatus(), ssoUserQo.getKeyword());
-        List<SsoUser> list = ssoUserRepository.find(offset, size, ssoUserQo.getRoleType(), ssoUserQo.getStatus(), ssoUserQo.getKeyword());
+        int total = ssoUserRepository.findCount(ssoUserQo.getRoleType(), ssoUserQo.getStatus(), ssoUserQo.getKeyword(), ssoUserQo.getOrgId());
+        List<SsoUser> list = ssoUserRepository.find(offset, size, ssoUserQo.getRoleType(), ssoUserQo.getStatus(), ssoUserQo.getKeyword(), ssoUserQo.getOrgId());
         PageInfo<SsoUser> pageInfo = new PageInfo<>(list);
         pageInfo.setTotal(total);
         pageInfo.setHasNextPage(page * size < total);

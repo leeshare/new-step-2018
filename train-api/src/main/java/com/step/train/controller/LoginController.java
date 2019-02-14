@@ -1,11 +1,13 @@
 package com.step.train.controller;
 
 import com.step.train.domain.entity.JsonResult;
+import com.step.train.domain.entity.SsoOrganization;
 import com.step.train.domain.entity.SsoUser;
 import com.step.train.domain.entity.SsoUserAccessLog;
 import com.step.train.exception.DataException;
 import com.step.train.service.AccessLogService;
 import com.step.train.service.ImageCode;
+import com.step.train.service.OrgService;
 import com.step.train.service.UserService;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ public class LoginController {
     private UserService userService;
     @Autowired
     private AccessLogService accessLogService;
+    @Autowired
+    private OrgService orgService;
 
     //@RequestMapping(value = "/login", method = RequestMethod.POST)
     //@RequestMapping(value = "/login")
@@ -74,7 +78,13 @@ public class LoginController {
                         u.setId(userId);
                         u.setRealName(user.getRealName());
                         u.setSsoRoles(user.getSsoRoles());
-
+                        u.setRoleType(user.getRoleType());
+                        u.setOrgId(user.getOrgId());
+                        if(user.getOrgId() > 0){
+                            SsoOrganization org = orgService.findById(user.getOrgId());
+                            if(org != null)
+                                u.setOrgName(org.getName());
+                        }
 
 
                         String ticket = userService.addLoginTicket(userId);

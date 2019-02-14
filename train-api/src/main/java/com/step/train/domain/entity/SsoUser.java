@@ -62,6 +62,10 @@ public class SsoUser implements Serializable {
     @Transient
     private Integer recommendUserId;
 
+    @Transient
+    private String orgName;
+
+    //----------------------------------------------------------//
 
     public Integer getId() {
         return id;
@@ -245,5 +249,13 @@ public class SsoUser implements Serializable {
 
     public void setRoleType(Byte roleType) {
         this.roleType = roleType;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 }

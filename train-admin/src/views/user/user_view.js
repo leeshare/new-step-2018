@@ -41,7 +41,9 @@ class UserView extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            dataModel: props.currentDataModel || { recommendUserId: 0, status: 1, id: 0 },//数据模型
+            dataModel: props.currentDataModel || {
+              recommendUserId: 0, status: 1, id: 0
+            },//数据模型
             disabled: false,
             loading: false,
             orgList: [],
@@ -49,7 +51,9 @@ class UserView extends React.Component {
     }
 
     componentWillMount() {
-      this.getOrgData();
+      if(this.props.user.orgType == 1){
+        this.getOrgData();
+      }
     }
     getOrgData = () => {
       this.props.train_org_list().payload.promise.then((response) => {
@@ -325,7 +329,10 @@ class UserView extends React.Component {
 const WrappedUserView = Form.create()(UserView);
 
 const mapStateToProps = (state) => {
-    return {}
+    var u = state.auth.user;
+    return {
+      user: u,
+    }
 };
 
 function mapDispatchToProps(dispatch) {

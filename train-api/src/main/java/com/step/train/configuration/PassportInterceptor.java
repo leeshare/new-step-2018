@@ -38,6 +38,7 @@ public class PassportInterceptor implements HandlerInterceptor {
         // 有 @LoginRequired 注解，需要认证
         if(methodAnnotation != null){
             String ticket = request.getHeader("ticket");
+            String org = request.getHeader("org");
             if (ticket == null) {
                 throw new RuntimeException("无ticket，请重新登录");
             }

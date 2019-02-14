@@ -11,6 +11,8 @@ public class SsoUserQo extends PageQo {
 
     private Byte roleType;
 
+    private Integer orgId;
+
     public SsoUserQo(){
 
     }
@@ -53,5 +55,13 @@ public class SsoUserQo extends PageQo {
 
     public void setRoleType(Byte roleType) {
         this.roleType = roleType;
+    }
+
+    public Integer getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Integer orgId) {
+        this.orgId = orgId;
     }
 }

@@ -19,6 +19,7 @@ export default function auth(state = initialState, action = {}) {
         //let currentOrgID = user.role_contexts[user.role_contexts.length - 1].orgID;
         //window.localStorage.setItem('token', user.token + ',' + currentOrgID)
         window.localStorage.setItem('token', user.ticket)
+        window.localStorage.setItem('org', user.orgId)
         window.localStorage.setItem('profile', JSON.stringify(user));
         //user.currentOrgID = currentOrgID;
         return {

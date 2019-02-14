@@ -18,9 +18,10 @@ export function updateNavPath(path, key) {
 
 export function getMenusByRole(roleType) {
   return {
-    type: GET_MENUS_BY_ROLE,
+    //type: 'GET_MENUS_BY_ROLE',
+    type: GET_ALL_MENU,
     payload: {
-      promise: api.get('/menu', roleType)
+      promise: api.get('/menu', {roleType: roleType})
     }
   }
 }

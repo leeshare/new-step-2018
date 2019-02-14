@@ -1,4 +1,4 @@
-import { serverURL, getToken, getLocale } from './env';
+import { serverURL, getToken, getLocale, getOrg } from './env';
 var axios = require('axios');
 var MockAdapter = require('axios-mock-adapter');
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
@@ -9,7 +9,7 @@ var normalAxios = axios.create({
 });
 
 var axios0 = axios;
-import { menus } from './mock/menu';
+import { menus_of_root, menus_of_org, menus_of_teacher } from './mock/menu';
 
 var mockAxios = axios.create();
 var axios = normalAxios;
@@ -19,8 +19,10 @@ axios.interceptors.request.use(function (config) {
   //在请求发送之前做一些事
   var token = getToken(); //window.localStorage.getItem('token') || '';
   var locale = getLocale();//语言环境
+  var orgId = getOrg();
   //config.headers.common.token = token;
   config.headers.common.ticket = token;
+  config.headers.common.org = orgId;
   config.headers.common.locale = locale;
   config.data = config.data || {}
   return config;
@@ -77,6 +79,20 @@ mock.onPut('/login').reply(config => {
 });
 //从本地获取菜单  train
 mock.onGet('/menu').reply(config => {
+  var menus = [];
+  switch (config.roleType) {
+    case 1:
+      menus = menus_of_root;
+      break;
+    case 2:
+      menus = menus_of_org;
+      break;
+    case 3:
+      menus = menus_of_teacher;
+      break;
+    default:
+      menus = [];
+  }
   return new Promise(function (resolve, reject) {
     resolve([200, menus]);
 
