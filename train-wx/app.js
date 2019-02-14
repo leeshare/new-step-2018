@@ -10,6 +10,11 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        wx.showToast({
+          title: res.code,
+          icon: 'success',
+          duration: 2000
+        })
       }
     })
     // 获取用户信息
