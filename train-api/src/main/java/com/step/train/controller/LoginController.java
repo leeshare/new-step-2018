@@ -26,7 +26,7 @@ import java.util.Map;
 import org.springframework.util.DigestUtils;
 
 @RestController
-@RequestMapping("/api/login")
+@RequestMapping("/api")
 public class LoginController {
 
     @Autowired
@@ -42,7 +42,7 @@ public class LoginController {
     //@PostMapping("/login")
     //public Object login(@RequestParam(value = "username", required = false) String username, @RequestParam(value = "pwd", required = false) String pwd)
 
-    @PostMapping("")
+    @PostMapping("/login")
     public Object login(@RequestBody(required = false) SsoUser params)
     {
         int result = 0;
@@ -128,6 +128,13 @@ public class LoginController {
             default:
                 return new JsonResult<SsoUser>("未知错误");
         }
+    }
+
+    @RequestMapping("/register")
+    public Object reg(@RequestBody SsoUser params){
+
+
+        return new JsonResult<>();
     }
 
     @RequestMapping(value = "/images/imagecode")
