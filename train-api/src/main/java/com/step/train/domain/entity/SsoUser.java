@@ -26,7 +26,7 @@ public class SsoUser implements Serializable {
     private Date birthday;
     private Byte status;
     private Byte isDelete;
-    private String wxAppId;
+    private String wechatOpenid;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

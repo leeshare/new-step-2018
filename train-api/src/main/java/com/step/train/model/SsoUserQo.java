@@ -3,19 +3,21 @@ package com.step.train.model;
 public class SsoUserQo extends PageQo {
 
     private Integer id;
-    private String realName;
+    //private String realName;
 
-    private String keyword;
+    //private String keyword;
 
-    private Byte status;
+    //private Byte status;
+
+    //private Integer orgId;
 
     private Byte roleType;
-
-    private Integer orgId;
 
     private String oldPwd;
 
     private String newPwd;
+
+    private String code;
 
     public SsoUserQo(){
 
@@ -29,7 +31,7 @@ public class SsoUserQo extends PageQo {
         this.id = id;
     }
 
-    public String getRealName() {
+    /*public String getRealName() {
         return realName;
     }
 
@@ -53,6 +55,15 @@ public class SsoUserQo extends PageQo {
         this.status = status;
     }
 
+    public Integer getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Integer orgId) {
+        this.orgId = orgId;
+    }
+    */
+
     public Byte getRoleType() {
         return roleType;
     }
@@ -61,13 +72,7 @@ public class SsoUserQo extends PageQo {
         this.roleType = roleType;
     }
 
-    public Integer getOrgId() {
-        return orgId;
-    }
 
-    public void setOrgId(Integer orgId) {
-        this.orgId = orgId;
-    }
 
     public String getOldPwd() {
         return oldPwd;
