@@ -1,12 +1,61 @@
 {
   "pages":[
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/category/category",
+    "pages/search/search",
+    "pages/photo/photo",
+    "pages/detail/detail",
+    "pages/comment/comment",
+    "pages/morepicture/morepicture",
+    "pages/myFavoriteList/myFavoriteList",
+    "pages/myFavoriteCreate/myFavoriteCreate",
+    "pages/mycollect/mycollect",
+    "pages/mycollectview/mycollectview",
+    "pages/viewmore/viewmore",
+    "pages/T/T",
+    "pages/shareCollect/shareCollect",
+    "pages/cards/cards",
+    "pages/towho/towho",
+    "pages/creatTime/creatTime",
+    "pages/creatLogo/creatLogo",
+    "pages/topay/topay",
+    "pages/By/By",
+    "pages/creatcatgory/creatcatgory"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
-  }
+    "navigationBarTitleText": "培训",
+    "navigationBarTextStyle": "black"
+  },
+  "networkTimeout": {
+    "request": 20000,
+    "downloadFile": 20000
+  },
+  "tabBar": {
+    "selectedColor": "#ea5b5a",
+    "borderStyle": "white",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/tab_home-0.png",
+        "selectedIconPath": "images/tab_home-1.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/T/T",
+        "iconPath": "images/tab_search-0.png",
+        "selectedIconPath": "images/tab_search-1.png",
+        "text": "找图"
+      },
+      {
+        "pagePath": "pages/mycollect/mycollect",
+        "iconPath": "images/tab_me-0.png",
+        "selectedIconPath": "images/tab_me-1.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "debug": false
 }

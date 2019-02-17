@@ -1,0 +1,42 @@
+
+<!--pages/search/search.wxml-->
+<template name="searchitem">
+  <view class="view-list-wrap " bindtap="toDetail" data-item="{{item0}}">
+    <view class="view-list-item flexrow">{{keyword}}</view>
+  </view>
+</template>
+<view class="WViewRow1 focus">
+  <view class="winputwrap">
+    <input placeholder="{{nobjico?'':'请输入内容'}}" type="text" bindblur="showbjico" bindfocus="hidebjico" placeholder-class="font14"  class="WInput17PT1 {{nobjico?'nobj':''}}" bindinput="Inputword" focus="true" value="{{keyvalue}}"></input>
+     <view  class="icon-shanchu_wrap flexrow"  bindtap="clearinput"><i class="iconfont icon-shanchu"></i></view>
+  </view>
+  <text class="button-cancel" bindtap="navigatebackto">取消</text>
+</view>
+<scroll-view style="height:{{scrollH}}px;background:#f5f5f5" scroll-y="true">
+
+  <view hidden="{{inputvalue}}" class="inputkey-wrap">
+    <block wx:for="{{dataSearchResult}}" wx:key="keyword_id" wx:for-item="item">
+      <template is="searchitem" data="{{...item, item0: item}}"></template>
+    </block>
+  </view>
+
+  <view class="view-search-hotword" hidden="{{!inputvalue || dataSearchResult.length>0}}">
+    <view class="view-header-title" >热词推荐</view>
+    <view class="view-word-wrap whitebj flexrow">
+      <view wx:for="{{dataWordList}}" class="outline radius flexcol" bindtap="toDetail" data-item="{{item}}">
+        <text class="text">{{item.keyword}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="view-history-word" hidden="{{dataHistoryList.length==0 || !inputvalue || dataSearchResult.length>0}}">
+    <view class="view-header-title">历史搜索</view>
+    <block wx:for="{{dataHistoryList}}" wx:key="keyword_id" wx:for-item="item">
+      <template is="searchitem" data="{{...item, item0: item}}"></template>
+      <!--<view class="view-list-wrap ">
+        <view class="view-list-item flexrow" wx:for="{{datalist}}" bindtap="toDetail" data-item="{{itemHis}}">{{itemHis.keyword}}</view>
+      </view>-->
+    </block>
+    <view class="clearbutton hasbottomline font14" hidden="{{dataHistoryList.length > 0 ? false : true}}" bindtap="clearHis">清除历史搜索</view>
+  </view>
+</scroll-view>

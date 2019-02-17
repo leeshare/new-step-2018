@@ -97,15 +97,37 @@ public class UserService {
             List<SsoRole> roles = ssoRoleRepository.findRolesByUser(user.getId());
             user.setSsoRoles(roles);
 
-            String key = "user:" + user.getId();
+            String key = "user:id:" + user.getId();
             userRedis.add(key, TIME_MINUTES, user);
         }else {
         }
         return user;
     }
 
+    /**
+     * 按微信openId查询用户
+     * 2019-02-16
+     * @param openId
+     * @return
+     */
+    public SsoUser findByWechatOpenId(String openId){
+        String key = "user:open_id:" + openId;
+        SsoUser user = userRedis.get(key);
+        if(user == null){
+            user = ssoUserRepository.findByWechatOpenId(openId);
+            if(user == null){
+                user = null;
+                userRedis.add(key, TIME_MINUTES, user);
+            }else {
+                userRedis.add(key, TIME_MINUTES, user);
+            }
+        }else {
+        }
+        return user;
+    }
+
     public SsoUser findById(int id){
-        String key = "user:" + id;
+        String key = "user:id:" + id;
         SsoUser user = userRedis.get(key);
         if(user == null){
             user = ssoUserRepository.findById(id);
@@ -157,7 +179,7 @@ public class UserService {
         return t;
     }
 
-    public void setCurrentUser(String ticket){
+    /*public void setCurrentUser(String ticket){
 
     }
 
@@ -172,6 +194,32 @@ public class UserService {
         }
         SsoUser user = findById(userId);
         return user;
+    }*/
+
+    /**
+     * 更新redis 用户信息
+     * @param user
+     */
+    public void updateRedisUser(SsoUser user){
+        if(user == null){
+            return;
+        }
+        if(user.getId() > 0){
+            String key = "user:id:" + user.getId();
+            SsoUser u = userRedis.get(key);
+            if(u != null){
+                userRedis.delete(key);
+            }
+            userRedis.add(key, TIME_MINUTES, user);
+        }
+        if(!StringUtils.isEmpty(user.getWechatOpenId())){
+            String key = "user:open_id:" + user.getWechatOpenId();
+            SsoUser u = userRedis.get(key);
+            if(u != null){
+                userRedis.delete(key);
+            }
+            userRedis.add(key, TIME_MINUTES, user);
+        }
     }
 
     public Boolean checkIsRoot(SsoUser user){
@@ -198,16 +246,18 @@ public class UserService {
     }
 
     @Transactional
-    public String save(SsoUser user){
+    public int save(SsoUser user){
         SsoUser oldUser = ssoUserRepository.findByUserName(user.getUserName());
         if(user.getId() <= 0 && oldUser != null && oldUser.getId() > 0){
-            return "新增用户名已存在!";
+            //return "新增用户名已存在!";
+            return -1;
         }
         if(user.getId() > 0 && oldUser != null && oldUser.getId() != user.getId()){
-            return "修改用户名已存在!";
+            //return "修改用户名已存在!";
+            return -2;
         }
 
-        if(user.getRoleType() <= 0){
+        if(user.getRoleType() == null || user.getRoleType() <= 0){
             user.setRoleType((byte)4);
         }
         if(user.getId() <= 0){
@@ -229,10 +279,12 @@ public class UserService {
         }
         //注册用户
         SsoUser newUser = ssoUserRepository.save(user);
-
         if(newUser.getId() <= 0){
             throw new RuntimeException();
         }
+        //应该异步调用 redis更新
+        updateRedisUser(newUser);
+
         //添加用户角色 sso_user_role
         SsoRole r = new SsoRole();
         r.setType(newUser.getRoleType());
@@ -250,7 +302,7 @@ public class UserService {
             userLevelRepository.save(ul);
         }
 
-        return "";
+        return newUser.getId();
     }
 
 }

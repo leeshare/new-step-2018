@@ -1,0 +1,84 @@
+
+<!--pages/topay/topay.wxml-->
+<view>
+  <view class="view_top_wrap flexrow">
+    <view class="view_img_wrap">
+      <image src="http://image.tohappy.com.cn/UserIcons/2016/12/03/164420917.png_100x100.png" mode="aspectFill" class="img"></image>
+    </view>
+    <view>
+      <view class="view_member_wrap">
+        <view class="flexrow view_name">
+          <text class="font16 color33">Sunflower.
+          </text>
+          <text class="font12 color99">会员剩余0天</text>
+        </view>
+      </view>
+      <view class="colorcc font12">已修改8888张水印</view>
+    </view>
+  </view>
+  <view class="split"></view>
+  <template name="template-1">
+    <view class="view_list_wrap">
+      <view class="view_list_header">
+        黄金VIP会员套餐
+      </view>
+      <view class="view_list_item">
+        <view class="view_colum1">12个月会员 </view>
+        <view class="view_colum2">
+          <view class="price">¥248.00</view>
+          <view>
+            <button type="warn" size="mini">开通</button>
+          </view>
+        </view>
+      </view>
+      <view class="view_list_item">
+        <view class="view_colum1">3个月会员 </view>
+        <view class="view_colum2">
+          <view class="price">¥68.00</view>
+          <view>
+            <button type="warn" size="mini">开通</button>
+          </view>
+        </view>
+      </view>
+      <view class="view_list_item">
+        <view class="view_colum1">1个月会员 </view>
+        <view class="view_colum2">
+          <view class="price">¥25.00</view>
+          <view>
+            <button type="warn" size="mini">开通</button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </template>
+  <block>
+    <template is="template-1"></template>
+  </block>
+  <view class="split"></view>
+  <view class="view_list_wrap nopadding">
+    <view class="view_list_header">黄金VIP会员特权</view>
+    <view class="view_list_item">
+      <view class="view_item_box">
+        <view>
+          <view class="box">
+            <i class="iconfont icon-tabme"></i>
+          </view>
+          <view class="font14 color66">修改水印</view>
+        </view>
+      </view>
+    </view>
+    <view class="view_list_item font12">
+      会员服务协议 <i class="iconfont icon-into"></i>
+    </view>
+  </view>
+  <view class="split"></view>
+  <view class="view_list_wrap nopadding">
+    <view class="view_list_item">
+      常见问题
+      <i class="iconfont icon-into"></i>
+    </view>
+  </view>
+  <view class="split"></view>
+  <view class="view13"></view>
+  <view class="center font10 color99">本活动由快乐多图公司提供，与微信无关系</view>
+</view>

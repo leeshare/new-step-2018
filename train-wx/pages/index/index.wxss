@@ -1,4 +1,66 @@
 /**index.wxss**/
+page{
+  position: relative;
+}
+
+/*swiper*/
+.page-section{
+  width: 100%;
+  margin-bottom: 60rpx;
+}
+.page-section-spacing{
+  box-sizing: border-box;
+  padding: 0 80rpx;
+}
+.demo-text-1{
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background-color: #1AAD19;
+  color: #FFFFFF;
+  font-size: 36rpx;
+}
+.demo-text-1:before{
+  content: 'A';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.demo-text-2{
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background-color: #2782D7;
+  color: #FFFFFF;
+  font-size: 36rpx;
+}
+.demo-text-2:before{
+  content: 'B';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.demo-text-3{
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background-color: #F1F1F1;
+  color: #353535;
+  font-size: 36rpx;
+}
+.demo-text-3:before{
+  content: 'C';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/*end swiper*/
+
+
 .userinfo {
   display: flex;
   flex-direction: column;
@@ -18,4 +80,330 @@
 
 .usermotto {
   margin-top: 200px;
+}
+
+.more {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 14px;
+  color: #49a298;
+}
+
+.WViewRow1 {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: stretch;
+  width: 750rpx;
+  height: 82rpx;
+  background-color: #e6e6e6;
+  color: #fff;
+  font-size: 20PX;
+  line-height: 40rpx;
+  font-family: "黑体";
+}
+
+.winputwrap {
+  box-sizing: border-box;
+  padding: 0rpx 0rpx 0rpx 10rpx;
+  width: 720rpx;
+  height: 52rpx;
+  background: white;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  border-radius: 8rpx;
+}
+
+.WInput17PT1 {
+  box-sizing: border-box;
+  border: 2rpx #e6e6e6;
+  padding: 0rpx 0rpx 0rpx 0;
+  width: 100%;
+  height: 26rpx;
+  background: url(http://www.tohappy.com.cn/web2/skin/images/home/images/search-ico.png) 40% center no-repeat;
+  background-size: 40rpx;
+  background-color: #fff;
+  color: #000;
+  font-size: 14PX;
+  line-height: 26rpx;
+  border-radius: 8rpx;
+  font-family: "黑体";
+  text-indent: 44%;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+
+
+.button-cancel {
+  font-size: 14px;
+  margin-left: 22rpx;
+  color: #666;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.WViewRow2 {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: stretch;
+  width: 750rpx;
+  height: 84rpx;
+  background-color: transparent;
+  color: #fff;
+  font-size: 20PX;
+  line-height: 40rpx;
+  font-family: "黑体";
+}
+
+.WViewRow3 {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: stretch;
+  padding: 24rpx 26rpx 24rpx 26rpx;
+  width: 750rpx;
+  height: 84rpx;
+  background-color: #fff;
+  color: #fff;
+  font-size: 20PX;
+  line-height: 40rpx;
+  font-family: "黑体";
+  position: relative;
+}
+
+.icon-specialtopic {
+  color: rgb(96, 138, 231);
+  font-size: 22px;
+  margin-right: 8rpx;
+  margin-top: -2px;
+}
+
+.icon-classify {
+  color: #49a298;
+  font-size: 20px;
+  margin-right: 8rpx;
+  margin-top: -2px;
+}
+
+.WViewRow4 {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: stretch;
+  width: 100%;
+  height: 34rpx;
+  background-color: transparent;
+  color: #fff;
+  font-size: 20PX;
+  line-height: 40rpx;
+  font-family: "黑体";
+  
+}
+
+.WText17PT1 {
+  background-color: transparent;
+  color: #333;
+  font-size: 16PX;
+  line-height: 32rpx;
+  font-family: "黑体";
+}
+
+.WViewRow5 {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  width: 750rpx;
+  background-color: #fff;
+  color: #fff;
+  font-size: 20PX;
+  line-height: 40rpx;
+  font-family: "黑体";
+  padding: 5rpx 5rpx;
+  box-sizing: border-box;
+  margin-bottom: 20rpx;
+}
+
+.WViewRow6 {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: stretch;
+  margin: 5rpx 5rpx 5rpx 5rpx;
+  width: 239rpx;
+  height: 239rpx;
+  background-color: #fff;
+  color: #fff;
+  font-size: 20PX;
+  line-height: 140rpx;
+  overflow: hidden;
+  font-family: "黑体";
+  position: relative;
+}
+
+.WViewRow6 .image {
+  height: 100%;
+}
+
+.wViewRow7 {
+  box-sizing: border-box;
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  align-content: space-around;
+  font-size: 18px;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  font-family: "黑体";
+  background: rgba(0, 0, 0, 0.3);
+  left: 0;
+  top: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.view_tapwrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+.placeholder {
+  padding-top: 1px;
+}
+
+.commodity_screen {
+  background: rgba(0, 0, 0, 0.8);
+  opacity: 1;
+  z-index: 1;
+}
+
+.view_img {
+  background: url(http://www.tohappy.com.cn/web2/skin/images/home/images/line-1.png) left center no-repeat;
+  width: 152rpx;
+  height: 380rpx;
+  background-size: 50%;
+  position: absolute;
+  right: 0;
+  top: -60rpx;
+  z-index: 11;
+  transform: rotate(45deg);
+}
+
+.view_text {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 120rpx;
+  text-align: center;
+  z-index: 11;
+  line-height: 48rpx;
+}
+
+.view_yindao_wrap {
+  background: white;
+  height: 314rpx;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 11;
+  padding-left: 26rpx;
+  box-sizing: border-box;
+}
+
+.view_yindao_wrap .text {
+  width: 100%;
+  font-family: "黑体";
+  font-size: 16px;
+  color: #666;
+}
+
+.viewTitle-wrap {
+  border-bottom: 2rpx solid #e6e6e6;
+  white-space: nowrap;
+  background: white;
+}
+
+.viewTitle-wrap text {
+  margin: 0 26rpx;
+  font-size: 16px;
+  color: #333;
+  display: inline-block;
+}
+
+.viewTitle-wrap text.active {
+  color: #000;
+  position: relative;
+}
+
+.viewTitle-wrap text.active::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 6rpx;
+  background: #ea5b5a;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.section {
+  background: #f5f5f5;
+}
+
+.view_more_wrap {
+  background: white;
+  height: 140rpx;
+  justify-content: center;
+  margin-top: 20rpx;
+  border-top: 1px solid #e6e6e6;
+  padding: 0 26rpx;
+}
+
+.icon-more {
+  color: #ea5b5a;
+  font-size: 24px;
+}
+
+.icon-more-wrap {
+  position: absolute;
+  right: 0;
+  height: 84rpx;
+  width: 98rpx;
+  justify-content: flex-end;
+  top: 0;
+  padding-right: 26rpx;
 }

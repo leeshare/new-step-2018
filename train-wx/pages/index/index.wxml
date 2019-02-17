@@ -1,13 +1,135 @@
+
 <!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+<template name="topic">
+  <view class="WViewRow5 hasbottomline" style="background:white;">
+    <view class="WViewRow6" wx:for="{{photo_list}}" bindtap="viewDetail" data-photo-item="{{item}}" data-index="{{index}}" data-category-id="{{self.id}}">
+      <image mode="aspectFill" src="{{item.cover_small}}" class="image"></image>
+      <view class="wViewRow7" hidden="{{!(index==5)}}">
+        <text class="font28">+{{self.photo_total_records > 6 ? self.photo_total_records - 6 : 0}}</text>
+      </view>
+    </view>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+</template>
+<template name="category">
+  <view class="WViewRow2" style="">
+    <view class="WViewRow3 hasbottomline hastopline">
+      <view class="WViewRow4" style="">
+        <text class="WText17PT1" style="">{{self.name}}</text>
+        <view class="icon-more-wrap flexrow" bindtap="viewDetail" data-photo-item="{{item}}" data-index="5" data-category-id="{{self.id}}">
+          <i class="iconfont icon-more"></i>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="WViewRow5 hasbottomline" style="padding-bottom:5rpx;">
+    <view class="WViewRow6" wx:for="{{photo_list}}" bindtap="viewDetail" data-photo-item="{{item}}" data-index="{{index}}" data-category-id="{{self.id}}">
+      <image mode="aspectFill" src="{{item.cover_small}}" class="image"></image>
+      <view class="wViewRow7" hidden="{{!(index==5)}}">
+        <text class="font28">+{{self.photo_total_records > 6 ? self.photo_total_records - 6 : 0}}</text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<view animation="{{animationData}}" class="view_search_box" hidden="{{showSearch}}">
+  <view class="page-section page-section-spacing swiper">
+    <swiper
+          indicator-dots="true" autoplay="true" circular="true" vertical="false"
+          interval="3000" duration="500" previous-margin="0px" next-margin="0px">
+          <block wx:for="{{background}}" wx:key="*this">
+            <swiper-item>
+              <view class="swiper-item {{item}}"></view>
+            </swiper-item>
+          </block>
+    </swiper>
+  </view>
+
+  <template name="searchitem">
+    <view class="view-list-wrap " bindtap="toDetail" data-item="{{item0}}">
+      <view class="view-list-item flexrow">{{keyword}}</view>
+    </view>
+  </template>
+  <view class="WViewRow1 ">
+    <view class="winputwrap">
+      <input placeholder="请输入内容" type="text" placeholder-class="font14" class="WInput17PT1" bindinput="Inputword" value="{{keyvalue}}"></input>
+      <view class="icon-shanchu_wrap flexrow" bindtap="clearinput">
+        <i class="iconfont icon-shanchu"></i>
+      </view>
+    </view>
+    <text class="button-cancel" bindtap="hideSearchModel">取消</text>
+  </view>
+  <scroll-view style="height:{{scrollH-40}}px;background:#f5f5f5" scroll-y="true" bindscroll="scrollHandler">
+    <view class="norecord" hidden="{{norecord}}">
+      没有更多的搜索结果
+    </view>
+    <view hidden="{{dataSearchResult.length==0}}" class="inputkey-wrap">
+      <block wx:for="{{dataSearchResult}}" wx:key="keyword_id" wx:for-item="item">
+        <template is="searchitem" data="{{...item, item0: item}}"></template>
+      </block>
+    </view>
+    <view class="view-search-hotword" hidden="{{!inputvalue || dataSearchResult.length>0}}">
+      <view class="view-header-title">热词推荐</view>
+      <view class="view-word-wrap whitebj flexrow">
+        <view wx:for="{{dataWordList}}" class="outline radius flexcol" bindtap="toDetail" data-item="{{item}}">
+          <text class="text">{{item.keyword}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="view-history-word" hidden="{{dataHistoryList.length==0 || !inputvalue || dataSearchResult.length>0}}">
+      <view class="view-header-title">历史搜索</view>
+      <block wx:for="{{dataHistoryList}}" wx:key="keyword_id" wx:for-item="item">
+        <template is="searchitem" data="{{...item, item0: item}}"></template>
+
+      </block>
+      <view class="clearbutton hasbottomline font14" hidden="{{dataHistoryList.length > 0 ? false : true}}" bindtap="clearHis">清除历史搜索</view>
+    </view>
+  </scroll-view>
+</view>
+<view class="WViewRow1 {{isfocuse?'focus':''}}" style="">
+  <view class="winputwrap relative">
+    <view class="view_tapwrap" bindtap="showSearchModel"></view>
+    <input placeholder="请输入内容" disable="true" placeholder-class="placeholder font14" class="WInput17PT1"></input>
+  </view>
+  <text class="button-cancel" hidden="{{cancel}}" bindtap="canceltrigger">取消</text>
+</view>
+<view class="section">
+  <scroll-view scroll-y="true" style="height:{{scrollH}}px">
+    <scroll-view scroll-x="true" scroll-y="false" style="height:84rpx;line-height:84rpx" class="viewTitle-wrap">
+      <text data-active="0" bindtap="selative" data-id="{{essence_id}}">精选</text>
+
+      <view class="icon-more-wrap flexrow" bindtap="viewDetail" data-photo-item="{{current.photo_list[5]}}" data-index="{{5}}" data-category-id="{{current.id}}">
+        <i class="iconfont icon-more"></i>
+      </view>
+    </scroll-view>
+    <block>
+
+      <view class="WViewRow5 hasbottomline" style="background:white;">
+        <view class="WViewRow6" wx:for="{{current.photo_list}}" bindtap="viewDetail" data-photo-item="{{item}}" data-index="{{index}}" data-category-id="{{current.id}}">
+          <image mode="aspectFill" src="{{item.cover_small}}" class="image"></image>
+          <view class="wViewRow7" hidden="{{!(index==5)}}">
+            <text class="font28">+{{current.photo_total_records > 6 ? current.photo_total_records - 6 : 0}}</text>
+          </view>
+        </view>
+      </view>
+    </block>
+    <block wx:for="{{categorys}}">
+      <template is="category" data="{{...item, self: item}}"></template>
+    </block>
+    <view class="view_more_wrap flexrow" bindtap="viewmore">
+      <button type="warn" size="default" class="font16" style="width:100%">查看更多图片分类</button>
+    </view>
+  </scroll-view>
+</view>
+<view class="commodity_screen" bindtap="hidemode" hidden="{{ishidemode}}">
+  <view class="view_img"></view>
+  <view class="font16 colorwhite view_text">
+    <text>点击“更多”按钮
+    </text>
+    <text>可将“{{title}}”小程序添加到桌面</text>
+  </view>
+  <view class="view_yindao_wrap flexrow">
+    <view class="text">分享</view>
+    <view class="text">显示在聊天底部</view>
+    <view class="text">添加到桌面</view>
   </view>
 </view>

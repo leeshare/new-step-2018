@@ -1,0 +1,13 @@
+
+<!--pages/morepicture/morepicture.wxml-->
+<scroll-view scroll-y="true" class="graybj" style="height:{{scrollH}}px" bindscrolltolower="getData">
+  <block wx:for="{{dataTopicList}}">
+    <view class="view_more_wrap" bindtap="viewDetail" data-category-item="{{item}}">
+      <image src="{{item.cover}}" class="image" mode="widthFix" style="width:100%;"></image>
+      <view class="view_content_wrap" hidden="true">
+        <text class="">{{item.name}}</text>
+      </view>
+    </view>
+  </block>
+ <view class="view_last_wrap" wx:if="{{all_loaded == true}}"> ---  没有更多图片了  --- </view>
+</scroll-view>

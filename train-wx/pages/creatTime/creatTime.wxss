@@ -1,0 +1,8 @@
+/* pages/creatTime/creatTime.wxss */
+.view_checbox_wrap{
+    margin: 178rpx 0;
+    text-align: center;
+}
+picker-view-column {
+  text-align: center;
+}

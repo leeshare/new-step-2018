@@ -1,0 +1,137 @@
+
+<!--pages/cards/cards.wxml-->
+ <view class="view_button_wrap">
+    <view class="view_save_button flexrow" >
+      <span class="button outline flexrow rowcenter" bindtap="goBack">
+        <i class="iconfont icon-quxiao"></i> 取消
+      </span> 
+      <span class="button primary"  bindtap="save">保存至图册</span> 
+    </view>
+    <view class="view_save_button flexrow" hidden="{{isSave}}" >
+      <span class="button outline flexrow rowcenter" bindtap="goBack">
+         <i class="iconfont icon-fanhui"></i> 返回
+      </span> 
+      <span class="button primary" bindtap="save">保存并分享</span> 
+    </view>
+  </view>
+
+<view class="view_choicecard">
+
+  <!--<i class="iconfont icon-tabhome"></i>
+  <i class="iconfont icon-jiahao" bindtap="showModal" wx:if="{{!showModalStatus}}" ></i>
+  <i class="iconfont icon-jiahao rotate" bindtap="hideModal" wx:if="{{showModalStatus}}" ></i>
+  <text class="tosender" bindtap="showTowho" >TO：Sunflower</text>-->
+   <scroll-view style="height:{{scaleHeight}}px" scroll-y="true">
+
+  <view class="view_card_wrap whitebj">
+    <view class="view_img_wrap">
+      <image src="{{photo.cover}}" mode="widthFix" style="width:100%;" />
+    </view>
+    <view class="view_header" bindtap="showedit" data-edittype="1" style="text-align:{{sty1}}">
+      <text class="headertext">{{headertext}}</text>
+
+      <!--<view class="view_year_month">Jan 17 2017</view>-->
+    </view>
+    <view class="view_wordContent" bindtap="showedit" data-editType="2" style="text-align:{{sty2}}">
+      <view class="underline">
+        <text>{{wordtext}}</text>
+      </view>
+    </view>
+
+    <!-- <view class="view_by" bindtap="poptoBy" >By：找图</view>
+    <view class="view_shuiying">
+      <image src="http://image.tohappy.com.cn/Resources/2016/12/02/113600534.jpg_640_thumb.jpg" mode="widthFix" style="width:100%;" />
+    </view>-->
+  </view>
+   </scroll-view>
+  <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+    <view class="view_item_box flexrow">
+      <view bindtap="showTowho">
+        <view class="box">
+          <i class="iconfont icon-te"></i>
+        </view>
+        <view class="font14 color66" style="font-family:arial;">TO</view>
+      </view>
+      <view bindtap="poptoPay" style="display:none;">
+        <view class="box">
+          <i class="iconfont icon-tabme"></i>
+        </view>
+        <view class="font14 color66">水印</view>
+      </view>
+      <view bindtap="poptoBy">
+        <view class="box">
+          <i class="iconfont icon-tabme"></i>
+        </view>
+        <view class="font14 color66">BY</view>
+      </view>
+      <view bindtap="showCreateTime">
+        <view class="box">
+          <i class="iconfont icon-tianjiariqi"></i>
+        </view>
+        <view class="font14 color66">日期</view>
+      </view>
+    </view>
+  </view>
+  <view class="view_editTextarea_wrap_blur" wx:if="{{showeditTextarea}}"></view>
+  <view class="view_editTextarea_wrap" wx:if="{{showeditTextarea}}">
+    <i class="iconfont icon-close" bindtap="hideedit"></i>
+    <i class="iconfont icon-queding" bindtap="saveEdit"></i>
+    <textarea auto-focus="true" maxlength="{{editType=='1'?12:200}}" style="height:348rpx;text-align:{{sty}}" value="{{textvalue}}" bindinput="inputText" />
+
+    <!-- <view class="view_fontstyle-wrap">
+      <i class="iconfont icon-juzuo {{select==1?'active':''}}" bindtap="setfontstyle" data-type="1"></i>
+      <i class="iconfont icon-juzhong {{select==2?'active':''}}" bindtap="setfontstyle" data-type="2"></i>
+      <i class="iconfont icon-juyou {{select==3?'active':''}}" bindtap="setfontstyle" data-type="3" wx:if="{{editType=='2'}}"></i>
+      <i class="iconfont icon-liangbianduiqi {{select==4?'active':''}}" bindtap="setfontstyle" data-type="4"></i>
+    </view>-->
+  </view>
+</view>
+
+<view class="view_creatcatgory_wrap" hidden="{{showFavorte}}" animation="{{animationData}}">
+  <view class="view_row_wrap flexrow" style="justify-content:center;">
+    <i class="iconfont icon-jiahao" bindtap="createFavorite"></i>
+    <text>保存至</text>
+    <view class="iconcancel_wrap">
+      <i class="iconfont icon-cancel" bindtap="hideFavorteModel"></i>
+    </view>
+  </view>
+  <scroll-view style="height:{{scaleHeight}}px" scroll-y="true">
+    <template name="template-1">
+      <view class="view_list_wrap" bindtap="setPhotoCollect" data-ug-id="{{UserGroupID}}" data-ug-name="{{GroupName}}" data-photo-id="{{photo_id}}">
+        <view class="view_list_item" bindtap="savesuccess">
+          <image src="{{photo_url}}" class="img_wrap" mode="aspectFill" wx:if="{{photo_url}}"></image>
+          <image src="" class="img_wrap" mode="aspectFill" wx:if="{{!photo_url}}"></image>
+          <view>
+            <view>{{GroupName}}</view>
+            <view class="imgnumber">{{photo_num}}张</view>
+          </view>
+          <i class="iconfont icon-wancheng" wx:if="{{photo_id == currentPhoto.photo_id}}"></i>
+        </view>
+      </view>
+    </template>
+    <block wx:for="{{user_groups}}">
+      <template is="template-1" data="{{...item, currentPhoto: photo}}"></template>
+    </block>
+  </scroll-view>
+</view>
+<view class="view_mask_wrap" hidden="{{!popInputDialog}}" bindtap="closeDiaolog"></view>
+<view class="view_box_wrap" hidden="{{!popInputDialog}}">
+  <view class="view_newcatgory_wrap">
+    <view class="view_header_wrap flexrow">
+      新建图册
+      <i class="iconfont icon-close" bindtap="closeDiaolog"></i>
+      <i class="iconfont icon-queding" bindtap="saveAndBack"></i>
+    </view>
+    <view class="view_input_wrap">
+      <input type="text" bindinput="bindKeyInput" value="{{option_upg.GroupName}}" placeholder-class="placeholder" placeholder="最多不能超过16个字" maxlength="16" />
+      <view class="icon-shanchu_wrap flexrow" bindtap="clearinput">
+        <i class="iconfont icon-shanchu"></i>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!--生成的图片-->
+<view class="view_proudimg_wrap flexrow" hidden="{{isSave}}">
+  <image id="SFimg" style="width:{{scaleWidth}}px;height:{{scaleHeight-60}}px" mode="aspectFit" src="../../images/tu.png"></image>
+</view>

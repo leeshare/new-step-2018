@@ -1,0 +1,59 @@
+
+<!--pages/shareCollect/shareCollect.wxml-->
+<scroll-view scroll-y="true" style="height:{{scrollH}}px;background:#f5f5f5;" bindscroll="scrollHandler" bindscrolltolower="getData">
+  <view class="dv_img_wrap">
+    <view class="dv_item_img relative">
+      <image src="{{userGroup.photo_url}}" mode="widthFix"></image>
+    </view>
+
+    <!--分享出去的-->
+    <view class="share-user-wrap flexrow">
+      <view class="view_left flexrow">
+        <view class="view_photo_wrap">
+          <image src="{{creatorInfo.icon}}" mode="scaleToFill"></image>
+        </view>
+        <view class="view_infor_wrap">
+          <view class="font18" style="margin-bottom:4rpx;color:#262626">{{userGroup.GroupName}}</view>
+          <view class=" color99 font14 ">{{creatorInfo.name}}收集 {{userGroup.photo_num}}张图片</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!--瀑布流-->
+  <template name="photoFlow">
+    <view class="flow-row-imagebox" style="width:{{box_style_width}};height:{{box_style_height}}" bindtap="gotoPhoto" data-photo="{{photo}}" data-photo-id="{{photo_id}}">
+      <image src="{{cover_small}}" style="width:{{image_width}}px;height:{{image_height}}px" mode="scaleToFill"></image>
+    </view>
+  </template>
+  <view class="view_box_wrap">
+    <view class="view_boxitem">
+      <view class="flow-row" wx:for="{{flowRows}}" wx:for-item="rowNo">
+        <template wx:for="{{colAll}}" wx:if="{{itemLeft.flowRowNo==rowNo}}" wx:key="photo_id" wx:for-item="itemLeft" is="photoFlow" data="{{...itemLeft}}" />
+      </view>
+    </view>
+  
+  </view>
+  <view class="loading" hidden="{{isloading || all_loaded}}">正在加载...</view>
+  <view class="view_last_wrap" wx:if="{{all_loaded == true}}"> --- 没有更多图片了 --- </view>
+</scroll-view>
+<view class="view_tabbar flexrow">
+  <view bindtap="tabBar"  data-tab="1">
+    <view>
+      <i class="iconfont icon-shouye"></i>
+    </view>
+    <view class="font10">精选</view>
+  </view>
+  <view bindtap="tabBar" data-tab="3">
+    <view>
+      <i class="iconfont icon-zhaotu_xiantiao"></i>
+    </view>
+     <view class="font10">找图</view>
+  </view>
+  <view bindtap="tabBar" data-tab="2">
+    <view>
+      <i class="iconfont icon-tabme"></i>
+    </view>
+    <view class="font10">我的</view>
+  </view>
+</view>

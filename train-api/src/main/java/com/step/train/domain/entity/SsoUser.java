@@ -26,7 +26,8 @@ public class SsoUser implements Serializable {
     private Date birthday;
     private Byte status;
     private Byte isDelete;
-    private String wechatOpenid;
+    private String wechatOpenId;
+    private String address;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -163,12 +164,12 @@ public class SsoUser implements Serializable {
         this.isDelete = isDelete;
     }
 
-    public String getWxAppId() {
-        return wxAppId;
+    public String getWechatOpenId() {
+        return wechatOpenId;
     }
 
-    public void setWxAppId(String wxAppId) {
-        this.wxAppId = wxAppId;
+    public void setWechatOpenId(String wechatOpenId) {
+        this.wechatOpenId = wechatOpenId;
     }
 
     public Date getCreatedDate() {
@@ -257,5 +258,13 @@ public class SsoUser implements Serializable {
 
     public void setOrgName(String orgName) {
         this.orgName = orgName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

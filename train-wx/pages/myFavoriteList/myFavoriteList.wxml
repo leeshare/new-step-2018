@@ -1,0 +1,23 @@
+ <view class="view_creatcatgory_wrap">
+    <view class="view_row_wrap flexrow" bindtap="createFavorite">
+      <i class="iconfont icon-jiahao"></i> 创建新图册
+    </view>
+    <scroll-view style="height:{{scaleHeight}}px" scroll-y="true">
+      <template name="template-1">
+        <view class="view_list_wrap" bindtap="setPhotoCollect" data-ug-id="{{UserGroupID}}" data-ug-name="{{GroupName}}" data-photo-id="{{photo_id}}">
+          <view class="view_list_item" bindtap="savesuccess">
+            <image src="{{photo_url}}" class="img_wrap" mode="aspectFill" wx:if="{{photo_url}}"></image>
+            <image src="" class="img_wrap" mode="aspectFill" wx:if="{{!photo_url}}"></image>
+            <view>
+              <view>{{GroupName}}</view>
+              <view class="imgnumber">{{photo_num}}张</view>
+            </view>
+            <i class="iconfont icon-wancheng" wx:if="{{photo_id == currentPhoto.photo_id}}"></i>
+          </view>
+        </view>
+      </template>
+      <block wx:for="{{user_groups}}">
+        <template is="template-1" data="{{...item, currentPhoto: photo}}"></template>
+      </block>
+    </scroll-view>
+  </view>

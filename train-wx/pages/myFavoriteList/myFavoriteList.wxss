@@ -1,0 +1,77 @@
+/* pages/createFavorte/createFavorte.wxss */
+.view_row_wrap {
+  height: 136rpx;
+  font-size: 16px;
+  color: #666;
+  padding-left: 26rpx;
+  border-bottom: 2rpx solid #e6e6e6;
+  font-family: "黑体";
+}
+
+.view_row_wrap .icon-jiahao {
+  font-size: 25px;
+  color: #666;
+  padding: 20rpx;
+  border: 2rpx solid #666;
+  margin-right: 26rpx;
+  line-height: normal;
+}
+
+.view_list_wrap {
+  background: white;
+  padding-left: 26rpx;
+}
+
+.view_list_header {
+  height: 82rpx;
+  line-height: 82rpx;
+  font-size: 16px;
+  font-family: "黑体";
+  border-bottom: 2rpx solid #e6e6e6;
+}
+
+.view_list_item {
+  min-height: 96rpx;
+  border-bottom: 2rpx solid #e6e6e6;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+  line-height: normal;
+  font-family: "黑体";
+  font-size: 16px;
+  color: #333;
+  position: relative;
+  padding: 42rpx 0;
+}
+
+.img_wrap {
+  width: 94rpx;
+  height: 94rpx;
+  margin-right: 26rpx;
+  background-color:#f5f5f5;
+  
+}
+
+.imgnumber {
+  margin-top: 12rpx;
+  font-size: 12px;
+  color:#999;
+}
+.icon-wancheng{
+  position: absolute;
+  font-size: 20px;
+  color:#E64340;
+  right: 26rpx;
+  top:40%;
+}
+.view_creatcatgory_wrap{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 11;
+  background: white;
+}

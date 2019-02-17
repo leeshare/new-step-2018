@@ -1,0 +1,69 @@
+
+<!--pages/mycollectview/mycollectview.wxml-->
+<scroll-view scroll-y="true" style="height:{{scrollH}}px;background:#f5f5f5;" bindscroll="scrollHandler" bindscrolltolower="getData">
+  <view class="dv_img_wrap">
+    <view class="dv_item_img relative">
+      <view class="fixedbottom">
+        <text class="edit font14 colorwhite" bindtap="createFavorite">编辑图册</text>
+      </view>
+      <image src="{{userGroup.photo_url}}" mode="widthFix"></image>
+    </view>
+    <view class="title box-middle">
+      <view>
+        <view>{{userGroup.GroupName}}</view>
+        <view class="color99 font14 center">{{userGroup.photo_num}}张图片</view>
+      </view>
+    </view>
+  </view>
+
+  <!--瀑布流-->
+  <template name="photoFlow">
+    <view class="flow-row-imagebox" style="width:{{box_style_width}};height:{{box_style_height}}" catchtap="gotoPhoto" data-photo-id="{{photo_id}}" data-photo="{{photo}}">
+      <view catchlongtap="longtap" data-photo-id="{{photo_id}}" data-photo="{{photo}}">
+        <image src="{{cover_small}}" style="width:{{image_width}}px;height:{{image_height}}px" mode="scaleToFill"></image>
+      </view>
+    </view>
+  </template>
+  <view class="view-content-wrap">
+    <view class="view_box_wrap">
+      <view class="view_boxitem">
+        <view class="flow-row" wx:for="{{flowRows}}" wx:for-item="rowNo">
+          <template wx:for="{{colAll}}" wx:if="{{itemLeft.flowRowNo==rowNo}}" wx:key="photo_id" wx:for-item="itemLeft" is="photoFlow" data="{{...itemLeft}}" />
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="loading" hidden="{{isloading || all_loaded}}">正在加载...</view>
+  <view class="view_last_wrap" wx:if="{{all_loaded == true}}"> ---  没有更多图片了  --- </view>
+</scroll-view>
+<view class="tabhome-wrap flexrow" bindtap="gotohome" hidden="{{ishashome}}">
+  <view style="width:100%;height:48rpx;">
+    <i class="iconfont icon-shouyexuanzhong"></i>
+  </view>
+  <view class="font10">首页</view>
+</view>
+<view class="tabhome-wrap flexrow" bindtap="goBack" hidden="{{!ishashome}}">
+  <view style="width:100%;height:48rpx;">
+    <i class="iconfont icon-fanhui1"></i>
+  </view>
+  <view class="font10">返回</view>
+</view>
+<view class="tabbacktop-wrap flexrow" bindtap="gototop" wx:if="{{is_top_filter==1}}">
+  <view style="width:100%;height:48rpx;">
+    <i class="iconfont icon-huidaodingbu"></i>
+  </view>
+  <view class="font10">顶部</view>
+</view>
+<view class="commodity_screen" bindtap="hideYindao" id="tip-3" wx:if="{{!ishidemode}}">
+  <view class="view_tip_1">
+    <view class="view_img"></view>
+    <view class="view_know">我知道了</view>
+    <view class="font16 colorwhite view_text">
+      <text>创建的图册不错哦！
+      </text>
+      <text>点击此处
+      </text>
+      <text>将图片分享给自己的小伙伴吧！</text>
+    </view>
+  </view>
+</view>

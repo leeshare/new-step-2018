@@ -1,0 +1,10 @@
+<!--pages/towho/towho.wxml-->
+<view class="view_to_wrap">
+    <view class="flexrow">
+      <view class="font16 color99 fontArial">TO:</view>
+      <view class="view_input_wrap">
+        <input type="text" maxlength="16" focus="true" class="font16 color99" value="{{keyvalue}}" />
+        <view class="iconfont icon-close"  bindtap="clearinput"></view>
+      </view>
+    </view>
+  </view>

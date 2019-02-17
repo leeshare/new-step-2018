@@ -1,0 +1,164 @@
+<view style="height:{{scaleHeight}}px" class="blackbj">
+  <scroll-view scroll-y="true" scroll-x="true" style="height:100%;width:100%;background:black;">
+    <view class="view_pagenumber" ng-if="{{photoList.length>1}}" hidden="{{slide}}">{{photoIndex+1}}/{{totalRecord}}</view>
+    <view class="ico-img-home-wrap" bindtap="topagehome" hidden="{{slide || ishashome}}">
+      <i class="iconfont icon-shouye"></i>
+      <text class="font16 colorwhite">首页</text>
+    </view>
+    <view class="ico-img-home-wrap" bindtap="goBack" hidden="{{slide || !ishashome}}">
+      <i class="iconfont icon-fanhui"></i>
+      <text class="font16 colorwhite">返回</text>
+    </view>
+    <swiper bindtouchstart="onTouchStart" bindtouchend="onTouchEnd"  circular="true" current="{{swiper_current_index}}" duration="500" style="height:100%;width:100%;position:absolute;left:0;top:0;" bindchange="intervalChange">
+      <block wx:for="{{photoListLoop}}">
+        <swiper-item>
+          <image id="SFimg" wx:if="{{item.width/item.height>1.7}}" bindload="imgload" bindtap="toggleslid" class="rotate{{is_ios?'-ios':''}}" style="width:{{scaleHeight}}px;height:{{ scaleWidth}}px" mode="aspectFit"
+          src="{{item.wxa_is_use_watermark ? item.cover_big_wxa : item.cover_big}}"></image>
+          <image id="SFimg" wx:if="{{item.width/item.height<=1.7}}" bindload="imgload" bindtap="toggleslid" style="width:{{ scaleWidth }}px;height:{{ scaleHeight }}px" mode="aspectFit" src="{{item.wxa_is_use_watermark ? item.cover_big_wxa : item.cover_big}}"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+  </scroll-view>
+  <view class="view-fixedbottom-wrap" hidden="{{slide}}">
+    <view class="view_jieshao_wrap {{showAll?'view_jie':''}}" hidden="{{ photo.introduction_limit==''}}">
+      <view class="view_jieshao_content_wrap fullheight">
+        <view class="showall-wrap">
+          <view hidden="{{showAll}}" class="view_show">
+            <p class="font14 colorwhite">{{photo.introduction_limit}}</p>
+            <text class="font14 view_viewall" bindtap="showJieshao">查看全部</text>
+          </view>
+          <view hidden="{{!showAll}}" bindtap="hideJieshao">
+            <i class="iconfont icon-into"></i>
+            <p class="font14 colorwhite">{{photo.introduction}}</p>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="view-content-wrap flexrow">
+      <view class="view-prink flexrow" bindtap="favoritePhoto" data-photo="{{photo}}">
+        <i wx:if="{{!photo.status_info.is_favorited}}" class="iconfont icon-like"></i>
+        <i wx:if="{{photo.status_info.is_favorited}}" class="iconfont icon-likepress"></i>
+        <text class="font14 colorwhite">{{photo.status_info.total_favorite}}</text>
+      </view>
+      <view class="view-prink flexrow" bindtap="gotoFavoriteList" data-photo="{{photo}}">
+        <i class="iconfont icon-tuji1 relative">
+        </i>
+        <text class="font14 colorwhite">收藏</text>
+      </view>
+      <view class="view-prink flexrow" bindtap="showModal" data-type="2">
+        <i class="iconfont icon-download"></i>
+        <text class="font14 colorwhite">下载</text>
+      </view>
+      <view class="button-download-wrap flexrow" bindtap="createCard" style="display:none">
+        <button type="warn" class="button-download">
+          <i class="iconfont icon-jiahao" style="font-size:28rpx;margin-right:0;"></i> 卡片</button>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
+<view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+  <view class="view_header">注意</view>
+  <view class="view_content_wrap">
+    <text class="block">从此应用下载图片的人均需同意： 仅作为个人学习、研究，不得用于商业用途；</text>
+    <text class="block"> 任何情况均不得去掉图片文件相关版权信息和修改图片； </text>
+    <text>如果未按条例约定的范围使用了本网站图片，我们有权停止您的继续使用。</text>
+  </view>
+  <view class="view_checbox_wrap">
+    <checkbox-group bindchange="checkboxChange">
+      <label class="checkbox" wx:for="{{checkitems}}">
+        <checkbox color="#ea5b5a" value="{{item.name}}" checked="{{item.checked}}" />{{item.value}}
+      </label>
+    </checkbox-group>
+  </view>
+  <view class="view_aggree_wrap">
+    <button type="warn" class="button-agree large" bindtap="downloadImg">同意</button>
+  </view>
+</view>
+<view class="commodity_screen" bindtap="hidecomment" wx:if="{{showModalcomment}}"></view>
+<view class="view_comment_box noborder-radius" wx:if="{{showModalcomment}}">
+  <textarea placeholder="我来说两句.." bindblur="textBlur" bindinput="textInput" placeholder-class="font14 color66" class="inputtext" maxlength="500" value="{{content2}}" />
+  <view class="view_aggree_wrap">
+    <button type="warn" class="button-agree" bindtap="evaluate">发表</button>
+  </view>
+</view>
+<view class="commodity_screen" bindtap="hideYindao" id="tip-1" wx:if="{{yindao==1 && !ishidemode}}" data-order="2">
+  <view class="view_tip_1">
+    <view class="view_img"></view>
+    <view class="view_know">我知道了</view>
+    <i class="view_img_collect iconfont icon-tuji1"></i>
+    <view class="font16 colorwhite view_text">
+      <text>点击此图标
+      </text>
+      <text>可以把图加到收藏夹</text>
+    </view>
+  </view>
+</view>
+<view class="commodity_screen" bindtap="hideYindao" id="tip-2" wx:if="{{yindao==2 && !ishidemode}}" data-order="3">
+  <view class="view_tip_1">
+    <view class="view_img"></view>
+    <view class="view_know">我知道了</view>
+    <view class="view_img_collect">
+       <i class="iconfont icon-download"></i>  下载
+    </view>
+    <view class="font16 colorwhite view_text">
+      <text>喜欢此图？
+      </text>
+      <text>立即把它保存下来</text>
+    </view>
+  </view>
+</view>
+<view class="commodity_screen" bindtap="hideYindao" id="tip-3" wx:if="{{yindao==3 && !ishidemode}}" data-order="1">
+  <view class="view_tip_1">
+    <view class="view_img"></view>
+    <view class="view_know">我知道了</view>
+    <view class="font16 colorwhite view_text">
+      <text>很喜欢这张图片？
+      </text>
+      <text>点击此处
+      </text>
+      <text>将图片分享给自己的小伙伴吧！</text>
+    </view>
+  </view>
+</view>
+<view class="view_creatcatgory_wrap" hidden="{{showFavorte}}" animation="{{animationData}}">
+  <view class="view_row_wrap flexrow" style="justify-content:center;">
+    <i class="iconfont icon-jiahao" bindtap="createFavorite"></i>
+    <text>收藏</text>
+    <view class="iconcancel_wrap">
+      <i class="iconfont icon-cancel" bindtap="hideFavorteModel"></i>
+    </view>
+  </view>
+  <scroll-view style="height:{{scaleHeight}}px" scroll-y="true">
+    <template name="template-1">
+      <view class="view_list_wrap" bindtap="setPhotoCollect" data-ug-id="{{UserGroupID}}" data-ug-name="{{GroupName}}" data-photo-id="{{photo_id}}">
+        <view class="view_list_item" bindtap="savesuccess">
+          <image src="{{photo_url}}" class="img_wrap" mode="aspectFill" wx:if="{{photo_url}}"></image>
+          <image src="" class="img_wrap" mode="aspectFill" wx:if="{{!photo_url}}"></image>
+          <view>
+            <view>{{GroupName}}</view>
+            <view class="imgnumber">{{photo_num}}张</view>
+          </view>
+          <i class="iconfont icon-wancheng" wx:if="{{photo_id == currentPhoto.photo_id}}"></i>
+        </view>
+      </view>
+    </template>
+    <block wx:for="{{user_groups}}">
+      <template is="template-1" data="{{...item, currentPhoto: photo}}"></template>
+    </block>
+  </scroll-view>
+</view>
+<view class="view_mask_wrap" hidden="{{!popInputDialog}}" bindtap="closeDiaolog"></view>
+<view class="view_box_wrap" hidden="{{!popInputDialog}}" >
+  <view class="view_newcatgory_wrap">
+    <view class="view_header_wrap flexrow">
+      新建专辑
+      <i class="iconfont icon-close" bindtap="closeDiaolog"></i>
+      <i class="iconfont icon-queding" bindtap="saveAndBack"></i>
+    </view>
+    <view class="view_input_wrap">
+    <input type="text" bindinput="bindKeyInput" value="{{option_upg.GroupName}}"  placeholder-class="placeholder" placeholder="最多不能超过16个字" maxlength="16" />
+      <view  class="icon-shanchu_wrap flexrow" bindtap="clearinput"><i class="iconfont icon-shanchu"></i></view>
+      </view>
+  </view>
+</view>

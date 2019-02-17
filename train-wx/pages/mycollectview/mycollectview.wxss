@@ -1,0 +1,215 @@
+/* pages/mycollectview/mycollectview.wxss */
+
+.dv_img_wrap {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 2rpx solid #e3e3e3;
+}
+
+.dv_img_wrap image {
+  height: 100%;
+  width: 100%;
+}
+
+.title {
+  z-index: 1;
+  background: white;
+  width: 100%;
+  left: 0;
+  padding: 26rpx 0;
+  line-height: 48rpx;
+  text-align: center;
+  font-size: 18px;
+  color: #333;
+  font-family: "黑体";
+}
+
+.dv_item_img {
+  height: 435rpx;
+  overflow: hidden;
+}
+
+.fixedbottom {
+  position: absolute;
+  height: 56rpx;
+  background: rgba(0, 0, 0, 0.5);
+  bottom: 0;
+  width: 100%;
+  line-height: 56rpx;
+  padding: 0 26rpx;
+  box-sizing: border-box;
+}
+
+.home {
+  float: left;
+}
+
+.edit {
+  float: right;
+}
+
+.commodity_attr_box  .view_header {
+  padding: 34rpx 0;
+  text-align: center;
+  font-size: 20px;
+  font-family: "黑体";
+}
+
+.commodity_attr_box .view_content_wrap {
+  padding: 0 44rpx;
+  color: #666;
+  font-size: 14px;
+  font-family: "黑体";
+  margin-bottom: 36rpx;
+  line-height: 48rpx;
+  text-align: justify;
+}
+
+.view_aggree_wrap {
+  padding: 0 46rpx;
+  margin-bottom: 44rpx;
+  font-family: "黑体";
+}
+
+.button-agree {
+  line-height: 58rpx;
+  font-size: 14px;
+  background: #ea5b5a;
+}
+
+.button-agree.large {
+  line-height: 76rpx;
+}
+
+.view_checbox_wrap {
+  margin-left: 44rpx;
+  margin-bottom: 18rpx;
+  font-size: 14px;
+  font-family: "黑体";
+  color: #666;
+}
+
+.commodity_attr_box {
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin-left: 0;
+  z-index: 222222;
+  background: transparent;
+  border-radius: 0;
+  box-sizing: border-box;
+  padding: 32rpx;
+}
+
+.share-user-wrap {
+  height: 142rpx;
+  background: white;
+}
+
+.share-user-wrap .view_left {
+  width: 572rpx;
+  padding-left: 26rpx;
+  box-sizing: border-box;
+}
+
+.share-user-wrap .view_left .view_photo_wrap {
+  width: 90rpx;
+  height: 90rpx;
+  margin-right: 26rpx;
+}
+
+.share-user-wrap .view_left .view_photo_wrap image {
+  width: 90rpx;
+  height: 90rpx;
+  border: 2rpx solid #e6e6e6;
+  border-radius: 999rem;
+}
+
+.share-user-wrap .view_right  button {
+  height: 50rpx;
+  width:152rpx;
+  line-height: 50rpx;
+  font-size: 14px;
+}
+.share-user-wrap .view_right .add
+{
+  font-size: 24px;
+  margin-right: 8rpx;
+  vertical-align: 20%;
+  display: inline-block;
+  font-family: "arial";
+}
+.share-user-wrap .view_right span{
+  display: inline-block;
+  vertical-align: 34%;
+}
+.commodity_screen {
+  background: rgba(0, 0, 0, 0.8);
+  opacity: 1;
+  z-index: 1111111111111111;
+}
+
+.view_img {
+  background: url(http://www.tohappy.com.cn/web2/skin/images/home/images/line-1.png) left center no-repeat;
+  width: 152rpx;
+  height: 380rpx;
+  background-size: 50%;
+  position: absolute;
+  z-index: 11;
+  transform: rotate(45deg);
+}
+
+.commodity_screen .view_tip_1 {
+  height: 100%;
+  position: relative;
+}
+#tip-3 .view_img {
+  top: -40rpx;
+  right: 0rpx;
+}
+
+#tip-3 .view_text {
+  position: absolute;
+  left: 120rpx;
+  top: 120rpx;
+  text-align: center;
+  line-height: 48rpx;
+}
+
+#tip-3 .view_img_collect {
+  position: absolute;
+  bottom: 28rpx;
+  right: 28rpx;
+  color: white;
+}
+
+#tip-3 .view_know {
+  position: absolute;
+  left: 280rpx;
+  top:45%;
+  color: white;
+  text-align: center;
+  border:2rpx solid white;
+  font-size: 16px;
+  width:200rpx;
+  height: 68rpx;
+  line-height:68rpx;
+  border-radius: 8rpx;
+}
+
+#tip-3 .view_img_collect button{
+  height: 52rpx;
+  line-height: 52rpx;
+  font-size: 16px;
+   
+}
+
+.flow-row-imagebox {
+  margin-left: 6rpx;
+  margin-top: 6rpx;
+  background-color: #f1f1f1;
+  float: left;
+  overflow: hidden;
+}

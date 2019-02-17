@@ -1,0 +1,42 @@
+/* pages/creatcatgory/creatcatgory.wxss */
+.winputwrap .icon-shanchu_wrap{
+ position: absolute;
+ top: 0;
+ width:80rpx;
+ height: 100%;
+ right:0;
+ z-index: 11111;
+ justify-content:flex-end;
+ padding-right:26rpx;
+}
+.winputwrap .icon-shanchu {
+  font-size: 34rpx;
+  color: #ccc;
+}
+
+.view_header_wrap {
+  margin:26rpx 0 16rpx 0;
+  background:white;
+  padding:16rpx 26rpx;
+  position: relative;
+}
+
+.view_content_wrap textarea {
+  border-top: 0;
+  padding: 26rpx;
+  padding-top: 16rpx;
+}
+.button_save_wrap{
+    margin:120rpx  26rpx 0 26rpx;
+}
+.view_delete{
+  text-align: center;
+  font-size: 14px;
+  color:#ea5b5a;
+  margin-top:26rpx; 
+}
+.bg_gray{
+  height: 100%;
+  background: #f5f5f5;
+  overflow: hidden;
+}

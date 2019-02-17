@@ -1,0 +1,50 @@
+
+<!--pages/comment/comment.wxml-->
+<view>
+  <scroll-view scroll-y="true" style="height:{{scrollH}}px">
+    <view class="flexrow view_empty_wrap" hidden="{{data_hot_list.length>0 || data_new_list.length>0?true:false}}">
+      <view class="view_empty">
+        <view class="empty-data"></view>
+      </view>
+      <view class="font14 colorcc">暂无评论</view>
+    </view>
+    <template name="template-comment">
+      <view class="view-list-item flexrow nobottom topitem">
+        <view class="view-praise-wrap" bindtap="favorte" data-evaluate-id="{{id}}" data-status="{{is_favorited}}">{{favorite_count}}
+          <i class="iconfont icon-praise {{is_favorited?'active':''}}"></i>
+        </view>
+        <view class="flexcol view_user_wrap" bindtap="reply" data-name="{{creator.name}}" data-uid="{{creator.uid}}">
+          <image mode="aspectFill" src="{{creator.icon}}" class="img"></image>
+        </view>
+        <view class="flexcol view_comment_wrap">
+          <view class="view_user_name" wx:if="{{!is_reply}}">{{creator.name}}</view>
+          <view class="view_user_name" wx:if="{{is_reply}}">{{creator.name}} <span class="colorcc">回复</span>  {{replier.name}}</view>
+          <view class="view_date">{{create_ago}}</view>
+          <view class="view_comment_word">{{content}}</view>
+        </view>
+      </view>
+    </template>
+    <view class="view-list-wrap" hidden="{{data_hot_list.length > 0 ? false : true}}">
+      <view class="view_list_header flexrow">
+        <text class="bottomred_line">最热点评</text>
+      </view>
+      <block wx:for="{{data_hot_list}}">
+        <template is="template-comment" data="{{...item}}"></template>
+      </block>
+    </view>
+    <view class="view-list-wrap" hidden="{{data_new_list.length > 0 ? false : true}}">
+      <view class="view_list_header flexrow">
+        <text class="bottomred_line">最新点评</text>
+      </view>
+      <block wx:for="{{data_new_list}}">
+        <template is="template-comment" data="{{...item}}"></template>
+      </block>
+    </view>
+  </scroll-view>
+  <view class="view_bottom_input flexrow">
+    <view class="view_textarea_wrap flexrow">
+      <textarea placeholder="发表评论" class="textarea" maxlength="500" placeholder-class="font14 color99" fixed="true" bindblur="textBlur" bindinput="textInput" auto-height="true" value="{{content2}}" />
+    </view>
+    <text class="send font14 color99" bindtap="evaluate">发送</text>
+  </view>
+</view>

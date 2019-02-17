@@ -17,8 +17,6 @@ public class SsoUserQo extends PageQo {
 
     private String newPwd;
 
-    private String code;
-
     public SsoUserQo(){
 
     }

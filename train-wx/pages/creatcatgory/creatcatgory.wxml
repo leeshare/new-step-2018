@@ -1,0 +1,14 @@
+
+<!--pages/creatcatgory/creatcatgory.wxml-->
+<view>
+  <view class="view_header_wrap winputwrap">
+    <input focus="true" type="text" placeholder="标题" placeholder-class="font16 colorcc" class="font16 color33" value="{{keyvalue}}"/>
+    <view class="iconfont icon-close"  bindtap="clearinput"></view>
+  </view>
+  <view class="view_content_wrap">
+    <textarea maxlength="200" placeholder="内容" style="height:348rpx;" placeholder-class="colorcc" value="{{textvalue}}" bindinput="inputText" class="color66" />
+  </view>
+  <view class="button_save_wrap">
+    <button type="primary" size="default" plain="true">完成</button>
+  </view>
+</view>

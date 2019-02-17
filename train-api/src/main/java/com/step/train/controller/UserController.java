@@ -62,11 +62,12 @@ public class UserController {
         }
         user.setCreatedUserId(currentUser.getId());
         user.setUpdatedUserId(currentUser.getId());
-        String result = userService.save(user);
-        if(StringUtils.isEmpty(result)){
+        int result = userService.save(user);
+        if(result > 0){
             return new JsonResult<>(user);
         }
-        return new JsonResult<>(result);
+        String msg = result == -1 ? "新增用户名已存在!" : result == -2 ? "修改用户名已存在!" : "用户保存出错!";
+        return new JsonResult<>(msg);
     }
 
     @PostMapping("/del")
@@ -109,11 +110,12 @@ public class UserController {
         }
         String newPwdMd5 = DigestUtils.md5DigestAsHex(param.getNewPwd().getBytes());
         currentUser.setPassword(newPwdMd5);
-        String result = userService.save(currentUser);
-        if(StringUtils.isEmpty(result)){
+        int result = userService.save(currentUser);
+        if(result > 0){
             return new JsonResult<>();
         }
-        return new JsonResult<>(result);
+        String msg = result == -1 ? "新增用户名已存在!" : result == -2 ? "修改用户名已存在!" : "用户保存出错!";
+        return new JsonResult<>(msg);
 
 
     }

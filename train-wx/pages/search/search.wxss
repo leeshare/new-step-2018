@@ -1,0 +1,167 @@
+/* pages/search/search.wxss */
+
+.WViewRow1 {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: stretch;
+  width: 750rpx;
+  height: 82rpx;
+  background-color: #e6e6e6;
+  color: #fff;
+  font-size: 20PX;
+  line-height: 40rpx;
+  font-family: "黑体";
+}
+.placeholder{line-height: 28rpx;}
+.winputwrap {
+  box-sizing: border-box;
+  padding: 0rpx 0rpx 0rpx 10rpx;
+  width: 698rpx;
+  height:52rpx;
+  background: white;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  border-radius: 8rpx;
+}
+
+.WViewRow1.focus .winputwrap {
+  width: 624rpx;
+}
+
+.WViewRow1.focus .WInput17PT1 {
+  background-position: left center;
+  text-indent: 40rpx;
+  width: 100%;
+  background-repeat: no-repeat;
+}
+
+.WInput17PT1 {
+  box-sizing: border-box;
+  border: 2rpx #e6e6e6;
+  padding: 0rpx 0rpx 0rpx 0;
+  width: 100%;
+  height: 52rpx;
+  background: url(http://www.tohappy.com.cn/web2/skin/images/home/images/search-ico.png) 40% center no-repeat;
+  background-size: 40rpx;
+  background-color: #fff;
+  color: #000;
+  font-size: 14PX;
+  line-height: 26rpx;
+  border-radius: 8rpx;
+  font-family: "黑体";
+  text-indent: 44%;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.WInput17PT1.nobj {
+  background: none;
+  text-indent: 10rpx!important;
+}
+
+.WViewRow1.focus .winputwrap {
+  width: 624rpx;
+  position: relative;
+}
+
+.button-cancel {
+  font-size: 14px;
+  margin-left: 22rpx;
+  color: #666;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.WViewRow1.focus .WInput17PT1 {
+  background-position: left center;
+  text-indent: 40rpx;
+  width: 80%;
+  background-repeat: no-repeat;
+}
+
+.view-search-hotword {
+  overflow: hidden;
+}
+
+.view-header-title {
+  background: #f5f5f5;
+  height: 66rpx;
+  font-size: 12px;
+  font-family: "黑体";
+  color: #666;
+  line-height: 66rpx;
+  text-indent: 26rpx;
+}
+
+.view-word-wrap {
+  padding: 26rpx 32rpx;
+  padding-bottom: 0;
+}
+
+.view-word-wrap .outline {
+  margin-right: 30rpx;
+  margin-bottom: 26rpx;
+}
+
+.view-word-wrap .text {
+  padding: 4rpx 14rpx;
+  color: #333;
+  font-size: 14px;
+  font-family: "黑体";
+}
+
+.view-list-wrap {
+  background: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: space-around;
+}
+
+.view-list-item {
+  height: 84rpx;
+  border-bottom: 2rpx solid #e6e6e6;
+  width: 100%;
+  color: #666;
+  font-size: 16px;
+  font-family: "黑体";
+  padding-left: 32rpx;
+  box-sizing: border-box;
+}
+.winputwrap .icon-shanchu_wrap{
+ position: absolute;
+ top: 0;
+ width:80rpx;
+ height: 100%;
+ right:0;
+ z-index: 11111;
+ justify-content:flex-end;
+ padding-right:26rpx;
+}
+.winputwrap .icon-shanchu {
+  font-size: 34rpx;
+  color: #ccc;
+}
+.clearbutton {
+  height: 84rpx;
+  width: 100%;
+  color: #ea5b5a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+
+.inputkey-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+}

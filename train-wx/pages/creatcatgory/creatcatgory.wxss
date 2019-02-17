@@ -1,0 +1,31 @@
+/* pages/creatcatgory/creatcatgory.wxss */
+
+.winputwrap .icon-close {
+  font-size: 34rpx;
+  color: #666;
+  position: absolute;
+  right: 16rpx;
+  top: 8rpx;
+  z-index: 111;
+}
+
+.view_header_wrap {
+  margin-left: 26rpx;
+  border-bottom: 2rpx solid #e6e6e6;
+  margin-bottom: 16rpx;
+  padding-bottom: 16rpx;
+}
+
+.view_content_wrap textarea {
+  border-top: 0;
+  padding: 26rpx;
+  padding-top: 16rpx;
+}
+.button_save_wrap{
+    margin:120rpx  26rpx 0 26rpx;
+
+}
+.button_save_wrap button[type="primary"][plain]{
+    border:2rpx solid #666;
+    color: #333;
+}

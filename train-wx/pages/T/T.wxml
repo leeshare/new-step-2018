@@ -1,0 +1,101 @@
+
+<!--index.wxml-->
+<template name="categoryBlockItem">
+  <view class="WViewRow2" style="">
+    <view class="WViewRow3" style="">
+      <view class="WViewRow4" style="">
+        <i class="iconfont icon-specialtopic" wx:if="{{categoryType==1}}"></i>
+        <i class="iconfont icon-classify" wx:if="{{categoryType==2}}"></i>
+        <text class="WText17PT1" style="">{{categoryName}}</text>
+        <text class="more" bindtap="topagemore" data-id="{{categoryType}}" wx:if="{{categoryType==2}}">查看更多>></text>
+     <!--   <text class="more graybj" bindtap="viewmore" data-id="{{categoryType}}" wx:if="{{categoryType==1}}">＋{{photoTotalNum}}</text>-->
+      </view>
+    </view>
+  </view>
+  <view class="WViewRow5" style="">
+    <view class="WViewRow6" wx:for="{{categoryLists}}" bindtap="viewDetail" data-category-item="{{item}}" wx:if="{{index<6 && categoryType==2}}">
+      <image mode="aspectFill" src="{{item.cover}}" class="image"></image>
+      <view class="wViewRow7" hidden="{{categoryType==2}}">
+        <text class="">{{item.name}}</text>
+      </view>
+    </view>
+    <view class="WViewRow6" wx:for="{{categoryLists}}" bindtap="viewDetail" data-category-item="{{item}}" wx:if="{{categoryType==1}}">
+      <image mode="aspectFill" src="{{item.cover}}" class="image"></image>
+      <view class="wViewRow7" hidden="{{categoryType==2}}">
+        <text class="">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+</template>
+<view class="WViewRow1 {{isfocuse?'focus':''}}" style="">
+  <view class="winputwrap relative">
+    <view class="view_tapwrap" bindtap="showSearchModel"></view>
+    <input placeholder="请输入内容" disable="true" placeholder-class="placeholder font14" class="WInput17PT1"></input>
+  </view>
+  <text class="button-cancel" hidden="{{cancel}}" bindtap="canceltrigger">取消</text>
+</view>
+<view class="section">
+  <scroll-view scroll-y="true" style="height:{{scrollH}}px;">
+    <block wx:for="{{categoryItems}}">
+      <template is="categoryBlockItem" data="{{...item, photoTotalNum: photoTotalNum}}"></template>
+    </block>
+  </scroll-view>
+</view>
+<view class="commodity_screen" bindtap="hidemode" hidden="{{ishidemode}}">
+  <view class="view_img"></view>
+  <view class="font16 colorwhite view_text">
+    <text>点击“更多”按钮
+    </text>
+    <text>可将“找图”小程序添加到桌面</text>
+  </view>
+  <view class="view_yindao_wrap flexrow">
+    <view class="text">分享</view>
+    <view class="text">显示在聊天底部</view>
+    <view class="text">添加到桌面</view>
+  </view>
+</view>
+<view animation="{{animationData}}" class="view_search_box" hidden="{{showSearch}}">
+  <template name="searchitem">
+    <view class="view-list-wrap " bindtap="toDetail" data-item="{{item0}}">
+      <view class="view-list-item flexrow">{{keyword}}</view>
+    </view>
+  </template>
+  <view class="WViewRow1 focus">
+    <view class="winputwrap">
+      <input placeholder="请输入内容" type="text" placeholder-class="font14" class="WInput17PT1" bindinput="Inputword" value="{{keyvalue}}"></input>
+      <view class="icon-shanchu_wrap flexrow" bindtap="clearinput">
+        <i class="iconfont icon-shanchu"></i>
+      </view>
+    </view>
+    <text class="button-cancel" bindtap="hideSearchModel">取消</text>
+  </view>
+<scroll-view style="height:{{scrollH}}px;background:#f5f5f5" scroll-y="true" bindscroll="scrollHandler">
+    <view class="norecord" hidden="{{norecord}}">
+      没有更多的搜索结果
+    </view>
+    <view hidden="{{dataSearchResult.length==0}}" class="inputkey-wrap">
+      <block wx:for="{{dataSearchResult}}" wx:key="keyword_id" wx:for-item="item">
+        <template is="searchitem" data="{{...item, item0: item}}"></template>
+      </block>
+    </view>
+    <view class="view-search-hotword" hidden="{{!inputvalue || dataSearchResult.length>0}}">
+      <view class="view-header-title">热词推荐</view>
+      <view class="view-word-wrap whitebj flexrow">
+        <view wx:for="{{dataWordList}}" class="outline radius flexcol" bindtap="toDetail" data-item="{{item}}">
+          <text class="text">{{item.keyword}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="view-history-word" hidden="{{dataHistoryList.length==0 || !inputvalue || dataSearchResult.length>0}}">
+      <view class="view-header-title">历史搜索</view>
+      <block wx:for="{{dataHistoryList}}" wx:key="keyword_id" wx:for-item="item">
+        <template is="searchitem" data="{{...item, item0: item}}"></template>
+
+        <!--<view class="view-list-wrap ">
+        <view class="view-list-item flexrow" wx:for="{{datalist}}" bindtap="toDetail" data-item="{{itemHis}}">{{itemHis.keyword}}</view>
+      </view>-->
+      </block>
+      <view class="clearbutton hasbottomline font14" hidden="{{dataHistoryList.length > 0 ? false : true}}" bindtap="clearHis">清除历史搜索</view>
+    </view>
+  </scroll-view>
+</view>

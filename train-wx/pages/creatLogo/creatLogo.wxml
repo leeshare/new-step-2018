@@ -1,0 +1,28 @@
+
+<!--pages/creatLogo/creatLogo.wxml-->
+<view>
+  <view class="view_checbox_wrap">
+    <checkbox-group bindchange="checkboxChange">
+      <label class="checkbox">
+        <checkbox color="#ea5b5a" value="隐藏水印" checked="true" />隐藏水印
+      </label>
+    </checkbox-group>
+  </view>
+  <view class="view_to_wrap">
+    <view class="flexrow">
+      <view class="font16 color99 fontArial">小程序：</view>
+      <view class="view_input_wrap">
+        <input type="text" maxlength="16" focus="true" class="font16 color99" value="{{keyvalue}}" />
+        <view class="iconfont icon-close" bindtap="clearinput"></view>
+      </view>
+    </view>
+  </view>
+  <view class="view_or_wrap fontarial">
+    －－－－－－－－－－ OR －－－－－－－－－－
+  </view>
+  <view class="view_add_wrap center">
+    <view class="color33 font16"> 添加图片水印 </view>
+  </view>
+  <view class="view13"></view>
+  <view class="font12 color99 center">（注：图片必须为透明背景png格式。）</view>
+</view>

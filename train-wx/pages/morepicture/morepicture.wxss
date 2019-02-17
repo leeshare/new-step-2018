@@ -1,0 +1,27 @@
+/* pages/morepicture/morepicture.wxss */
+.view_more_wrap{
+    margin-bottom: 20rpx;
+    height:400rpx;
+    overflow: hidden;
+    box-shadow:0 2rpx 8rpx rgba(0,0,0,0.4);
+    position: relative;
+}
+.view_content_wrap {
+  box-sizing: border-box;
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  align-content: space-around;
+  font-size: 20px;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  font-family: "黑体";
+  background: rgba(0, 0, 0, 0.3);
+  left: 0;
+  top: 0;
+  line-height: normal;
+  white-space: nowrap;
+}

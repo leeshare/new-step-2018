@@ -1,0 +1,19 @@
+
+<!--pages/creatcatgory/creatcatgory.wxml-->
+<view class="bg_gray" style="height:{{scrollH}}px">
+<form bindsubmit="saveAndBack">
+  <view class="view_header_wrap winputwrap">
+    <input focus="true" type="text" placeholder="标题" placeholder-class="font16 colorcc" class="font16 color33" bindinput="bindKeyInput" value="{{option_upg.GroupName}}" maxlength="14" style="width:90%;"/>
+    <view  class="icon-shanchu_wrap flexrow" bindtap="clearinput"><i class="iconfont icon-shanchu"></i></view>
+  </view>
+  <!--<view class="view_content_wrap">
+    <textarea maxlength="200" placeholder="内容" style="height:348rpx;" placeholder-class="colorcc" value="{{textvalue}}" bindinput="inputText" class="color66" />
+  </view>-->
+  <view class="button_save_wrap">
+    <button type="warn" size="default" formType="submit">完成</button>
+  </view>
+  </form>
+ <view class="flexrow" hidden="{{photo_id>0}}" style="justify-content: center;margin-top:32rpx;" bindtap="delUserGroup">
+  <text class="view_delete">删除此图册</text>
+  </view>
+</view>

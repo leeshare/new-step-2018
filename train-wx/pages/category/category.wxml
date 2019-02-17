@@ -1,0 +1,80 @@
+<template name="photoFlow">
+  <view class="flow-row-imagebox" style="width:{{box_style_width}};height:{{box_style_height}}" bindtap="gotoPhoto" data-photo-id="{{photo_id}}">
+    <image src="{{cover_small}}" style="width:{{image_width}}px;height:{{image_height}}px" mode="scaleToFill"></image>
+  </view>
+</template>
+<template name="filterkeywords">
+  <view class="view-hot-wrap {{is_top_filter?'view-hot-wrap-top':''}}">
+    <scroll-view class="tag_wrap" scroll-x="true">
+      <text class="keyword {{keyword_choosed_index == -2 ? 'colorred' : ''}}" bindtap="filterKeyword" data-keyword="全部" style="padding-left:26rpx;">全部</text>
+      <text class="keyword {{keyword_choosed_index == -1 ? 'colorred' : ''}}" bindtap="filterKeyword" data-keyword="热门">热门</text>
+      <text class="keyword {{keyword_choosed_index == index ? 'colorred' : ''}}" wx:for="{{category.keyword_str_list}}" wx:key="unique" bindtap="filterKeyword" data-keyword="{{item}}">{{item}}</text>
+    </scroll-view>
+  </view>
+</template>
+<view class="tabhome-wrap flexrow" bindtap="gotohome" hidden="{{ishashome}}">
+  <view style="width:100%;height:48rpx;">
+    <i class="iconfont icon-shouyexuanzhong"></i>
+  </view>
+  <view class="font10">首页</view>
+</view>
+<view class="tabhome-wrap flexrow" bindtap="goBack" hidden="{{!ishashome}}">
+  <view style="width:100%;height:48rpx;">
+    <i class="iconfont icon-fanhui1"></i>
+  </view>
+  <view class="font10">返回</view>
+</view>
+<view class="tabbacktop-wrap flexrow" bindtap="gototop" wx:if="{{is_top_filter==1}}">
+  <view style="width:100%;height:48rpx;">
+    <i class="iconfont icon-huidaodingbu"></i>
+  </view>
+  <view class="font10">顶部</view>
+</view>
+<scroll-view scroll-y="true" style="height:{{scrollH}}px;background:#f5f5f5;" bindscroll="scrollHandler" scroll-top="{{scrollTop}}" bindscrolltolower="loadImages">
+  <template wx:if="{{is_top_filter==1}}" is="filterkeywords" data="{{is_top_filter:is_top_filter,keyword_choosed_index:keyword_choosed_index,category:category}}"></template>
+  <view class="view-content-wrap">
+    <view class="view-top-wrap" wx:if="{{category.name=='编辑精选'?false:true}}">
+      <image src="{{category.cover}}" mode="widthFix" class="imge"> </image>
+    </view>
+    <view class="view-detail-wrap color66" hidden="{{category.desc==''?true:false}}">
+      {{category.desc}}
+    </view>
+    <view>
+    </view>
+    <template is="filterkeywords" data="{{keyword_choosed_index:keyword_choosed_index,category:category}}"></template>
+    <view class="view_box_wrap">
+      <view class="flexrow view_empty_wrap" style="height:{{scrollH/2}}px" hidden="{{(!is_loaded || colAll.length>0)?true:false}}">
+        <view class="view_empty">
+          <view class="empty-data"></view>
+        </view>
+        <view class="font14 colorcc">暂无图片</view>
+      </view>
+      <view class="view_boxitem">
+        <view class="flow-row" wx:for="{{flowRows}}" wx:for-item="rowNo">
+          <template wx:for="{{colAll}}" wx:if="{{itemLeft.flowRowNo==rowNo}}" wx:key="photo_id" wx:for-item="itemLeft" is="photoFlow" data="{{...itemLeft}}" />
+        </view>
+      </view>
+    </view>
+    <view class="loading" hidden="{{isloading || all_loaded}}">正在加载...</view>
+  <view class="view_last_wrap" wx:if="{{all_loaded == true}}"> ---  没有更多图片了  --- </view>
+  </view>
+  <view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
+  <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+    <view class="view_header">注意</view>
+    <view class="view_content_wrap">
+      <text class="block">从此应用下载图片的人均需同意： 仅作为个人学习、研究，不得用于商业用途；</text>
+      <text class="block"> 任何情况均不得去掉图片文件相关版权信息和修改图片； </text>
+      <text>如果未按条例约定的范围使用了本网站图片，我们有权停止您的继续使用。</text>
+    </view>
+    <view class="view_checbox_wrap">
+      <checkbox-group bindchange="checkboxChange">
+        <label class="checkbox" wx:for="{{checkitems}}">
+          <checkbox color="#ea5b5a" value="{{item.name}}" checked="{{item.checked}}" />{{item.value}}
+        </label>
+      </checkbox-group>
+    </view>
+    <view class="view_aggree_wrap">
+      <button type="warn" class="button-agree large" bindtap="downloadImg">同意</button>
+    </view>
+  </view>
+</scroll-view>

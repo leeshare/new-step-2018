@@ -36,4 +36,6 @@ public interface SsoUserRepository
     @Query(nativeQuery = true, value = "SELECT u.* FROM sso_user u WHERE u.is_delete = 0 AND (u.role_type = ?3 OR 0 = ?3) AND (u.status = ?4 OR -1 = ?4) AND (u.real_name LIKE CONCAT(CONCAT('%',?5),'%') OR u.user_name LIKE CONCAT(CONCAT('%',?5),'%')) AND (u.org_id = ?6 OR 0 = ?6) LIMIT ?2 OFFSET ?1 ")
     List<SsoUser> find(int offset, int limit, byte roleType, byte status, String keyword, int orgId);
 
+    @Query("SELECT u FROM SsoUser u WHERE u.isDelete = 0 AND u.wechatOpenId = ?1")
+    SsoUser findByWechatOpenId(String openId);
 }

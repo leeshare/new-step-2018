@@ -1,0 +1,39 @@
+/* pages/creatLogo/creatLogo.wxss */
+
+.view_checbox_wrap {
+  margin: 178rpx 0;
+  margin-bottom:128rpx;
+  text-align: center;
+}
+
+.view_to_wrap .flexrow {
+  border-bottom: 2rpx solid #e6e6e6;
+  margin: 0 36rpx;
+  margin-top: 54rpx;
+  padding-bottom: 8rpx;
+}
+
+.view_input_wrap {
+  position: relative;
+  width: 78%;
+}
+
+.view_input_wrap .icon-close {
+  font-size: 34rpx;
+  color: #999;
+  position: absolute;
+  right: 16rpx;
+  top: 8rpx;
+  z-index: 111;
+}
+
+.view_to_wrap .flexrow .fontArial {
+  margin-right: 10rpx;
+}
+.view_or_wrap{
+    margin-top: 96rpx;
+    margin-bottom: 96rpx;
+    text-align: center;
+    font-size: 16px;
+    color:#999;
+}

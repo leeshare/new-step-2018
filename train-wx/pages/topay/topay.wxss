@@ -1,0 +1,121 @@
+/* pages/topay/topay.wxss */
+
+.view_top_wrap {
+  height: 152rpx;
+  background: white;
+  padding: 26rpx;
+  box-sizing: border-box;
+}
+
+.view_img_wrap {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 999rpx;
+  overflow: hidden;
+  margin-right: 26rpx;
+}
+
+.view_img_wrap .img {
+  height: 100%;
+  width: 100%;
+  border-radius: 99rpx;
+}
+
+.view_name {
+  margin-bottom: 20rpx;
+}
+
+.view_list_wrap {
+  background: white;
+  padding-left: 26rpx;
+}
+
+.view_list_header {
+  height: 82rpx;
+  line-height: 82rpx;
+  font-size: 16px;
+  font-family: "黑体";
+  border-bottom: 2rpx solid #e6e6e6;
+}
+
+.view_list_item {
+  min-height: 96rpx;
+  border-bottom: 2rpx solid #e6e6e6;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+  line-height: normal;
+  font-family: "黑体";
+  font-size: 16px;
+  color: #333;
+  position: relative;
+}
+
+.view_list_item:last-child {
+  border-bottom: 0;
+}
+
+.view_colum1 {
+  font-size: 16px;
+  width: 30%;
+}
+
+.view_colum2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-content: center;
+  align-items: center;
+  width: 70%;
+  padding-right: 26rpx;
+}
+
+.price {
+  color: #ea5b5a;
+  margin-right: 26rpx;
+  font-family: "arial";
+}
+
+.view_item_box {
+  padding: 24rpx 0;
+}
+
+.view_item_box> view {
+  margin-right: 34rpx;
+  width: 128rpx;
+  text-align: center;
+}
+
+.view_item_box .box {
+  border: 2rpx solid #e6e6e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 128rpx;
+  width: 128rpx;
+  box-sizing: border-box;
+  margin-bottom: 12rpx;
+}
+
+.view_item_box .box .iconfont {
+  font-size: 29px;
+  color: #666;
+}
+
+.view_list_wrap.nopadding .view_list_header {
+  padding-left: 26rpx;
+}
+
+.view_list_wrap.nopadding .view_list_item {
+  padding-left: 26rpx;
+}
+
+.view_list_item .icon-into {
+  position: absolute;
+  font-size: 40rpx;
+  color: #ccc;
+  right: 26rpx;
+  top: 34%;
+}

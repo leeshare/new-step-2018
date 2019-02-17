@@ -1,0 +1,46 @@
+
+<!--index.wxml-->
+<template name="categoryBlockItem">
+  <view class="WViewRow5" style="background:white">
+    <view class="WViewRow6" wx:for="{{categoryLists}}" bindtap="viewDetail" data-category-item="{{item}}">
+      <image mode="aspectFill" src="{{item.cover}}" class="image"></image>
+      <view class="wViewRow7" hidden="{{categoryType==2}}">
+        <text class="">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+</template>
+<view class="WViewRow1 {{isfocuse?'focus':''}}" style="">
+  <view class="winputwrap relative">
+    <view class="view_tapwrap" bindtap="gotoSearch"></view>
+    <input placeholder="请输入内容" disable="true" placeholder-class="placeholder font14" class="WInput17PT1"></input>
+  </view>
+  <text class="button-cancel" hidden="{{cancel}}" bindtap="canceltrigger">取消</text>
+</view>
+<view class="section">
+  <scroll-view scroll-y="true" style="height:{{scrollH}}px">
+    <block wx:for="{{categoryItems}}">
+      <template is="categoryBlockItem" data="{{...item}}"></template>
+    </block>
+  </scroll-view>
+</view>
+<view class="view_tabbar flexrow">
+  <view bindtap="tabBar"  data-tab="1">
+    <view>
+      <i class="iconfont icon-shouye"></i>
+    </view>
+    <view class="font10">精选</view>
+  </view>
+  <view bindtap="tabBar" data-tab="3">
+    <view>
+      <i class="iconfont icon-zhaotu_xiantiao"></i>
+    </view>
+     <view class="font10">找图</view>
+  </view>
+  <view bindtap="tabBar" data-tab="2">
+    <view>
+      <i class="iconfont icon-tabme"></i>
+    </view>
+    <view class="font10">我的</view>
+  </view>
+</view>
