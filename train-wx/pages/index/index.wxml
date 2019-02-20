@@ -32,26 +32,16 @@
 </template>
 
 <view animation="{{animationData}}" class="view_search_box" hidden="{{showSearch}}">
-  <view class="page-section page-section-spacing swiper">
-    <swiper
-          indicator-dots="true" autoplay="true" circular="true" vertical="false"
-          interval="3000" duration="500" previous-margin="0px" next-margin="0px">
-          <block wx:for="{{background}}" wx:key="*this">
-            <swiper-item>
-              <view class="swiper-item {{item}}"></view>
-            </swiper-item>
-          </block>
-    </swiper>
-  </view>
+  
 
   <template name="searchitem">
     <view class="view-list-wrap " bindtap="toDetail" data-item="{{item0}}">
       <view class="view-list-item flexrow">{{keyword}}</view>
     </view>
   </template>
-  <view class="WViewRow1 ">
+  <view class="WViewRow1 focus">
     <view class="winputwrap">
-      <input placeholder="请输入内容" type="text" placeholder-class="font14" class="WInput17PT1" bindinput="Inputword" value="{{keyvalue}}"></input>
+      <input placeholder="请输入内容1" type="text" placeholder-class="font14" class="WInput17PT1" bindinput="Inputword" value="{{keyvalue}}"></input>
       <view class="icon-shanchu_wrap flexrow" bindtap="clearinput">
         <i class="iconfont icon-shanchu"></i>
       </view>
@@ -86,9 +76,20 @@
   </scroll-view>
 </view>
 <view class="WViewRow1 {{isfocuse?'focus':''}}" style="">
+  <view class="page-section page-section-spacing swiper">
+    <swiper
+          indicator-dots="true" autoplay="true" circular="true" vertical="false"
+          interval="3000" duration="500" previous-margin="0px" next-margin="0px">
+          <block wx:for="{{background}}" wx:key="*this">
+            <swiper-item>
+              <view class="swiper-item {{item}}"></view>
+            </swiper-item>
+          </block>
+    </swiper>
+  </view>
   <view class="winputwrap relative">
     <view class="view_tapwrap" bindtap="showSearchModel"></view>
-    <input placeholder="请输入内容" disable="true" placeholder-class="placeholder font14" class="WInput17PT1"></input>
+    <input placeholder="请输入内容2" disable="true" placeholder-class="placeholder font14" class="WInput17PT1"></input>
   </view>
   <text class="button-cancel" hidden="{{cancel}}" bindtap="canceltrigger">取消</text>
 </view>
