@@ -6,6 +6,9 @@ page{
 }
 
 /*swiper*/
+.page-body{
+  padding-top: 60rpx;
+}
 .page-section{
   width: 100%;
   margin-bottom: 60rpx;
@@ -14,10 +17,17 @@ page{
   box-sizing: border-box;
   padding: 0 80rpx;
 }
+<<<<<<< HEAD
 /*.swiper-item{
   display: block;
   height: 150px;
 }*/
+=======
+.swiper-item{
+  display: block;
+  height: 150px;
+}
+>>>>>>> 61fddc64e7be5cc832e7db63309307589cf614c0
 .demo-text-1{
   position: relative;
   align-items: center;
