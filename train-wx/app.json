@@ -20,7 +20,8 @@
     "pages/creatLogo/creatLogo",
     "pages/topay/topay",
     "pages/By/By",
-    "pages/creatcatgory/creatcatgory"
+    "pages/creatcatgory/creatcatgory",
+    "pages/logs/logs"
   ],
   "window": {
     "backgroundTextStyle": "light",
