@@ -75,15 +75,9 @@
     </view>
   </scroll-view>
 </view>
-<<<<<<< HEAD
-<view class=" {{isfocuse?'focus':''}}" style="">
-  <view class="page-section page-section-spacing swiper">
-    <swiper indicator-dots="true" autoplay="true" circular="true" vertical="{{false}}" interval="3000" duration="500" previous-margin="0px" next-margin="0px">
-=======
 <view class="page-body {{isfocuse?'focus':''}}" style="">
   <view class="page-section page-section-spacing swiper">
     <swiper indicator-dots="{{true}}" autoplay="{{true}}" circular="{{true}}" vertical="{{false}}" interval="3000" duration="500" previous-margin="0px" next-margin="0px">
->>>>>>> 61fddc64e7be5cc832e7db63309307589cf614c0
           <block wx:for="{{background}}" wx:key="*this">
             <swiper-item>
               <view class="swiper-item {{item}}"></view>
