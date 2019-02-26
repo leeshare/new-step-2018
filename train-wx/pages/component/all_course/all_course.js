@@ -1,16 +1,17 @@
 //index.js
 //获取应用实例
 const app = getApp()
-var WxNotificationCenter = require("../../utils/WxNotificationCenter.js")
+var WxNotificationCenter = require("../../../utils/WxNotificationCenter.js")
 Page({
   data: {
-    title: '培训',
+    title: '所有课程',
+    showSearch: true,
+
     topactive: '0',
     tabActive: '1',
     scrollH: 0,
     imgWidth: 0,
     ishidemode: true,
-    showSearch: true,
     isfocuse: false,
     cancel: true,
     essence_id: 0,  //精选
@@ -40,33 +41,15 @@ Page({
     return {
       title: '要培训找培训',
       desc: '',
-      path: '/pages/index/index'
+      path: '/pages/index'
     }
   },
   onLoad: function () {
     let that = this;
-    app.getUserInfo(function (userInfo) {
-      //更新数据
-      that.setData({
-        userInfo: userInfo
-      })
-
-      wx.getSystemInfo({
-        success: (res) => {
-          console.log(res)
-          let ww = res.windowWidth;
-          let wh = res.windowHeight - 40;
-          let scrollH = wh;
-
-          that.setData({
-            scrollH: scrollH
-          });
-
-          that.loadIndexList()
-        }
-      })
-    })
+    
     WxNotificationCenter.addNotification("update_photo_favorite", that.updatePhotoFavorite, that)
+
+    this.showSearchModel();
   },
   onReady: function () {
     var that = this;

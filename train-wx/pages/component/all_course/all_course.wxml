@@ -1,6 +1,6 @@
 
 <!--index.wxml-->
-<template name="topic">
+<!--<template name="topic">
   <view class="WViewRow5 hasbottomline" style="background:white;">
     <view class="WViewRow6" wx:for="{{photo_list}}" bindtap="viewDetail" data-photo-item="{{item}}" data-index="{{index}}" data-category-id="{{self.id}}">
       <image mode="aspectFill" src="{{item.cover_small}}" class="image"></image>
@@ -9,8 +9,9 @@
       </view>
     </view>
   </view>
-</template>
-<template name="category">
+</template>-->
+
+<!--<template name="category">
   <view class="WViewRow2" style="">
     <view class="WViewRow3 hasbottomline hastopline">
       <view class="WViewRow4" style="">
@@ -29,10 +30,9 @@
       </view>
     </view>
   </view>
-</template>
+</template>-->
 
-<view animation="{{animationData}}" class="view_search_box" hidden="{{showSearch}}">
-  
+<view class="view_search_box">
 
   <template name="searchitem">
     <view class="view-list-wrap " bindtap="toDetail" data-item="{{item0}}">

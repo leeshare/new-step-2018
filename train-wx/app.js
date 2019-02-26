@@ -11,13 +11,14 @@ App({
   },
   goHome: function () {
     let currentPages = getCurrentPages();
-    if (currentPages[0].__route__ == "pages/index/index") {
+    let url = "pages/index";
+    if (currentPages[0].__route__ == url) {
       wx.navigateBack({
         delta: 12
       });
     }
     else {
-      wx.redirectTo({ url: "/pages/index/index" });
+      wx.redirectTo({ url: url });
     }
   },
   goBack: function () {

@@ -28,7 +28,7 @@ Page({
     return {
       title: '找好图用找图',
       desc: '',
-      path: '/pages/index/index'
+      path: '/pages/index'
     }
   },
   onLoad: function () {

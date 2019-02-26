@@ -1,6 +1,8 @@
 {
   "pages":[
-    "pages/index/index",
+    "pages/index",
+    "pages/component/all_course/all_course",
+
     "pages/category/category",
     "pages/search/search",
     "pages/photo/photo",
@@ -39,7 +41,7 @@
     "backgroundColor": "#fff",
     "list": [
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/index",
         "iconPath": "images/tab_home-0.png",
         "selectedIconPath": "images/tab_home-1.png",
         "text": "首页"
