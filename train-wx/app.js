@@ -6,6 +6,7 @@ App({
   apiUrl: function () {
     return this.isDevelop ? this.developUrl : this.productUrl
   },
+  resUrl: 'http://47.110.255.125:9000/',
   onLaunch: function () {
     
   },

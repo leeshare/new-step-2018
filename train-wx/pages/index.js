@@ -5,6 +5,7 @@ var WxNotificationCenter = require("../utils/WxNotificationCenter.js")
 Page({
   data: {
     title: '培训',
+    resUrl: app.resUrl,
 
     currentTab: 0,
     winWidth: 0,
