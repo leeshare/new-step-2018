@@ -1,6 +1,6 @@
 package com.step.train.controller;
 
-import com.lyyzoo.fastdfs.client.*;
+import com.step.train.util.fastdfs.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
