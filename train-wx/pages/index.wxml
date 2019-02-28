@@ -3,7 +3,7 @@
 
 <view class="page-body {{isfocuse?'focus':''}}" style="">
   <view class="page-section page-section-spacing swiper">
-    <swiper indicator-dots="{{true}}" autoplay="{{true}}" circular="{{true}}" vertical="{{false}}" interval="3000" duration="500" previous-margin="0px" next-margin="0px">
+    <swiper indicator-dots="{{true}}" autoplay="{{true}}" circular="{{true}}" vertical="{{false}}" interval="5000" duration="500" previous-margin="0px" next-margin="0px">
           <block wx:for="{{[1, 2]}}" wx:key="*this">
             <swiper-item>
               <!--<view class="swiper-item {{item}}"></view>-->
