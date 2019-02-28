@@ -64,47 +64,50 @@ public class LoginController {
         }else {
             SsoUser user = userService.findByUserName(username);
             if(user != null && user.getId() > 0 && user.getStatus() == 1) {
-                userId = user.getId();
-                //验证 log
-                int tempResult = accessLogService.checkAccessLog(userId, false, false);
-                if(tempResult < 0){
-                    result = tempResult;
+                if(user.getRoleType() == 4){
+                    result = -5;
                 }else {
-                    //返回0 表示查不到任何登录记录
-                    if(tempResult > 0)
-                        errorNum = (byte)tempResult;
-                    String pwd_md5 = DigestUtils.md5DigestAsHex(pwd.getBytes());
-                    if (pwd_md5.equalsIgnoreCase(user.getPassword())) {
-                        u.setId(userId);
-                        u.setRealName(user.getRealName());
-                        u.setSsoRoles(user.getSsoRoles());
-                        u.setRoleType(user.getRoleType());
-                        u.setOrgId(user.getOrgId());
-                        if(user.getOrgId() > 0){
-                            SsoOrganization org = orgService.findById(user.getOrgId());
-                            if(org != null)
-                                u.setOrgName(org.getName());
+                    userId = user.getId();
+                    //验证 log
+                    int tempResult = accessLogService.checkAccessLog(userId, false, false);
+                    if (tempResult < 0) {
+                        result = tempResult;
+                    } else {
+                        //返回0 表示查不到任何登录记录
+                        if (tempResult > 0)
+                            errorNum = (byte) tempResult;
+                        String pwd_md5 = DigestUtils.md5DigestAsHex(pwd.getBytes());
+                        if (pwd_md5.equalsIgnoreCase(user.getPassword())) {
+                            u.setId(userId);
+                            u.setRealName(user.getRealName());
+                            u.setSsoRoles(user.getSsoRoles());
+                            u.setRoleType(user.getRoleType());
+                            u.setOrgId(user.getOrgId());
+                            if (user.getOrgId() > 0) {
+                                SsoOrganization org = orgService.findById(user.getOrgId());
+                                if (org != null)
+                                    u.setOrgName(org.getName());
+                            }
+
+
+                            String ticket = userService.addLoginTicket(userId);
+                            u.setTicket(ticket);
+
+                            accessLogService.checkAccessLog(userId, true, true);
+
+                            result = 1;
+                        } else {
+                            //本次登录失败
+                            errorNum += 1;
+                            accessLogService.checkAccessLog(userId, false, true);
+                            if (errorNum > 5)
+                                result = -3;
+                            else
+                                result = -4;
                         }
 
-
-                        String ticket = userService.addLoginTicket(userId);
-                        u.setTicket(ticket);
-
-                        accessLogService.checkAccessLog(userId, true, true);
-
-                        result = 1;
-                    }else {
-                        //本次登录失败
-                        errorNum += 1;
-                        accessLogService.checkAccessLog(userId, false, true);
-                        if(errorNum > 5)
-                            result = -3;
-                        else
-                            result = -4;
                     }
-
                 }
-
 
             }else {
                 result = -2;
@@ -123,6 +126,8 @@ public class LoginController {
             case -4:
                 //用户存在，但密码错误小于5次
                 return new JsonResult<SsoUser>(String.format("密码错误, 已失败%d", errorNum));
+            case -5:
+                return new JsonResult<>("您没有权限登录此平台");
             case 1:
                 return new JsonResult<SsoUser>(u);
             default:
@@ -170,7 +175,7 @@ public class LoginController {
 
         String captcha = cko.toString();
         Date now = new Date();
-        Long codeTime = Long.valueOf(session.getAttribute("codeTime")+"");
+        Long codeTime = Long.valueOf(session.getAttribute("codeTime") + "");
         if(StringUtils.isEmpty(checkCode) || captcha == null ||  !(checkCode.equalsIgnoreCase(captcha))){
             request.setAttribute("errorMsg", "验证码错误！");
             return "验证码错误！";
