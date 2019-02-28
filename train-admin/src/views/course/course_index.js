@@ -37,6 +37,7 @@ import {
 } from '@/actions/course';
 
 import CourseView from './course_view.js';
+import './index.less';
 
 class CourseManage extends React.Component {
   constructor(props) {
@@ -73,6 +74,13 @@ class CourseManage extends React.Component {
     {
       title: YSI18n.get('课程名称'),
       dataIndex: 'name',
+    },
+    {
+      title: YSI18n.get('课程图片'),
+      dataIndex: 'coursePhotoFull',
+      render: (text) => {
+        return <img src={text} alt="" className="preview" />
+      }
     },
     {
       title: '是否收费',

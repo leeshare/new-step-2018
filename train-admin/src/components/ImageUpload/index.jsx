@@ -58,17 +58,17 @@ class ImageUpload extends React.Component {
             this.setState({
                 imageUrl: localUrl,
             });
-            if (!info.file.response.result) {
+            if (!info.file.response.success) {
                 message.error(info.file.response.message);
             }
             else {
-                this.triggerChange(info.file.response.data.url, info.file.response.data.fullUrl);//上传回调
+                this.triggerChange(info.file.response.filePath, info.file.response.httpUrl);//上传回调
                 this.setState({
                     loading: false,
                     percent: 0,
                 });
                 if (this.props.callback) {
-                    this.props.callback(localUrl, info.file.response.data.url);
+                    this.props.callback(localUrl, info.file.response.filePath);
 
                 }
             }
@@ -92,10 +92,12 @@ class ImageUpload extends React.Component {
     render() {
         const imageUrl = this.state.imageUrl;
         let token = getToken();
-        let uploadUrl = `${serverURL}/Admin/UploadFile?token=${token}`;
+        //let uploadUrl = `${serverURL}/Admin/UploadFile?token=${token}`;
+        let uploadUrl = `${serverURL}/fastdfs/upload/image/sample?token=${token}`;
         if (this.props.functionType) {
             let functionType = this.props.functionType;
-            uploadUrl = `${serverURL}/Admin/UploadFile?token=${token}&functionType=${functionType}`;
+            //uploadUrl = `${serverURL}/Admin/UploadFile?token=${token}&functionType=${functionType}`;
+            uploadUrl = `${serverURL}/fastdfs/upload/image/sample?token=${token}&functionType=${functionType}`;
         }
         return (
             <div className="ImageUpload">

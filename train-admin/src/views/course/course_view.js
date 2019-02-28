@@ -10,6 +10,7 @@ import { Modal, message, Form, Row, Col, Input, Select,
   Radio, Checkbox
 } from 'antd';
 
+import ImageUpload from '@/components/ImageUpload';
 import ImageCutUpload from '@/components/ImageCutUpload';
 import { getDictionaryTitle, getViewEditModeTitle,
   convertTextToHtml, dataBind, dateFormat, timestampToTime
@@ -45,8 +46,14 @@ class CourseView extends React.Component {
               courseType: 1,
               orgId: '',
               teacherId: '',
-              id: 0
+              id: 0,
+              //FormImagePaths_Temp: {value: '', url: ''}
             };
+          if(dm.coursePhoto && dm.coursePhotoFull){
+            dm.coverInfo = {value: dm.coursePhoto, url: dm.coursePhotoFull};
+          }else {
+            dm.coverInfo = {value: '', url: ''};
+          }
         this.state = {
             dataModel: dm,//数据模型
             disabled: false,
@@ -154,7 +161,8 @@ class CourseView extends React.Component {
                     if(values.courseType == '2'){
                       values.price = 0;
                     }
-                    this.props.viewCallback({ ...that.state.dataModel, ...values });//合并保存数据
+                    values.coursePhoto = that.state.dataModel.coverInfo.value;
+                    that.props.viewCallback({ ...that.state.dataModel, ...values });//合并保存数据
                 }
             });
         }
@@ -247,6 +255,7 @@ class CourseView extends React.Component {
 
     //多种模式视图处理
     renderEditModeOfView() {
+        var that = this;
         let block_content = <div></div>
         const { getFieldDecorator } = this.props.form;
         switch (this.props.editMode) {
@@ -375,6 +384,28 @@ class CourseView extends React.Component {
                             })(
                                 <TextArea rows={5} />
                                 )}
+                        </FormItem>
+                        <FormItem
+                          {...formItemLayout}
+                          label="课程封面"
+                          extra="建议尺寸：1024*718px；大小：200kb左右"
+                        >
+                          <Row className="AppBackGroundImageList">
+                              <div className='dv_img_list' style={{ marginBottom: 24 }}>
+                                  <ImageUpload
+                                    value={this.state.dataModel.coverInfo.url}
+                                    functionType={'ZixunFiles'}
+                                    onChange={(value, url) => {
+                                      var item = that.state.dataModel.coverInfo;
+                                      item.value = value;
+                                      item.url = url.indexOf('http://') < 0 ? 'http://' + url : url;
+                                      that.setState({ dataModel: that.state.dataModel })
+                                  }} onDelete={() => {
+                                      that.state.dataModel.coverInfo = { value: '', url: ''};
+                                      that.setState({ dataModel: that.state.dataModel })
+                                  }} />
+                              </div>
+                          </Row>
                         </FormItem>
                         {this.renderBtnControl()}
                     </Form>

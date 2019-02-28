@@ -1,6 +1,8 @@
 package com.step.train.controller;
 
+import com.step.train.configuration.Config;
 import com.step.train.util.fastdfs.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,22 +25,25 @@ import java.util.Locale;
  * @date 2017-10-15 14:09
  */
 @Controller
-@RequestMapping("/fastdfs")
+@RequestMapping("/api/fastdfs")
 public class FileObjectController {
 
     private FastDFSClient fastDFSClient = new FastDFSClient();
 
+    @Autowired
+    Config config;
+
     /**
      * 文件服务器地址
      */
-    @Value("${file_server_addr}")
-    private String fileServerAddr;
+    //@Value("${file_server_addr}")
+    //private String fileServerAddr;
 
     /**
      * FastDFS秘钥
      */
-    @Value("${fastdfs.http_secret_key}")
-    private String fastDFSHttpSecretKey;
+    //@Value("${fastdfs.http_secret_key}")
+    //private String fastDFSHttpSecretKey;
 
     @RequestMapping("/test")
     @ResponseBody
@@ -165,6 +170,8 @@ public class FileObjectController {
     @RequestMapping("/get/token")
     @ResponseBody
     public FileResponseData getToken(String filePath){
+        String fastDFSHttpSecretKey = config.getHttp_secret_key();
+        String fileServerAddr = config.getFile_server_addr();
         FileResponseData responseData = new FileResponseData();
         // 设置访文件的Http地址. 有时效性.
         String token = FastDFSClient.getToken(filePath, fastDFSHttpSecretKey);
@@ -182,6 +189,8 @@ public class FileObjectController {
      * @return
      */
     public FileResponseData uploadSample(MultipartFile file, HttpServletRequest request){
+        String fastDFSHttpSecretKey = config.getHttp_secret_key();
+        String fileServerAddr = config.getFile_server_addr();
         FileResponseData responseData = new FileResponseData();
         try {
             // 上传到服务器

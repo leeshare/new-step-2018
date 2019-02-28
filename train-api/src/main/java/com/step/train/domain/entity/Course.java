@@ -73,6 +73,9 @@ public class Course implements Serializable {
     @Transient
     private String orgName;
 
+    @Transient
+    private String coursePhotoFull;
+
     //-------------------------------------//
 
     public Integer getId() {
@@ -233,5 +236,13 @@ public class Course implements Serializable {
 
     public void setOrgName(String orgName) {
         this.orgName = orgName;
+    }
+
+    public String getCoursePhotoFull() {
+        return coursePhotoFull;
+    }
+
+    public void setCoursePhotoFull(String coursePhotoFull) {
+        this.coursePhotoFull = coursePhotoFull;
     }
 }

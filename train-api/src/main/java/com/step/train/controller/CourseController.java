@@ -3,6 +3,7 @@ package com.step.train.controller;
 import com.github.pagehelper.PageInfo;
 import com.step.train.annotation.CurrentUser;
 import com.step.train.annotation.LoginRequired;
+import com.step.train.configuration.Config;
 import com.step.train.domain.entity.*;
 import com.step.train.domain.repository.SsoOrganizationRepository;
 import com.step.train.model.PageQo;
@@ -32,6 +33,8 @@ public class CourseController {
     private UserService userService;
     @Autowired
     private OrgService orgService;
+    @Autowired
+    private Config config;
 
     @PostMapping("/list")
     @LoginRequired
@@ -62,6 +65,11 @@ public class CourseController {
                 SsoOrganization org = orgService.findById(info.getOrgId());
                 if(org != null)
                     info.setOrgName(org.getName());
+            }
+            if(!StringUtils.isEmpty(info.getCoursePhoto())){
+                String base = config.getFile_server_addr();
+                base = base.indexOf("http://") < 0 ? "http://" + base : base;
+                info.setCoursePhotoFull(base + "/" + info.getCoursePhoto());
             }
         }
         pageInfo.setList(courseList);
