@@ -5,9 +5,12 @@
     <image mode="aspectFill" src="{{coursePhotoFull}}" class="course_img"></image>
     <view class="course_item_right">
       <text class="font-medium">{{name}}</text>
-      <text class="font-medium" style="color: orange">{{courseType == 1 ? price : '免费'}}</text>
+      <view style="display: flex; flex-direction: row;">
+      <image class="icon-small" style="margin-top:18rpx; color: orange" src="resources/antd/yuan.png"></image>
+      <text class="font-medium" style="color: orange">{{courseType == 1 ? price + '.00' : '免费'}}</text>
+      </view>
       <view style="display: flex; flex-direction: row; margin-top: 10rpx;">
-        <image class="icon-small" src="resources/antd/icon_signal.png"></image>
+        <image class="icon-small" style="margin-top:8rpx" src="resources/antd/icon_signal.png"></image>
         <text class="font-small" style="padding-left: 10rpx;">{{teacherName || '无'}}</text>
       </view>
     </view>
