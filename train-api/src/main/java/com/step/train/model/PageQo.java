@@ -1,7 +1,7 @@
 package com.step.train.model;
 
 public class PageQo {
-    private Integer page = 0;
+    private Integer page = 1;
     private Integer size = 10;
 
     private String keyword;
@@ -9,6 +9,11 @@ public class PageQo {
     private Byte status;
 
     private Integer orgId;
+
+    /**
+     * 针对课程 Course中的 isShow  1 只显示课程; -1 全部
+     */
+    private Byte isShow;
 
     public Integer getPage() {
         return page;
@@ -48,5 +53,13 @@ public class PageQo {
 
     public void setOrgId(Integer orgId) {
         this.orgId = orgId;
+    }
+
+    public Byte getIsShow() {
+        return isShow;
+    }
+
+    public void setIsShow(Byte isShow) {
+        this.isShow = isShow;
     }
 }

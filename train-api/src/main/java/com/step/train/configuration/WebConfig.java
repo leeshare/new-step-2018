@@ -38,7 +38,8 @@ public class WebConfig
                 .addPathPatterns("/api/org/**")
                 .addPathPatterns("/api/teacher/**")
                 .addPathPatterns("/api/course/**")
-                .excludePathPatterns("/api/login/**");
+                .excludePathPatterns("/api/login/**")
+                .excludePathPatterns("/api/wechat/**");
         super.addInterceptors(registry);
     }
 

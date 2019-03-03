@@ -74,6 +74,9 @@ public class Course implements Serializable {
     private String orgName;
 
     @Transient
+    private String teacherName;
+
+    @Transient
     private String coursePhotoFull;
 
     //-------------------------------------//
@@ -236,6 +239,14 @@ public class Course implements Serializable {
 
     public void setOrgName(String orgName) {
         this.orgName = orgName;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
     }
 
     public String getCoursePhotoFull() {

@@ -2,7 +2,7 @@
 App({
   isDevelop: true,
   productUrl: 'https://www.tohappy.com.cn/API-2.0/',
-  developUrl: 'http://localhost:8084/api/',
+  developUrl: 'http://localhost:8084/api/wechat/',
   apiUrl: function () {
     return this.isDevelop ? this.developUrl : this.productUrl
   },
@@ -25,7 +25,7 @@ App({
   goBack: function () {
     wx.navigateBack();
   },
-  getUserInfo: function (cb) {
+  getUserInfo: function (cb, fail) {
     var that = this
     if (this.globalData.userInfo) {
       typeof cb == "function" && cb(this.globalData.userInfo)
@@ -38,6 +38,10 @@ App({
               that.globalData.userInfo = res.userInfo
               that.globalData.token = res.signature
               that.getTokenFromServer(response.code, res.encryptedData, res.iv, res.signature, cb);
+            },
+            fail: function(response) {
+              console.log(response);
+              typeof fail == "function" && fail();
             }
           })
         }
@@ -53,7 +57,7 @@ App({
     var that = this;
     if (code) {
       wx.request({
-        url: that.apiUrl() + 'login/wechat',
+        url: that.apiUrl() + 'login',
         //url: 'http://localhost:8084/api/course/list',
         data: {
           code: code,
@@ -78,7 +82,7 @@ App({
       })
     }
   },
-  loginToServer: function (token, cb) {
+  /*loginToServer: function (token, cb) {
     var that = this;
     wx.request({
       url: that.apiUrl() + 'user/getCurrentUserInfo?token=' + token,
@@ -89,7 +93,7 @@ App({
         typeof cb == "function" && cb(that.globalData.userInfo)
       }
     })
-  },
+  },*/
   //显示加载中对话框
   showLoading: function (title) {
     wx.showToast({ title: title || '加载中', icon: 'loading', mask: true, duration: 10000 });
@@ -112,10 +116,10 @@ App({
         },
         success: function (res) {
           console.log(res.data);
-          if (res.data.result) {
+          if (res.data.state == 1) {
             typeof _success == "function" && _success(res.data);
           }
-          else if (res.data.result === false) {
+          else if (res.data.state === 0) {
             typeof _fail == "function" && _fail(res.data);
           }
           else {
@@ -133,7 +137,7 @@ App({
     wx.getStorage({
       key: 'UserContextInfo',
       success: function (res0) {
-        toPost(res0.data.token);
+        toPost(res0.data.ticket);
       },
       fail: function (resError) {
         toPost();

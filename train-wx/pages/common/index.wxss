@@ -36,3 +36,16 @@
 .kind-list-item-bd-show {
   height: auto;
 }
+
+.font-medium {
+  font-size: 32rpx;
+  text-align: left;
+  margin-top: 10rpx;
+}
+.font-small {
+  font-size: 30rpx;
+}
+.icon-small {
+  width: 30rpx;
+  height: 30rpx;
+}

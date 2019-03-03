@@ -2,6 +2,7 @@
   "pages":[
     "pages/index",
     "pages/component/all_course/all_course",
+    "pages/component/course_detail/detail",
 
     "pages/category/category",
     "pages/search/search",
@@ -50,7 +51,7 @@
         "pagePath": "pages/T/T",
         "iconPath": "images/tab_search-0.png",
         "selectedIconPath": "images/tab_search-1.png",
-        "text": "找图"
+        "text": "找课"
       },
       {
         "pagePath": "pages/mycollect/mycollect",

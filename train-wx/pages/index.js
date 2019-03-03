@@ -6,16 +6,20 @@ Page({
   data: {
     title: '培训',
     resUrl: app.resUrl,
+    isAuthed: true,
 
     currentTab: 0,
     winWidth: 0,
     windowHeight: 0,
+
+    courses: [],
 
     topactive: '0',
     tabActive: '1',
     scrollH: 0,
     imgWidth: 0,
     ishidemode: true,
+    //ishidemode: false,
     showSearch: true,
     isfocuse: false,
     cancel: true,
@@ -54,7 +58,8 @@ Page({
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({
-        userInfo: userInfo
+        userInfo: userInfo,
+        isAuthed: true
       })
 
       wx.getSystemInfo({
@@ -70,8 +75,12 @@ Page({
             scrollH: scrollH
           });
 
-          that.loadIndexList()
+          that.loadCourseList()
         }
+      })
+    }, function(){
+      that.setData({
+        isAuthed: false
       })
     })
     WxNotificationCenter.addNotification("update_photo_favorite", that.updatePhotoFavorite, that)
@@ -194,8 +203,20 @@ Page({
   viewDetail: function (event) {
     var that = this;
     var dataset = event.currentTarget.dataset;
-    let categoryId = dataset.categoryId;
-    let index = event.currentTarget.dataset.index;
+    let courseId = dataset.courseId;
+    //let index = event.currentTarget.dataset.index;
+    app.globalData.pushData = null;
+    for (var i = 0; i < that.data.courses.length; i++) {
+      if (that.data.courses[i].id == courseId) {
+        app.globalData.pushData = that.data.courses[i];
+        break;
+      }
+    }
+    wx.navigateTo({
+      url: 'component/course_detail/detail?id=' + courseId,
+    })
+    return;
+
     if (index == 5) {
       //去去 精选详情页
       wx.navigateTo({
@@ -237,15 +258,20 @@ Page({
       url: '../photo/photo?id=' + photoId
     });
   },
-  //载入分类数据
-  loadIndexList: function () {
+  //载入课程数据
+  loadCourseList: function () {
     var that = this;
     app.showLoading('加载中');
     app.ajax(
-      'puzzleV20170301/indexHome',
+      'course/list',
       { dataVersion: 0 },
       function (response) {
-        var categorys = response.data.data_categorys.group_list;
+        var courses = response.data.list;
+        that.setData({
+          courses: courses,
+        })
+
+        /*var categorys = response.data.data_categorys.group_list;
         var topicNames = response.data.data_topics;
         //topicNames.push({ id: -1, name: '精选'});
         var essence = response.data.data_editor;
@@ -269,7 +295,7 @@ Page({
           topics: topics,
           current: essence,
           photoTotalNum: photoTotalNum
-        })
+        })*/
 
         //that.setData({
         //  categoryItems: [{ categoryType: 2, categoryName: '专辑', categoryLists: topics }, { categoryType: 1, categoryName: '图库', categoryLists: categorys }]
@@ -303,7 +329,7 @@ Page({
     })
 
   },
-  getPhotosByCategory: function (id) {
+  /*getPhotosByCategory: function (id) {
     var that = this;
     app.ajax('puzzleV4/getGroupInfoById', { groupId: id, defaultPhotoNum: 6 },
       function (response) {
@@ -346,14 +372,15 @@ Page({
       }
     }
     if (!isExist) {
-      if (id > 0)
-        that.getPhotosByCategory(id);
+      if (id > 0){
+        //that.getPhotosByCategory(id);
+      }
     } else {
       that.setData({
         current: topics[index]
       });
     }
-  },
+  },*/
 
   Inputword: function (e) {
     var that = this;

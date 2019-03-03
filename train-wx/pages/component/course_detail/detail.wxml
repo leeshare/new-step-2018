@@ -1,0 +1,40 @@
+
+<!--pages/detail/detail.wxml-->
+<template name="photoFlow">
+  <view class="flow-row-imagebox" style="width:{{box_style_width}};height:{{box_style_height}}" bindtap="gotoPhoto" data-photo-id="{{photo_id}}">
+    <image src="{{cover_small}}" style="width:{{image_width}}px;height:{{image_height}}px" mode="scaleToFill"></image>
+  </view>
+</template>
+<view class="WViewRow1">
+  <view class="winputwrap relative">
+  </view>
+</view>
+<view class="tabhome-wrap flexrow" bindtap="gotohome" hidden="{{ishashome}}">
+  <view style="width:100%;height:48rpx;">
+    <i class="iconfont icon-shouyexuanzhong"></i>
+  </view>
+  <view class="font10">首页</view>
+</view>
+<view class="tabhome-wrap flexrow" bindtap="goBack" hidden="{{!ishashome}}">
+  <view style="width:100%;height:48rpx;">
+    <i class="iconfont icon-fanhui1"></i>
+  </view>
+  <view class="font10">返回</view>
+</view>
+<view class="tabbacktop-wrap flexrow" bindtap="gototop" wx:if="{{is_top_filter==1}}">
+  <view style="width:100%;height:48rpx;">
+    <i class="iconfont icon-huidaodingbu"></i>
+  </view>
+  <view class="font10">顶部</view>
+</view>
+<scroll-view style="height:{{scrollH}}px" scroll-y="true" bindscrolltolower="loadImages" bindscroll="scrollHandler" scroll-top="{{scrollTop}}">
+
+  <view class="view_box_wrap">
+      <view class="view_boxitem">
+         
+      </view>
+    </view>
+ 
+  <view class="loading" hidden="{{isloading || all_loaded}}">正在加载...</view>
+  <view class="view_last_wrap" wx:if="{{all_loaded == true}}"> ---  没有更多图片了  --- </view>
+</scroll-view>
