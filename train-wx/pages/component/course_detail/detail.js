@@ -38,7 +38,8 @@ Page({
   },
   onLoad: function (options) {
     let courseInfo = app.globalData.pushData;
-    wx.setNavigationBarTitle({ title: courseInfo.name });
+    //wx.setNavigationBarTitle({ title: courseInfo.name });
+    wx.setNavigationBarTitle({ title: '图文详情' });
     this.setData({ courseInfo: courseInfo });
 
     var that = this;

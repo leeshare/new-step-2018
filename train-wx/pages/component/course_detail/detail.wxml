@@ -7,6 +7,8 @@
 </template>
 <view class="WViewRow1">
   <view class="winputwrap relative">
+    abc
+    <text>{{courseInfo.name}}</text>def
   </view>
 </view>
 <view class="tabhome-wrap flexrow" bindtap="gotohome" hidden="{{ishashome}}">
@@ -27,6 +29,7 @@
   </view>
   <view class="font10">顶部</view>
 </view>
+
 <scroll-view style="height:{{scrollH}}px" scroll-y="true" bindscrolltolower="loadImages" bindscroll="scrollHandler" scroll-top="{{scrollTop}}">
 
   <view class="view_box_wrap">

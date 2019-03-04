@@ -13,7 +13,7 @@ page {
   flex-wrap: wrap;
   align-content: stretch;
   width: 750rpx;
-  height: 82rpx;
+  height: 164rpx;
   background-color: #e6e6e6;
   color: #fff;
   font-size: 20PX;
@@ -25,7 +25,7 @@ page {
   box-sizing: border-box;
   padding: 0rpx 0rpx 0rpx 10rpx;
   width: 720rpx;
-  height: 52rpx;
+  height: 120rpx;
   background: white;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
