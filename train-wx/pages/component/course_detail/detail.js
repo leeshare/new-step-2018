@@ -7,6 +7,7 @@ Page({
   data: {
     scrollH: 0,
     courseInfo: {},
+    currentTab: 0,
 
     keywordObj: {},
     temp_photo_list: [],
@@ -55,6 +56,25 @@ Page({
     })
     //that.loadImages();
   },
+
+  /** 
+   * 点击tab切换 
+   */
+  swichTabNav: function (e) {
+    var that = this;
+    if (this.data.currentTab === e.target.dataset.current) {
+      return false;
+    } else {
+      that.setData({
+        currentTab: e.target.dataset.current
+      })
+    }
+  },
+  buyCourse: function() {
+    //app.showSuccess("购买课程成功")
+    app.showFail("购买课程失败")
+  },
+
   onShow: function () {
     let currentPages = getCurrentPages();
     if (currentPages.length == 1) {

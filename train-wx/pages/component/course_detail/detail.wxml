@@ -1,14 +1,31 @@
 
-<!--pages/detail/detail.wxml-->
-<template name="photoFlow">
-  <view class="flow-row-imagebox" style="width:{{box_style_width}};height:{{box_style_height}}" bindtap="gotoPhoto" data-photo-id="{{photo_id}}">
-    <image src="{{cover_small}}" style="width:{{image_width}}px;height:{{image_height}}px" mode="scaleToFill"></image>
+<!--pages/component/course_detail/detail.wxml-->
+<template name="course">
+  <text class="content_header">讲师介绍</text>
+  <view style="flex-direction:row; margin-left:20rpx">
+    <image style="margin-top:8rpx; height: 30rpx; width: 30rpx;" mode="aspectFill" src="../../resources/antd/icon_signal.png"></image>
+    <text style="vertical-align:center;">{{courseInfo.teacherName || '暂无'}}</text>
   </view>
+  <text class="content_header">课程价格</text>
+  <view style="flex-direction:row; margin-left:20rpx">
+    <image style="margin-top:8rpx; height: 30rpx; width: 30rpx;" mode="aspectFill" src="../../resources/antd/yuan.png"></image>
+    <text class="font-medium" style="color: orange">{{courseInfo.courseType == 1 ? courseInfo.price + '.00' : '免费'}}</text>
+  </view>
+  <text class="content_header">课程图片</text>
+  <image mode="widthFix" src="{{courseInfo.coursePhotoFull}}" class="course_img"></image>
+  <text class="content_header">课程介绍</text>
+  <view style="flex-direction:row; margin-left:20rpx">
+    <text style="margin-left: 20rpx">{{courseInfo.courseDesc || '暂无'}}</text>
+  </view>
+  <view style="text-align: center" wx:if="{{courseInfo.courseType == 1}}">
+    <button class="org_btn" bindtap="buyCourse">购买</button>
+  </view>
+
 </template>
+
 <view class="WViewRow1">
   <view class="winputwrap relative">
-    abc
-    <text>{{courseInfo.name}}</text>def
+    <text style="vertical-align:center;">{{courseInfo.name}}</text>
   </view>
 </view>
 <view class="tabhome-wrap flexrow" bindtap="gotohome" hidden="{{ishashome}}">
@@ -33,11 +50,30 @@
 <scroll-view style="height:{{scrollH}}px" scroll-y="true" bindscrolltolower="loadImages" bindscroll="scrollHandler" scroll-top="{{scrollTop}}">
 
   <view class="view_box_wrap">
-      <view class="view_boxitem">
-         
-      </view>
+    <view class="view_boxitem">
+        
     </view>
+  </view>
+
+  <view class="swiper_block">
+    <view class="swiper-tab">
+      <view class="swiper-tab-list {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="swichTabNav">详情</view>
+      <view class="swiper-tab-list {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichTabNav">评论</view>
+    </view>
+    <swiper current="{{currentTab}}" class="swiper-box" duration="300"  bindchange="bindTabChange">
+      <swiper-item>
+        <scroll-view scroll-y="true" class="section">
+            <block>
+              <template is="course" data="{{courseInfo}}"></template>
+            </block>
+        </scroll-view>
+      </swiper-item>
+      <swiper-item>
+        <view class="view_last_wrap" style="background-color: white"> ---  暂无评论  --- </view>
+      </swiper-item>
+    </swiper>
+  </view>
  
   <view class="loading" hidden="{{isloading || all_loaded}}">正在加载...</view>
-  <view class="view_last_wrap" wx:if="{{all_loaded == true}}"> ---  没有更多图片了  --- </view>
+  <view class="view_last_wrap" wx:if="{{all_loaded == true}}"> ---  我是有底线的  --- </view>
 </scroll-view>

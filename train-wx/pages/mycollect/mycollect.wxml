@@ -15,9 +15,9 @@
 <scroll-view scroll-y="true" style="height:{{scrollH}}px;background:#f5f5f5;">
   <view class="flexrow view_empty_wrap" style="height:{{scrollH}}px" hidden="{{user_groups.length>0?true:false}}">
         <view><image src="../../images/collection_null@3x.png" style='width:200rpx;height:178rpx;margin-bottom:20rpx;' mode='aspectFit'></image></view>
-        <view><text class="color66 font14">您还没有喜欢的图片哦～</text></view>
-        <view><text class="color66 font14">赶快去收藏吧～</text></view>
-        <button type="warn" class="small" bindtap='viewmore'>去收藏</button>
+        <view><text class="color66 font14">您还没有购买课程哦～</text></view>
+        <view><text class="color66 font14">赶快去购买吧～</text></view>
+        <button type="warn" class="small" bindtap='viewmore'>去购买</button>
    </view>
   <view>
     <block wx:for="{{user_groups}}">

@@ -102,6 +102,12 @@ App({
   hideLoading: function (itle) {
     wx.hideToast();
   },
+  showSuccess: function (title) {
+    wx.showToast({ title: title, icon: 'success', mask: false, duration: 3000 });
+  },
+  showFail: function (title) {
+    wx.showToast({ title: title, icon: 'fail', mask: false, duration: 3000 });
+  },
   //API接口数据
   ajax: function (url, data, _success, _fail) {
     var that = this;

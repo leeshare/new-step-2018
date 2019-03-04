@@ -49,3 +49,16 @@
   width: 30rpx;
   height: 30rpx;
 }
+
+.content_header {
+  color: black;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+.org_btn {
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+  background-color: orange;
+  color: white;
+  width: 95%;
+}
