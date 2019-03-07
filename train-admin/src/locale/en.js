@@ -41,7 +41,7 @@ const App = {
   Qrcode_login_tips: 'Please use <a>Shenmo Smart Cloud APP</a> Scan Code Login',
   Forget_password: 'Forgot password',
   Forget_password_title: 'Forgot your password?',
-  Forget_password_content: 'Please email us at <a href="mail:service@shenmo.com">service@shenmo.com</a> to complete the password! ',
+  Forget_password_content: 'Please email us at <a href="mail:service@train.com">service@train.com</a> to complete the password! ',
   logout: 'logout',
   login: 'login',
   loginPending: 'login...',
