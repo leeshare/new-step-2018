@@ -24,7 +24,11 @@
 /nbdist/
 /.nb-gradle/
 
-### ÷§ È cert
+### cert
 *.p12
 *.pem
+
+### config
+application.yml
+config.properties
 
