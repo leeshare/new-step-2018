@@ -32,3 +32,6 @@
 application.yml
 config.properties
 
+### mac
+.DS_Store
+
