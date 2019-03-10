@@ -8,6 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>train</name>
     <description>Demo project for Spring Boot</description>
+    <packaging>jar</packaging>
 
     <!-- lookup parent from repository -->
     <!--<version>2.1.1.RELEASE</version>-->
