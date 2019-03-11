@@ -1,10 +1,8 @@
 //app.js
 App({
   isDevelop: true,
-  //productUrl: 'https://www.tohappy.com.cn/API-2.0/',
   productUrl: 'http://47.110.255.125:8084/api/wechat/',
   developUrl: 'http://localhost:8084/api/wechat/',
-  //developUrl: 'http://47.110.255.125:8084/api/wechat/',
   apiUrl: function () {
     return this.isDevelop ? this.developUrl : this.productUrl
   },

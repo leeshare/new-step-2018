@@ -23,11 +23,11 @@ import org.springframework.util.Assert;
 import java.util.Date;
 import java.util.List;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {JpaConfiguration.class})
 public class MysqlTest {
 
-    private static Logger logger = LoggerFactory.getLogger(MysqlTest.class);
+    /*private static Logger logger = LoggerFactory.getLogger(MysqlTest.class);
 
     @Autowired
     TempUserRepository tempUserRepository;
@@ -74,6 +74,6 @@ public class MysqlTest {
             logger.info("=====tempUser===== user name:{}, department name: {}, role name: {}", tempUser.getName(), tempUser.getTempDepartment().getName(), tempUser.getTempRoles().get(0).getName());
         }
 
-    }
+    }*/
 
 }
