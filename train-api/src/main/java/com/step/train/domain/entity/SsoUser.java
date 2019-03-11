@@ -66,6 +66,12 @@ public class SsoUser implements Serializable {
     @Transient
     private String orgName;
 
+    /**
+     * 分享应用时，使用的唯一标识
+     */
+    @Transient
+    private String shareKey;
+
     //----------------------------------------------------------//
 
     public Integer getId() {
@@ -266,5 +272,13 @@ public class SsoUser implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getShareKey() {
+        return shareKey;
+    }
+
+    public void setShareKey(String shareKey) {
+        this.shareKey = shareKey;
     }
 }

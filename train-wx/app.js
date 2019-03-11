@@ -1,14 +1,16 @@
 //app.js
 App({
   isDevelop: true,
-  productUrl: 'https://www.tohappy.com.cn/API-2.0/',
+  //productUrl: 'https://www.tohappy.com.cn/API-2.0/',
+  productUrl: 'http://47.110.255.125:8084/api/wechat/',
   developUrl: 'http://localhost:8084/api/wechat/',
+  //developUrl: 'http://47.110.255.125:8084/api/wechat/',
   apiUrl: function () {
     return this.isDevelop ? this.developUrl : this.productUrl
   },
   resUrl: 'http://47.110.255.125:9000/',
-  onLaunch: function () {
-    
+  onLaunch: function (option) {
+    console.log(option.scene)//小程序场景值
   },
   goHome: function () {
     let currentPages = getCurrentPages();
@@ -73,6 +75,8 @@ App({
             //that.loginToServer(token, cb);
             that.setStorageValueSync(0, res.data.data)
             typeof cb == "function" && cb(that.globalData.userInfo)
+          }else {
+            console.log('登录server失败：' + res);
           }
           
         },
@@ -170,7 +174,19 @@ App({
     } catch (e) {
       // Do something when catch error
     }
-  }
+  },
+  //微信支付
+  pay: function() {
+    wx.requestPayment({
+      timeStamp: '',
+      nonceStr: '',
+      package: '',
+      signType: 'MD5',
+      paySign: '',
+      success(res) { },
+      fail(res) { }
+    })
+  },
 
   /*
   getOpenId: function(res){
@@ -203,5 +219,6 @@ App({
       }
     });
   }*/
+
 
 })

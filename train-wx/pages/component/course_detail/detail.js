@@ -73,6 +73,7 @@ Page({
   buyCourse: function() {
     //app.showSuccess("购买课程成功")
     app.showFail("购买课程失败")
+
   },
 
   onShow: function () {
@@ -229,10 +230,12 @@ Page({
     //合并数据
     colAll = colAll.concat(dataItems);
     //水平瀑布流处理
-    let container = { children: colAll, offsetWidth: this.data.offsetWidth - (6 / this.data.pixelRatio) };//去除右侧margin宽度
+    let container = { children: colAll, offsetWidth: this.data.offsetWidth - (6 / this.data.pixelRatio) }; 
+    //去除右侧margin宽度
     let options = {
       defaultHeight: 180, //默认行高
-      margin: (6 / this.data.pixelRatio)//图片间距px，与样式flow-row-imagebox{margin: 12rpx 12rpx}对应
+      margin: (6 / this.data.pixelRatio) 
+      //图片间距px，与样式flow-row-imagebox{margin: 12rpx 12rpx}对应
     };
     new HorizontalWaterfallFlow(container, options);
     //水平瀑布流行

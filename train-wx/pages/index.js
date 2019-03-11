@@ -47,10 +47,12 @@ Page({
     background: ['demo-text-1', 'demo-text-2', 'demo-text-3'],
   },
   onShareAppMessage: function () {
+    //var that = this
+    var u = app.getStorageValueSync(0) || {};
     return {
       title: '要培训找培训',
       desc: '',
-      path: '/pages/index'
+      path: '/pages/index?id=' + u.shareKey
     }
   },
   onLoad: function () {

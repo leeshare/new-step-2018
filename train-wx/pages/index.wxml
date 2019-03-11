@@ -119,7 +119,7 @@
   </scroll-view>
 </view>-->
 
-<!--<view class="commodity_screen" bindtap="hidemode" hidden="{{isAuthed}}">
+<view class="commodity_screen" bindtap="hidemode" hidden="{{isAuthed}}">
   <view class="font16 colorwhite view_text">
     
   </view>
@@ -140,4 +140,4 @@
     <view class="text">显示在聊天底部</view>
     <view class="text">添加到桌面</view>
   </view>
-</view>-->
+</view>

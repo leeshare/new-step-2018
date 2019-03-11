@@ -30,6 +30,7 @@ public class Config {
 
     private String tracker_servers;
 
+    private String aes_pwd;
 
     public String getFile_server_addr() {
         return file_server_addr;
@@ -101,5 +102,13 @@ public class Config {
 
     public void setTracker_servers(String tracker_servers) {
         this.tracker_servers = tracker_servers;
+    }
+
+    public String getAes_pwd() {
+        return aes_pwd;
+    }
+
+    public void setAes_pwd(String aes_pwd) {
+        this.aes_pwd = aes_pwd;
     }
 }

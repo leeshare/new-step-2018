@@ -13,6 +13,7 @@ import com.step.train.service.CourseService;
 import com.step.train.service.OrgService;
 import com.step.train.service.UserService;
 import com.step.train.service.WechatService;
+import com.step.train.util.SymmetricEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,6 +52,10 @@ public class WxController {
             String ticket = userService.addLoginTicket(u.getId());
             //u.setTicket(user.getTicket());
             u.setTicket(ticket);
+            //
+            String shareKey = SymmetricEncoder.AESEncode(config.getAes_pwd(), u.getId().toString());
+            u.setShareKey(shareKey);
+            //
             return new JsonResult<>(u);
         } catch (Exception e) {
             e.printStackTrace();
