@@ -1,7 +1,7 @@
 //app.js
 App({
-  isDevelop: true,
-  productUrl: 'http://47.110.255.125:8084/api/wechat/',
+  isDevelop: false,
+  productUrl: 'http://www.nkian.com:8084/api/wechat/',
   developUrl: 'http://localhost:8084/api/wechat/',
   apiUrl: function () {
     return this.isDevelop ? this.developUrl : this.productUrl
