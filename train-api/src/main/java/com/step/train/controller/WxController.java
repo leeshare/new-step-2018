@@ -54,7 +54,7 @@ public class WxController {
             u.setTicket(ticket);
             //
             String shareKey = SymmetricEncoder.AESEncode(config.getAes_pwd(), u.getId().toString());
-            u.setShareKey(shareKey);
+            u.setShareKey(java.net.URLEncoder.encode(shareKey));
             //
             return new JsonResult<>(u);
         } catch (Exception e) {
