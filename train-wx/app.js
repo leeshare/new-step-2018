@@ -1,6 +1,6 @@
 //app.js
 App({
-  isDevelop: false,
+  isDevelop: true,
   productUrl: 'http://www.nkian.com:8084/api/wechat/',
   developUrl: 'http://localhost:8084/api/wechat/',
   apiUrl: function () {
@@ -9,6 +9,10 @@ App({
   resUrl: 'http://47.110.255.125:9000/',
   onLaunch: function (option) {
     console.log(option.scene)//小程序场景值
+    var shareId = option.pid || options.scene;
+    if(typeof(shareId) == 'undefined' || shareId == 'undefined'){
+      this.globalData.shareId = shareId;
+    }
   },
   goHome: function () {
     let currentPages = getCurrentPages();
@@ -37,7 +41,8 @@ App({
             success: function (res) {
               that.globalData.userInfo = res.userInfo
               that.globalData.token = res.signature
-              that.getTokenFromServer(response.code, res.encryptedData, res.iv, res.signature, cb);
+              let shareId = that.globalData.shareId;
+              that.getTokenFromServer(response.code, res.encryptedData, res.iv, res.signature, shareId, cb);
             },
             fail: function(response) {
               console.log(response);
@@ -49,11 +54,12 @@ App({
     }
   },
   globalData: {
+    shareId: '',
     userInfo: null,
     token: '',
     pushData: {}
   },
-  getTokenFromServer: function (code, encryptedData, iv, signature, cb) {
+  getTokenFromServer: function (code, encryptedData, iv, signature, shareId, cb) {
     var that = this;
     if (code) {
       wx.request({
@@ -63,7 +69,8 @@ App({
           code: code,
           encryptedData: encryptedData,
           iv: iv,
-          signature: signature
+          signature: signature,
+          shareId: shareId,
         },
         method: 'POST',
         success: function (res) {

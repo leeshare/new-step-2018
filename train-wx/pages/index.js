@@ -52,11 +52,15 @@ Page({
     return {
       title: '要培训找培训',
       desc: '',
-      path: '/pages/index?id=' + u.shareKey
+      path: '/pages/index?pid=' + u.shareKey
     }
   },
-  onLoad: function () {
+  onLoad: function (options) {
     let that = this;
+    let shareId = options.shareId;
+    if (typeof (shareId) == 'undefined' || shareId == 'undefined') {
+      app.globalData.shareId = shareId;
+    }
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({

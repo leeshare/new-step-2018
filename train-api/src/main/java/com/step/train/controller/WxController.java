@@ -44,6 +44,12 @@ public class WxController {
     @PostMapping("login")
     public Object login(@RequestBody WechatQo param){
         try {
+            param.setpId(0);
+            if(param != null && !StringUtils.isEmpty(param.getShareId())){
+                String key = java.net.URLDecoder.decode(param.getShareId());
+                String pId = SymmetricEncoder.AESDncode(config.getAes_pwd(), key);
+                param.setpId(Integer.parseInt(pId));
+            }
             SsoUser user = wechatService.wxLogin(param);
             SsoUser u = new SsoUser();
             u.setId(user.getId());

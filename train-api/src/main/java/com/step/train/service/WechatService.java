@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.step.train.domain.entity.JsonResult;
 import com.step.train.domain.entity.SsoUser;
 import com.step.train.model.WechatQo;
+import com.step.train.util.SymmetricEncoder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.hibernate.usertype.UserType;
 import org.slf4j.Logger;
@@ -100,6 +101,7 @@ public class WechatService {
                 logger.info("userInfo = "+ userInfoStr);
                 JSONObject u = JSON.parseObject(userInfoStr);
 
+
                 user = new SsoUser();
                 user.setId(0);
                 user.setOrgId(0);
@@ -109,9 +111,11 @@ public class WechatService {
                 user.setRealName(u.getString("nickName"));
                 user.setPhoto(u.getString("avatarUrl"));
                 user.setSex(u.getByte("gender"));
-                user.setStatus((byte)1);
+                user.setStatus((byte) 1);
                 user.setAddress(u.getString("country") + "," + u.getString("province") + "," + u.getString("city"));
-                user.setRecommendUserId(req.getrId());
+                if(user.getRecommendUserId() == null || user.getRecommendUserId() == 0){
+                    user.setRecommendUserId(req.getpId());
+                }
                 int result = userService.save(user);
                 if(result > 0) {
                     user.setId(result);

@@ -14,8 +14,10 @@ public class WechatQo {
 
     private String signature;
 
-    //推荐用户Id
-    private int rId;
+    //推荐用户Id 经过aes加密
+    private String shareId;
+
+    private int pId;
 
     public String getCode() {
         return code;
@@ -57,11 +59,19 @@ public class WechatQo {
         this.signature = signature;
     }
 
-    public int getrId() {
-        return rId;
+    public String getShareId() {
+        return shareId;
     }
 
-    public void setrId(int rId) {
-        this.rId = rId;
+    public void setShareId(String shareId) {
+        this.shareId = shareId;
+    }
+
+    public int getpId() {
+        return pId;
+    }
+
+    public void setpId(int pId) {
+        this.pId = pId;
     }
 }
