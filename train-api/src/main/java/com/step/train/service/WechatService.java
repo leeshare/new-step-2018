@@ -2,6 +2,7 @@ package com.step.train.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.step.train.configuration.Config;
 import com.step.train.domain.entity.JsonResult;
 import com.step.train.domain.entity.SsoUser;
 import com.step.train.model.WechatQo;
@@ -44,15 +45,15 @@ public class WechatService {
     @Autowired
     private UserService userService;
 
-    public static boolean initialized = false;
+    @Autowired
+    private Config config;
 
-    private static final String APPID = "wx54c4a3e89a269570";
-    private static final String SECRET = "e8e62832016da003b6b5c167b2dadbb3";
+    public static boolean initialized = false;
 
     public SsoUser wxLogin(WechatQo req) throws Exception
     {
         //获取 session_key 和 openId
-        String url = "https://api.weixin.qq.com/sns/jscode2session?appid="+APPID+"&secret="+SECRET+"&js_code="+req.getCode()+"&grant_type=authorization_code";
+        String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + config.getApp_id() + "&secret=" + config.getSecret() + "&js_code=" + req.getCode() + "&grant_type=authorization_code";
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
         if(responseEntity != null && responseEntity.getStatusCode() == HttpStatus.OK)

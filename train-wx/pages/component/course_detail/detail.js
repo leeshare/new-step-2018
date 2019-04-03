@@ -105,7 +105,7 @@ Page({
     var condition = { keyword: that.data.keywordObj.keyword, pageIndex: that.data.page_index, userType: that.data.keywordObj.keyvalue}
     that.setData({ last_search_condition: condition });
 
-    app.ajax('puzzlev2/keywordPhotoList', condition , function (res) {
+    /*app.ajax('puzzlev2/keywordPhotoList', condition , function (res) {
       console.log(res.data)
       that.setData({ total_record: res.data.total_records })
       if (res.data.total_records==res.data.keyword_photo_list.length){
@@ -115,7 +115,7 @@ Page({
         that.getImageFlowItemsV2(res.data.keyword_photo_list, isReload);
         that.setData({ isloading: true })
       }
-    })
+    })*/
   },
   getImageFlowItems: function (dataItems) {
     let col1 = this.data.col1;
